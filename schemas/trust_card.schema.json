@@ -1,0 +1,196 @@
+{
+  "$defs": {
+    "FinalLabel": {
+      "description": "最终四级结论（见方案文档第七节）。",
+      "enum": [
+        "verified",
+        "partially_suspicious",
+        "insufficient_evidence",
+        "high_risk_misleading"
+      ],
+      "title": "FinalLabel",
+      "type": "string"
+    },
+    "TrustCardSection": {
+      "description": "信任卡的一个区块。",
+      "properties": {
+        "title": {
+          "description": "如 主要发现 / 这会怎样影响你 / 哪些信息仍可参考",
+          "title": "Title",
+          "type": "string"
+        },
+        "content": {
+          "description": "要点列表（面向初学者，通俗）",
+          "items": {
+            "type": "string"
+          },
+          "title": "Content",
+          "type": "array"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "高级用户可展开的细节（可选）",
+          "title": "Details"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "TrustCardSection",
+      "type": "object"
+    },
+    "AdvancedView": {
+      "description": "高级视图固定键（冻结，见 API_SPEC §6.5）。所有键始终存在；无内容时为空数组/空对象/null。",
+      "properties": {
+        "tool_results": {
+          "description": "各 Tool 结果及可靠性汇总（来自 tool_reliability）",
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Tool Results",
+          "type": "array"
+        },
+        "heatmaps": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "可疑区域热力图引用（如 manipulation_map）",
+          "title": "Heatmaps"
+        },
+        "source_metadata": {
+          "additionalProperties": true,
+          "description": "来源与元数据（C2PA / EXIF 等）",
+          "title": "Source Metadata",
+          "type": "object"
+        },
+        "before_after_comparison": {
+          "description": "前后画面条件差异",
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Before After Comparison",
+          "type": "array"
+        },
+        "claim_evidence_mapping": {
+          "description": "关键宣称与证据对应",
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Claim Evidence Mapping",
+          "type": "array"
+        },
+        "decision_path": {
+          "description": "Agent 完整决策路径",
+          "items": {
+            "type": "string"
+          },
+          "title": "Decision Path",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tool_results",
+        "heatmaps",
+        "source_metadata",
+        "before_after_comparison",
+        "claim_evidence_mapping",
+        "decision_path"
+      ],
+      "title": "AdvancedView",
+      "type": "object"
+    }
+  },
+  "description": "Beauty Trust Card：消费者端一目了然的信任卡片。",
+  "properties": {
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "content_id": {
+      "title": "Content Id",
+      "type": "string"
+    },
+    "verdict": {
+      "$ref": "#/$defs/FinalLabel"
+    },
+    "verdict_label": {
+      "description": "中文结论，如 部分可疑",
+      "title": "Verdict Label",
+      "type": "string"
+    },
+    "product": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Product"
+    },
+    "main_findings": {
+      "description": "主要发现（对应方案文档示例 1/2/3）",
+      "items": {
+        "type": "string"
+      },
+      "title": "Main Findings",
+      "type": "array"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/TrustCardSection"
+      },
+      "title": "Sections",
+      "type": "array"
+    },
+    "creator_actions": {
+      "description": "创作者可补充的材料",
+      "items": {
+        "type": "string"
+      },
+      "title": "Creator Actions",
+      "type": "array"
+    },
+    "advanced": {
+      "$ref": "#/$defs/AdvancedView",
+      "description": "高级视图（冻结固定英文键，见 API_SPEC §6.5）：tool_results / heatmaps / source_metadata / before_after_comparison / claim_evidence_mapping / decision_path"
+    },
+    "generated_at": {
+      "default": "",
+      "title": "Generated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "content_id",
+    "verdict",
+    "verdict_label",
+    "main_findings",
+    "sections",
+    "creator_actions",
+    "advanced"
+  ],
+  "title": "TrustCard",
+  "type": "object"
+}

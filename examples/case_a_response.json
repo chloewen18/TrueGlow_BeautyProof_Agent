@@ -1,0 +1,435 @@
+{
+  "request_id": "req_4abc04018d11",
+  "status": "success",
+  "result": {
+    "request_id": "req_4abc04018d11",
+    "content_id": "case_a",
+    "reviewed": false,
+    "verdict": "insufficient_evidence",
+    "verdict_label": "证据不足",
+    "report": {
+      "report_id": "report_ed809ab24e30",
+      "request_id": "req_4abc04018d11",
+      "content_id": "case_a",
+      "schema_version": "1.0.0",
+      "evidence": {
+        "content_id": "case_a",
+        "source_evidence": {
+          "summary": "C2PA 不存在，来源状态 Unknown；不做二元判假，继续调用视觉取证；元数据可能受平台压缩/转码影响",
+          "items": [
+            {
+              "evidence_id": "src-001",
+              "tool": "source_trace",
+              "claim": "C2PA 不存在，来源状态 Unknown（不等于伪造）",
+              "finding": {
+                "c2pa_status": "absent"
+              },
+              "reliability": "Medium",
+              "source": "C2PA / Content Credentials",
+              "confidence_note": "元数据缺失可能受平台压缩/转码影响"
+            }
+          ],
+          "raw": {
+            "c2pa": {
+              "status": "absent"
+            },
+            "exif": {},
+            "metadata_complete": false,
+            "metadata_anomalies": [],
+            "file_info": {},
+            "creator_submission_status": "none",
+            "conclusion": "C2PA 不存在，来源状态 Unknown；不做二元判假，继续调用视觉取证；元数据可能受平台压缩/转码影响"
+          }
+        },
+        "visual_evidence": {
+          "summary": "完整性评分 0.82，可靠性 Medium",
+          "items": [
+            {
+              "evidence_id": "vis-none",
+              "tool": "image_forensics",
+              "claim": "未检出明显篡改/修饰痕迹",
+              "finding": {
+                "integrity_score": 0.82
+              },
+              "reliability": "Medium",
+              "source": "TruFor/取证模型",
+              "confidence_note": null
+            }
+          ],
+          "raw": {
+            "integrity_score": 0.82,
+            "manipulation_map": {
+              "kind": "description",
+              "value": "（Mock）可疑区域热力图：待成员 2 接入 TruFor 后输出像素级 mask"
+            },
+            "local_replacement": "Not detected",
+            "splicing": "Not detected",
+            "inpainting": "Not detected",
+            "ai_generated": "Unknown",
+            "skin_smoothing": "Low",
+            "texture_loss": "Low",
+            "whitening": "Low",
+            "face_reshape": "Low",
+            "exposure_shift": "Low",
+            "reliability": "Medium",
+            "notes": []
+          }
+        },
+        "before_after_evidence": {
+          "summary": "",
+          "items": [],
+          "raw": {}
+        },
+        "text_evidence": {
+          "summary": "披露声明: not_found；问题数: 0",
+          "items": [
+            {
+              "evidence_id": "txt-claim-遮瑕",
+              "tool": "text_integrity",
+              "claim": "宣称「遮瑕」需重点核验",
+              "finding": {
+                "claim": "遮瑕",
+                "kind": "efficacy",
+                "severity": "Medium"
+              },
+              "reliability": "Medium",
+              "source": null,
+              "confidence_note": null
+            }
+          ],
+          "raw": {
+            "claims": [
+              {
+                "text": "持妆",
+                "kind": "efficacy",
+                "severity": "Low"
+              },
+              {
+                "text": "遮瑕",
+                "kind": "efficacy",
+                "severity": "Medium"
+              }
+            ],
+            "integrity_issues": [],
+            "disclosure": "not_found",
+            "efficacy_evidence": [
+              {
+                "product": "某品牌粉底液",
+                "claim": "持妆",
+                "claim_type": "持妆",
+                "evidence_method": "功效评价试验",
+                "evaluation_duration": "4-8 小时",
+                "evidence_level": "Moderate",
+                "matched": false
+              },
+              {
+                "product": "某品牌粉底液",
+                "claim": "遮瑕",
+                "claim_type": "遮瑕",
+                "evidence_level": "Weak",
+                "matched": false
+              }
+            ],
+            "user_explanation": "宣称「遮瑕、持妆」暂未找到官方功效证据支持；结合你混合皮的肤质，建议重点关注遮瑕边界与持妆表现"
+          }
+        },
+        "efficacy_evidence": [
+          {
+            "product": "某品牌粉底液",
+            "claim": "持妆",
+            "claim_type": "持妆",
+            "evidence_method": "功效评价试验",
+            "evaluation_duration": "4-8 小时",
+            "evidence_level": "Moderate",
+            "matched": false
+          },
+          {
+            "product": "某品牌粉底液",
+            "claim": "遮瑕",
+            "claim_type": "遮瑕",
+            "evidence_level": "Weak",
+            "matched": false
+          }
+        ],
+        "user_context": {
+          "skin_type": "混合皮",
+          "concerns": "遮瑕",
+          "goal": "核验可信度"
+        },
+        "tool_reliability": [
+          {
+            "tool": "page_understanding",
+            "status": "success",
+            "reliability": "Medium",
+            "note": null
+          },
+          {
+            "tool": "source_trace",
+            "status": "success",
+            "reliability": "Medium",
+            "note": null
+          },
+          {
+            "tool": "image_forensics",
+            "status": "success",
+            "reliability": "Medium",
+            "note": null
+          },
+          {
+            "tool": "text_integrity",
+            "status": "success",
+            "reliability": "Medium",
+            "note": null
+          },
+          {
+            "tool": "before_after",
+            "status": "missing",
+            "reliability": "Low",
+            "note": "未调用，相关维度证据缺失"
+          }
+        ],
+        "agent_decision": {
+          "final_label": "insufficient_evidence",
+          "content_integrity_risk": "内容完整性: Low（素材是否被加工/拼接/伪造）",
+          "attribution_reliability": "妆效归因可靠性: Medium（效果能否合理归因于产品）",
+          "claim_evidence_sufficiency": "宣称证据充分性: Low（文案是否得到可信证据支持）",
+          "personal_fit_hint": "产品是否适合混合皮肤质需结合个人试用，系统无法仅凭内容判断适配度，建议重点观察遮瑕相关表现",
+          "confidence": "置信度 Medium；系统看到的证据与局限：未提供 before/after 素材，妆效归因无法完整判断；未发现商业合作/AI 使用声明（无强宣称，仅提示）",
+          "decision_path": [
+            "evidence_fusion: 来源1条 / 视觉1条 / 前后对比0条 / 文本1条",
+            "rule: c2pa=absent/error 且无补证 -> source_unknown=True",
+            "rule: 无硬篡改证据 -> content_integrity=Low",
+            "rule: before_after 缺失 -> attribution=Medium(存疑)",
+            "rule: 文本无重大问题 -> claim_sufficiency=Low",
+            "rule: 置信度=Medium（低可靠证据0条，缺失1个维度）",
+            "rule: 风险由证据缺失引起且无实际可疑证据 -> insufficient_evidence"
+          ],
+          "affected_claims": []
+        },
+        "creator_submission": {
+          "status": "none",
+          "materials": {},
+          "review_result": null,
+          "credential": null
+        },
+        "human_review": {
+          "status": "none",
+          "reviewer": null,
+          "note": null
+        },
+        "final_label": "insufficient_evidence"
+      },
+      "trust_card": {
+        "request_id": "req_4abc04018d11",
+        "content_id": "case_a",
+        "verdict": "insufficient_evidence",
+        "verdict_label": "证据不足",
+        "product": "某品牌粉底液",
+        "main_findings": [
+          "未发现足以影响主要结论的可疑处理痕迹"
+        ],
+        "sections": [
+          {
+            "title": "这会怎样影响你？",
+            "content": [
+              "当前证据未显示明显会影响判断的加工痕迹"
+            ],
+            "details": null
+          },
+          {
+            "title": "哪些信息仍可参考？",
+            "content": [
+              "需要补充原始素材后才能给出更明确的判断",
+              "当前结论不代表内容一定造假"
+            ],
+            "details": null
+          },
+          {
+            "title": "如果你是混合皮初学者",
+            "content": [
+              "如果你是混合皮肤质：建议重点观察遮瑕边界、纹理细节与持妆表现，尽量参考相同光线下的近距离画面"
+            ],
+            "details": null
+          }
+        ],
+        "creator_actions": [
+          "原始视频/未压缩图片",
+          "滤镜参数与拍摄设置",
+          "同条件复测片段"
+        ],
+        "advanced": {
+          "tool_results": [
+            {
+              "tool": "page_understanding",
+              "status": "success",
+              "reliability": "Medium",
+              "note": null
+            },
+            {
+              "tool": "source_trace",
+              "status": "success",
+              "reliability": "Medium",
+              "note": null
+            },
+            {
+              "tool": "image_forensics",
+              "status": "success",
+              "reliability": "Medium",
+              "note": null
+            },
+            {
+              "tool": "text_integrity",
+              "status": "success",
+              "reliability": "Medium",
+              "note": null
+            },
+            {
+              "tool": "before_after",
+              "status": "missing",
+              "reliability": "Low",
+              "note": "未调用，相关维度证据缺失"
+            }
+          ],
+          "heatmaps": {
+            "kind": "description",
+            "value": "（Mock）可疑区域热力图：待成员 2 接入 TruFor 后输出像素级 mask"
+          },
+          "source_metadata": {
+            "c2pa": {
+              "status": "absent"
+            },
+            "exif": {},
+            "metadata_complete": false,
+            "metadata_anomalies": [],
+            "file_info": {},
+            "creator_submission_status": "none",
+            "conclusion": "C2PA 不存在，来源状态 Unknown；不做二元判假，继续调用视觉取证；元数据可能受平台压缩/转码影响"
+          },
+          "before_after_comparison": [],
+          "claim_evidence_mapping": [
+            {
+              "product": "某品牌粉底液",
+              "claim": "持妆",
+              "claim_type": "持妆",
+              "evidence_method": "功效评价试验",
+              "evaluation_duration": "4-8 小时",
+              "evidence_level": "Moderate",
+              "matched": false
+            },
+            {
+              "product": "某品牌粉底液",
+              "claim": "遮瑕",
+              "claim_type": "遮瑕",
+              "evidence_level": "Weak",
+              "matched": false
+            }
+          ],
+          "decision_path": [
+            "evidence_fusion: 来源1条 / 视觉1条 / 前后对比0条 / 文本1条",
+            "rule: c2pa=absent/error 且无补证 -> source_unknown=True",
+            "rule: 无硬篡改证据 -> content_integrity=Low",
+            "rule: before_after 缺失 -> attribution=Medium(存疑)",
+            "rule: 文本无重大问题 -> claim_sufficiency=Low",
+            "rule: 置信度=Medium（低可靠证据0条，缺失1个维度）",
+            "rule: 风险由证据缺失引起且无实际可疑证据 -> insufficient_evidence"
+          ]
+        },
+        "generated_at": "2026-09-03T15:15:44+00:00"
+      },
+      "tool_calls": [
+        {
+          "tool": "page_understanding",
+          "status": "success",
+          "latency_ms": 0,
+          "model": "mock",
+          "evidence_keys": [
+            "content_type",
+            "product",
+            "claims",
+            "media_tasks",
+            "disclosure",
+            "media",
+            "notes"
+          ],
+          "reason": "把浏览内容转化为可分析对象与待核验任务"
+        },
+        {
+          "tool": "source_trace",
+          "status": "success",
+          "latency_ms": 0,
+          "model": "mock",
+          "evidence_keys": [
+            "c2pa",
+            "exif",
+            "metadata_complete",
+            "metadata_anomalies",
+            "file_info",
+            "creator_submission_status",
+            "conclusion"
+          ],
+          "reason": "检查 EXIF/C2PA/元数据来源证据"
+        },
+        {
+          "tool": "image_forensics",
+          "status": "success",
+          "latency_ms": 0,
+          "model": "mock",
+          "evidence_keys": [
+            "integrity_score",
+            "manipulation_map",
+            "local_replacement",
+            "splicing",
+            "inpainting",
+            "ai_generated",
+            "skin_smoothing",
+            "texture_loss",
+            "whitening",
+            "face_reshape",
+            "exposure_shift",
+            "reliability",
+            "notes"
+          ],
+          "reason": "检测拼接/替换/磨皮等视觉痕迹"
+        },
+        {
+          "tool": "text_integrity",
+          "status": "success",
+          "latency_ms": 0,
+          "model": "mock",
+          "evidence_keys": [
+            "claims",
+            "integrity_issues",
+            "disclosure",
+            "efficacy_evidence",
+            "user_explanation"
+          ],
+          "reason": "宣称提取、完整性检查、功效证据检索"
+        }
+      ],
+      "limitations": [
+        "Not detected 不等于一定没有，只表示当前证据中未检出",
+        "未核验到 C2PA/来源信息，真实性无法确证（C2PA 缺失≠伪造）",
+        "未提供 before/after 素材，妆效归因无法完整判断",
+        "创作者补证尚未提交/完成，结论可能随补证更新"
+      ]
+    },
+    "decision_path": [
+      "evidence_fusion: 来源1条 / 视觉1条 / 前后对比0条 / 文本1条",
+      "rule: c2pa=absent/error 且无补证 -> source_unknown=True",
+      "rule: 无硬篡改证据 -> content_integrity=Low",
+      "rule: before_after 缺失 -> attribution=Medium(存疑)",
+      "rule: 文本无重大问题 -> claim_sufficiency=Low",
+      "rule: 置信度=Medium（低可靠证据0条，缺失1个维度）",
+      "rule: 风险由证据缺失引起且无实际可疑证据 -> insufficient_evidence"
+    ]
+  },
+  "meta": {
+    "version": "1.0.0",
+    "model": "mock",
+    "latency_ms": 1,
+    "warnings": [
+      "Mock 模式：检测结果由规则模拟生成，仅供前后端联调，不代表真实检测结论"
+    ]
+  },
+  "error": null
+}
