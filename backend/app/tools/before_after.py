@@ -22,24 +22,38 @@ class BeforeAfterHandler(ToolHandler):
         s = p.get("signals", {})
 
         dims_raw = s.get("dimensions", p.get("dimensions"))
+        # computed=False 表示没有拿到任何差异信号，即「未进行计算」。
+        computed = bool(dims_raw)
         if dims_raw:
             dimensions = [ConsistencyDimension(**d) for d in dims_raw]
         else:
-            # 默认中性：各维度 Similar，可比较
+            # 修复：旧实现默认「全部 Similar + 归因 Strong」，等于一行没算就断言
+            # "效果可归因于产品"，与项目「证据不足不判真」原则相反。未计算时一律 Unknown。
             dimensions = [
-                ConsistencyDimension(dimension="face_angle", level=ComparisonLevel.SIMILAR, detail="角度一致"),
-                ConsistencyDimension(dimension="crop", level=ComparisonLevel.SIMILAR, detail="裁切一致"),
-                ConsistencyDimension(dimension="exposure", level=ComparisonLevel.SIMILAR, detail="曝光一致"),
-                ConsistencyDimension(dimension="white_balance", level=ComparisonLevel.SIMILAR, detail="白平衡一致"),
-                ConsistencyDimension(dimension="skin_texture", level=ComparisonLevel.SIMILAR, detail="纹理一致"),
-                ConsistencyDimension(dimension="smoothing", level=ComparisonLevel.SIMILAR, detail="平滑强度一致"),
+                ConsistencyDimension(dimension=name, level=ComparisonLevel.UNKNOWN, detail="未计算")
+                for name in (
+                    "face_angle",
+                    "crop",
+                    "exposure",
+                    "white_balance",
+                    "skin_texture",
+                    "smoothing",
+                )
             ]
 
-        comp_reliability = EvidenceReliability(s.get("comparison_reliability", p.get("comparison_reliability", "High")))
+        # 未计算时可靠性为 Low（没算就没有可靠证据），不得默认 High。
+        default_reliability = "High" if computed else "Low"
+        comp_reliability = EvidenceReliability(
+            s.get("comparison_reliability", p.get("comparison_reliability", default_reliability))
+        )
 
         # 归因强度：对比条件差异越大、可比较性越低 → 归因越不可靠
         significant = [d for d in dimensions if d.level in (ComparisonLevel.DIFFERENT, ComparisonLevel.SIGNIFICANT_DIFFERENCE)]
-        if len(significant) == 0 or comp_reliability == EvidenceReliability.HIGH:
+        if not computed:
+            # 未计算：不得给出任何方向的归因结论
+            attribution_strength = Strength.UNKNOWN
+            summary = "未进行前后对比计算（当前为模拟实现），无法判断观察到的变化能否归因于产品"
+        elif len(significant) == 0 or comp_reliability == EvidenceReliability.HIGH:
             attribution_strength = Strength.STRONG
             summary = "前后条件基本一致，观察到的变化可较合理地归因于产品"
         elif len(significant) <= 2:

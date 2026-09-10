@@ -1,0 +1,10 @@
+{"claim": "12小时持妆不卡粉", "evidence_text": "上妆效果很好", "evidence_image_meta": ["无后期磨皮", "仅提供0h刚上妆效果图"], "groundtruth_label": "INSUFFICIENT", "reason": "缺少4h/8h/12h时间维度的对比图像证据，无法证明长时间持妆"}
+{"claim": "粉底液隐形毛孔", "evidence_text": "毛孔直接不见了", "evidence_image_meta": ["before-after对比", "after图像检测出高程度数字皮肤平滑"], "groundtruth_label": "CONFOUNDED", "reason": "毛孔减少很可能来自后期数字磨皮，不能全部归为粉底液功效"}
+{"claim": "敏感肌可用不泛红", "evidence_text": "我是敏感肌，用了三天没有过敏", "evidence_image_meta": ["无后期磨皮", "提供连续3天使用对比图", "脸部无可见红斑"], "groundtruth_label": "SUPPORTED", "reason": "文本证据包含敏感肌使用体验，图像证据连续三天无泛红，与宣称一致"}
+{"claim": "一抹提亮肤色", "evidence_text": "瞬间白两个度", "evidence_image_meta": ["仅文字宣称", "未提供产品使用前后对比图"], "groundtruth_label": "INSUFFICIENT", "reason": "缺少图像证据，无法验证提亮效果是否来自产品本身"}
+{"claim": "防水防汗不脱妆", "evidence_text": "游泳回来妆还在", "evidence_image_meta": ["游泳前后面部特写", "检测到面部存在中度数字磨皮", "无水流/水珠细节"], "groundtruth_label": "CONFOUNDED", "reason": "图像存在数字磨皮，无法判断妆效是否真实持久"}
+{"claim": "轻薄遮瑕不厚重", "evidence_text": "遮住了我的黑眼圈", "evidence_image_meta": ["遮瑕前后对比", "无后期磨皮", "眼底区域纹理保留"], "groundtruth_label": "SUPPORTED", "reason": "图像证据显示遮瑕效果且保留皮肤纹理，无修图干扰"}
+{"claim": "7天淡化痘印", "evidence_text": "痘印淡了很多", "evidence_image_meta": ["Day1与Day7对比", "Day7图像检测到皮肤平滑处理"], "groundtruth_label": "CONFOUNDED", "reason": "Day7图像经过磨皮，痘印淡化可能由修图造成"}
+{"claim": "控油8小时", "evidence_text": "下午脸还是清爽的", "evidence_image_meta": ["仅提供上妆后1小时照片", "无8小时对比"], "groundtruth_label": "INSUFFICIENT", "reason": "缺少8小时时间维度证据，无法支撑控油时长宣称"}
+{"claim": "自然妈生好皮", "evidence_text": "像没化妆一样", "evidence_image_meta": ["素颜与妆后对比", "妆后图像检测到高强度磨皮"], "groundtruth_label": "CONTRADICTED", "reason": "宣称自然无妆感，但图像证据显示明显数字磨皮，与宣称矛盾"}
+{"claim": "防晒同时养肤", "evidence_text": "用了一个月皮肤变好了", "evidence_image_meta": ["使用前后对比", "无磨皮", "有第三方皮肤检测报告"], "groundtruth_label": "SUPPORTED", "reason": "图像与第三方报告共同支撑养肤宣称"}

@@ -67,9 +67,20 @@ class PageUnderstandingEvidence(BaseModel):
 # T2 来源溯源与创作者证明
 # ---------------------------------------------------------------------------
 class C2paInfo(BaseModel):
-    """C2PA / Content Credentials 状态。"""
+    """C2PA / Content Credentials 状态。
 
-    status: Literal["valid", "invalid", "absent", "error"] = "absent"
+    状态语义（成员 2 规整为三态区分，避免一律返回 error 掩盖真实情况）：
+      - valid              检测到 C2PA 数据且签名验证通过
+      - invalid            检测到 C2PA 数据但签名验证失败
+      - absent             未检测到 C2PA 数据（不含凭证或已被平台剥离）→ 不代表伪造，按 Unknown
+      - not_verified       检测到疑似 C2PA 数据，但当前环境无签名验证库 → Unknown，不作为判真/判假依据
+      - unsupported_format 文件格式不在可检查范围内
+      - error              读取/解析过程异常
+    """
+
+    status: Literal[
+        "valid", "invalid", "absent", "not_verified", "unsupported_format", "error"
+    ] = "absent"
     detail: Optional[str] = None
 
 

@@ -28,19 +28,28 @@ class Severity(str, Enum):
 
 
 class Strength(str, Enum):
-    """归因/证据强度：Weak / Moderate / Strong。"""
+    """归因/证据强度：Weak / Moderate / Strong / Unknown。
+
+    Unknown 用于「未进行计算」或「证据不足」。
+    重要：不得在没有计算时默认 Strong——那等价于凭空断言"效果可归因于产品"。
+    """
 
     WEAK = "Weak"
     MODERATE = "Moderate"
     STRONG = "Strong"
+    UNKNOWN = "Unknown"
 
 
 class ComparisonLevel(str, Enum):
-    """前后对比维度差异：Similar / Different / Significant difference。"""
+    """前后对比维度差异：Similar / Different / Significant difference / Unknown。
+
+    Unknown 用于「该维度未计算」。不得默认 Similar。
+    """
 
     SIMILAR = "Similar"
     DIFFERENT = "Different"
     SIGNIFICANT_DIFFERENCE = "Significant difference"
+    UNKNOWN = "Unknown"
 
 
 class DetectStatus(str, Enum):
