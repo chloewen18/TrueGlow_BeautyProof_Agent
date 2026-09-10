@@ -154,11 +154,14 @@ class MainAgent:
         before_label = VERDICT_LABEL.get(before_label_enum, before_label_enum.value)
         after_label = VERDICT_LABEL.get(after_enum, after_enum.value)
         changed = before_label_enum != after_enum
+        real_source = tool_results.get("source_trace", {}).get("file_info", {}).get("mode") == "real_exif"
         credential = None
         cs = report.evidence.creator_submission
         if cs is not None:
             credential = cs.credential if isinstance(cs, CreatorSubmission) else (cs.get("credential"))
-        if changed:
+        if real_source:
+            summary = f"补证文件已收件并解析元数据，当前结论为「{after_label}」。C2PA 尚未验证，未签发可信凭证；视觉检测仍为模拟实现。"
+        elif changed:
             summary = (
                 f"创作者补充原始素材并重新核验后，结论由「{before_label}」更新为「{after_label}」。"
                 "来源可信度提升（C2PA 验证有效），部分磨皮/曝光差异与已声明的拍摄及滤镜条件一致。"

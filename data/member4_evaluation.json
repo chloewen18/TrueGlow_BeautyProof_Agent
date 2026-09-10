@@ -1,0 +1,810 @@
+{
+  "mode": "dictionary_rules_mock_semantic",
+  "scope": "canonical claim sets only; no OCR/polarity/evidence validation",
+  "datasets": {
+    "Test Set": {
+      "count": 20,
+      "exact_match_count": 20,
+      "exact_match_rate": 1.0,
+      "micro_f1": 1.0,
+      "errors": 0,
+      "cases": [
+        {
+          "id": "T01",
+          "text": "这款粉底遮瑕真的不错，痘印基本都能盖住。",
+          "expected": [
+            "遮瑕",
+            "遮痘印"
+          ],
+          "predicted": [
+            "遮瑕",
+            "遮痘印"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T02",
+          "text": "油皮亲妈！下午三点T区还是不怎么出油。",
+          "expected": [
+            "不易泛油",
+            "控油",
+            "油皮适用"
+          ],
+          "predicted": [
+            "不易泛油",
+            "控油",
+            "油皮适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T03",
+          "text": "早八到晚八完全焊脸，鼻翼一点没斑驳。",
+          "expected": [
+            "12小时持妆",
+            "不斑驳"
+          ],
+          "predicted": [
+            "12小时持妆",
+            "不斑驳"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T04",
+          "text": "不是那种特别控油的粉底，我到中午就有点泛油了。",
+          "expected": [
+            "容易泛油",
+            "控油"
+          ],
+          "predicted": [
+            "容易泛油",
+            "控油"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T05",
+          "text": "毛孔直接消失，像开了磨皮一样。",
+          "expected": [
+            "柔焦",
+            "毛孔修饰"
+          ],
+          "predicted": [
+            "柔焦",
+            "毛孔修饰"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T06",
+          "text": "上脸很服帖，完全没有浮粉。",
+          "expected": [
+            "不卡粉",
+            "服帖"
+          ],
+          "predicted": [
+            "不卡粉",
+            "服帖"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T07",
+          "text": "刚上脸会亮一点，但过两个小时就暗沉了。",
+          "expected": [
+            "即时提亮",
+            "暗沉"
+          ],
+          "predicted": [
+            "即时提亮",
+            "暗沉"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T08",
+          "text": "这遮瑕真没有吹得那么神，黑眼圈还是能看见。",
+          "expected": [
+            "遮瑕",
+            "遮黑眼圈"
+          ],
+          "predicted": [
+            "遮瑕",
+            "遮黑眼圈"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T09",
+          "text": "干皮用着也不拔干，鼻翼没有起皮。",
+          "expected": [
+            "不拔干",
+            "不起皮",
+            "干皮适用"
+          ],
+          "predicted": [
+            "不拔干",
+            "不起皮",
+            "干皮适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T10",
+          "text": "戴口罩一天下来，口罩边缘还是蹭掉了一些粉底。",
+          "expected": [
+            "易脱妆",
+            "易转移"
+          ],
+          "predicted": [
+            "易脱妆",
+            "易转移"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T11",
+          "text": "防水是真的强，拿水冲都没怎么掉。",
+          "expected": [
+            "防水"
+          ],
+          "predicted": [
+            "防水"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T12",
+          "text": "我出汗以后鼻翼就花了，所以防汗一般。",
+          "expected": [
+            "斑驳",
+            "防汗"
+          ],
+          "predicted": [
+            "斑驳",
+            "防汗"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T13",
+          "text": "妈生皮妆效，近看也几乎没什么粉感。",
+          "expected": [
+            "低妆感",
+            "轻薄"
+          ],
+          "predicted": [
+            "低妆感",
+            "轻薄"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T14",
+          "text": "遮瑕力中等，泛红能盖，痘印还是会透出来。",
+          "expected": [
+            "中等遮瑕",
+            "遮泛红",
+            "遮痘印"
+          ],
+          "predicted": [
+            "中等遮瑕",
+            "遮泛红",
+            "遮痘印"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T15",
+          "text": "粉底刚上脸颜色正好，下午直接氧化成橘色。",
+          "expected": [
+            "氧化"
+          ],
+          "predicted": [
+            "氧化"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T16",
+          "text": "虽然叫控油粉底，但我觉得它更像自然光泽，不是死哑光。",
+          "expected": [
+            "哑光",
+            "控油",
+            "自然光泽"
+          ],
+          "predicted": [
+            "哑光",
+            "控油",
+            "自然光泽"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T17",
+          "text": "没有到‘纹身都能盖’那么夸张，但普通痘印确实能遮七八成。",
+          "expected": [
+            "遮痘印",
+            "高遮瑕"
+          ],
+          "predicted": [
+            "遮痘印",
+            "高遮瑕"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T18",
+          "text": "今天三十多度在外面走了两个小时，妆面还算稳，就是鼻翼有一点卡粉。",
+          "expected": [
+            "卡粉/浮粉",
+            "持妆"
+          ],
+          "predicted": [
+            "卡粉/浮粉",
+            "持妆"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T19",
+          "text": "敏感肌闭眼冲，我今天上脸完全零刺激。",
+          "expected": [
+            "低刺激/温和",
+            "敏感肌适用"
+          ],
+          "predicted": [
+            "低刺激/温和",
+            "敏感肌适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "T20",
+          "text": "我不会说它24小时不掉，但从早上九点到晚上六点基本没怎么脱妆。",
+          "expected": [
+            "不易脱妆",
+            "持妆"
+          ],
+          "predicted": [
+            "不易脱妆",
+            "持妆"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        }
+      ]
+    },
+    "Blind Test": {
+      "count": 30,
+      "exact_match_count": 20,
+      "exact_match_rate": 0.6666666666666666,
+      "micro_f1": 0.90625,
+      "errors": 0,
+      "cases": [
+        {
+          "id": "B01",
+          "text": "这粉底上脸很轻，像没化妆一样，但鼻翼还是会有一点浮粉。",
+          "expected": [
+            "低妆感",
+            "卡粉/浮粉",
+            "轻薄"
+          ],
+          "predicted": [
+            "低妆感",
+            "卡粉/浮粉",
+            "轻薄"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B02",
+          "text": "早上七点化完到下午五点，妆面基本还在，T区只是微微出油。",
+          "expected": [
+            "不易泛油",
+            "持妆"
+          ],
+          "predicted": [
+            "持妆"
+          ],
+          "missing": [
+            "不易泛油"
+          ],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B03",
+          "text": "遮瑕没有想象中那么高，红痘印能遮住，深色痘印还是能看出来。",
+          "expected": [
+            "遮痘印",
+            "高遮瑕"
+          ],
+          "predicted": [
+            "低遮瑕",
+            "遮痘印"
+          ],
+          "missing": [
+            "高遮瑕"
+          ],
+          "extra": [
+            "低遮瑕"
+          ],
+          "error": null
+        },
+        {
+          "id": "B04",
+          "text": "油皮夏天用真的稳，三十多度走了一下午也没怎么脱。",
+          "expected": [
+            "不易脱妆",
+            "持妆",
+            "油皮适用"
+          ],
+          "predicted": [
+            "不易脱妆",
+            "持妆",
+            "油皮适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B05",
+          "text": "毛孔确实被柔化了不少，但绝对没有网上说的‘磨皮到没纹理’那么夸张。",
+          "expected": [
+            "柔焦",
+            "毛孔修饰"
+          ],
+          "predicted": [
+            "柔焦",
+            "毛孔修饰"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B06",
+          "text": "我干皮用到晚上都不紧绷，不过眼下会稍微卡纹。",
+          "expected": [
+            "不拔干",
+            "卡纹",
+            "干皮适用"
+          ],
+          "predicted": [
+            "不拔干",
+            "卡纹",
+            "干皮适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B07",
+          "text": "戴口罩通勤三个小时，口罩上有一点粉，但是脸上的妆没有明显掉。",
+          "expected": [
+            "不易脱妆",
+            "易转移"
+          ],
+          "predicted": [
+            "不易脱妆",
+            "易转移"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B08",
+          "text": "这款刚涂完很有光泽，下午却有点发灰发暗。",
+          "expected": [
+            "不发灰/发灰",
+            "暗沉",
+            "自然光泽"
+          ],
+          "predicted": [
+            "不发灰",
+            "暗沉",
+            "自然光泽"
+          ],
+          "missing": [
+            "不发灰/发灰"
+          ],
+          "extra": [
+            "不发灰"
+          ],
+          "error": null
+        },
+        {
+          "id": "B09",
+          "text": "号称防汗，但我跑完步以后鼻翼和嘴角已经花了。",
+          "expected": [
+            "斑驳",
+            "防汗"
+          ],
+          "predicted": [
+            "斑驳",
+            "防汗"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B10",
+          "text": "不是完全不沾口罩，但比我之前那瓶好很多。",
+          "expected": [
+            "不易蹭妆"
+          ],
+          "predicted": [
+            "不易蹭妆"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B11",
+          "text": "妈生皮感很强，脸看起来还是自己的皮肤，只是更均匀。",
+          "expected": [
+            "低妆感",
+            "均匀肤色"
+          ],
+          "predicted": [
+            "低妆感"
+          ],
+          "missing": [
+            "均匀肤色"
+          ],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B12",
+          "text": "一层只能盖住浅痘印，想遮黑眼圈还是得上遮瑕膏。",
+          "expected": [
+            "低遮瑕",
+            "遮痘印",
+            "遮黑眼圈"
+          ],
+          "predicted": [
+            "低遮瑕",
+            "遮黑眼圈"
+          ],
+          "missing": [
+            "遮痘印"
+          ],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B13",
+          "text": "油皮亲妈我不敢说，我下午两点已经开始泛油了。",
+          "expected": [
+            "容易泛油",
+            "油皮适用"
+          ],
+          "predicted": [
+            "容易泛油",
+            "控油",
+            "油皮适用"
+          ],
+          "missing": [],
+          "extra": [
+            "控油"
+          ],
+          "error": null
+        },
+        {
+          "id": "B14",
+          "text": "从早九到晚九都没大面积斑驳，但法令纹那里有积线。",
+          "expected": [
+            "12小时持妆",
+            "不斑驳",
+            "卡纹"
+          ],
+          "predicted": [
+            "12小时持妆",
+            "不斑驳",
+            "卡纹"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B15",
+          "text": "颜色刚上脸挺自然，半小时后会微微变黄，但没有严重氧化。",
+          "expected": [
+            "氧化"
+          ],
+          "predicted": [
+            "氧化"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B16",
+          "text": "水冲之后基本还在，不过纸巾一擦就会掉不少。",
+          "expected": [
+            "耐摩擦",
+            "防水"
+          ],
+          "predicted": [
+            "耐摩擦",
+            "防水"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B17",
+          "text": "妆效偏柔雾，不是完全哑光，近看毛孔也没有被放大。",
+          "expected": [
+            "不显纹理",
+            "哑光",
+            "柔雾"
+          ],
+          "predicted": [
+            "不显纹理",
+            "哑光",
+            "柔雾"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B18",
+          "text": "宣传说24小时持妆我觉得太夸张，我实际戴了八小时整体还算完整。",
+          "expected": [
+            "24小时持妆",
+            "持妆"
+          ],
+          "predicted": [
+            "24小时持妆",
+            "持妆"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B19",
+          "text": "敏感肌的我上脸没刺痛，但是这只能代表我个人体验。",
+          "expected": [
+            "低刺激/温和",
+            "敏感肌适用"
+          ],
+          "predicted": [
+            "低刺激/温和",
+            "敏感肌适用"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B20",
+          "text": "粉底液很润，鼻翼和嘴角今天都没有起皮。",
+          "expected": [
+            "不起皮",
+            "保湿"
+          ],
+          "predicted": [
+            "不起皮",
+            "保湿"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B21",
+          "text": "遮泛红能力不错，但雀斑基本遮不住。",
+          "expected": [
+            "遮斑",
+            "遮泛红"
+          ],
+          "predicted": [
+            "遮斑",
+            "遮泛红"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B22",
+          "text": "今天出门淋了点雨，底妆没花，防水表现比我预想好。",
+          "expected": [
+            "不斑驳",
+            "防水"
+          ],
+          "predicted": [
+            "防水"
+          ],
+          "missing": [
+            "不斑驳"
+          ],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B23",
+          "text": "一到下午鼻翼就开始脱，脸颊倒是一直很服帖。",
+          "expected": [
+            "易脱妆",
+            "服帖"
+          ],
+          "predicted": [
+            "易脱妆",
+            "服帖"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B24",
+          "text": "上脸瞬间白了一个度，但不是那种很假的死白。",
+          "expected": [
+            "不假白",
+            "即时提亮"
+          ],
+          "predicted": [
+            "即时提亮"
+          ],
+          "missing": [
+            "不假白"
+          ],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B25",
+          "text": "这瓶号称轻薄，但我觉得粉感挺重，有点面具感。",
+          "expected": [
+            "厚重/面具感",
+            "轻薄"
+          ],
+          "predicted": [
+            "卡粉/浮粉",
+            "厚重/面具感",
+            "轻薄"
+          ],
+          "missing": [],
+          "extra": [
+            "卡粉/浮粉"
+          ],
+          "error": null
+        },
+        {
+          "id": "B26",
+          "text": "熬夜到凌晨妆面居然还在线，不过T区油光已经很明显。",
+          "expected": [
+            "容易泛油",
+            "持妆"
+          ],
+          "predicted": [
+            "容易泛油",
+            "持妆"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B27",
+          "text": "干皮闭眼冲这种话我觉得过头了，我鼻翼还是有轻微起皮。",
+          "expected": [
+            "干皮适用",
+            "起皮"
+          ],
+          "predicted": [
+            "干皮适用",
+            "起皮"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B28",
+          "text": "口罩边缘蹭下来不少粉底，但整体遮瑕还在。",
+          "expected": [
+            "易转移",
+            "遮瑕"
+          ],
+          "predicted": [
+            "易转移",
+            "遮瑕"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B29",
+          "text": "刚上完妆毛孔像隐形了一样，两个小时后纹理又变明显了。",
+          "expected": [
+            "放大纹理",
+            "毛孔修饰"
+          ],
+          "predicted": [
+            "放大纹理",
+            "毛孔修饰"
+          ],
+          "missing": [],
+          "extra": [],
+          "error": null
+        },
+        {
+          "id": "B30",
+          "text": "这款不算控油挂，但也没有很油，属于比较自然的光泽妆效。",
+          "expected": [
+            "控油",
+            "自然光泽"
+          ],
+          "predicted": [
+            "容易泛油",
+            "控油",
+            "自然光泽"
+          ],
+          "missing": [],
+          "extra": [
+            "容易泛油"
+          ],
+          "error": null
+        }
+      ]
+    }
+  }
+}

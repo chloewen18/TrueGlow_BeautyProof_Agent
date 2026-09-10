@@ -60,11 +60,12 @@ class EvidenceFuser:
     ) -> EvidenceLayer:
         layer = EvidenceLayer(content_id=content_id, user_context=user_context or {})
         if creator_submission:
+            real_source = tool_results.get("source_trace", {}).get("file_info", {}).get("mode") == "real_exif"
             layer.creator_submission = CreatorSubmission(
-                status="done",
+                status="received" if real_source else "done",
                 materials=creator_submission,
                 review_result="补证材料已纳入复核",
-                credential={"scope": "来源与拍摄条件", "date": "2026-09-02"},
+                credential=None if real_source else {"scope": "来源与拍摄条件", "date": "2026-09-02"},
             )
         notes: list[str] = []
 
@@ -81,6 +82,8 @@ class EvidenceFuser:
                 items = [_ev("src-001", "source_trace", "C2PA 存在且验证通过，来源证据可靠", {"c2pa_status": "valid"}, EvidenceReliability.HIGH, "C2PA / Content Credentials")]
             elif c2pa == "invalid":
                 items = [_ev("src-001", "source_trace", "C2PA 签名验证失败，来源证据不可信", {"c2pa_status": "invalid"}, EvidenceReliability.HIGH, "C2PA / Content Credentials")]
+            elif c2pa == "error":
+                items = [_ev("src-001", "source_trace", "C2PA 尚未验证，来源状态未知", {"c2pa_status": "error"}, EvidenceReliability.LOW, "C2PA / Content Credentials")]
             else:
                 items = [_ev("src-001", "source_trace", "C2PA 不存在，来源状态 Unknown（不等于伪造）", {"c2pa_status": "absent"}, EvidenceReliability.MEDIUM, "C2PA / Content Credentials", "元数据缺失可能受平台压缩/转码影响")]
             for i, a in enumerate(e.metadata_anomalies):

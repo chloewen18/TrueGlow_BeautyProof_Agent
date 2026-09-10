@@ -1,0 +1,49 @@
+{
+  "request_id": "req_case_b_001",
+  "content_id": "content_case_b",
+  "report": {
+    "trust_card": {
+      "verdict": "medium_risk",
+      "verdict_label": "部分可疑",
+      "main_findings": [
+        "After 画面的皮肤纹理明显减少，存在较强平滑处理迹象。",
+        "Before 与 After 的曝光条件存在明显差异。",
+        "“12 小时不卡粉”暂未找到充分的画面证据支持。"
+      ],
+      "sections": [
+        {
+          "title": "这会怎样影响你的判断？",
+          "content": [
+            "磨皮可能隐藏卡粉、起皮和毛孔堆积。",
+            "曝光变化可能让遮瑕和提亮效果看起来更明显。",
+            "长时持妆主张需要时间线素材或补充证据支持。"
+          ]
+        },
+        {
+          "title": "哪些信息仍可参考？",
+          "content": [
+            "产品上妆步骤和用量仍具有一定参考价值。",
+            "妆效风格可以参考，但遮瑕、服帖度和持妆表现需要谨慎判断。"
+          ]
+        }
+      ],
+      "creator_actions": [
+        "补充原始视频或原相机照片。",
+        "说明滤镜、美颜、补光和曝光参数。",
+        "提供相同光线条件下的 Before / After / 带妆后复测素材。"
+      ],
+      "advanced": {
+        "schema_version": "0.1.0",
+        "confidence": 0.76,
+        "tool_results": {
+          "skin_smoothing": "high",
+          "texture_loss": "medium",
+          "exposure_consistency": "low",
+          "white_balance_consistency": "low",
+          "claim_support": "weak",
+          "reliability": "medium"
+        }
+      }
+    }
+  }
+}

@@ -1,130 +1,84 @@
-# TrueGlow 映真 · Main Agent 骨架
+# TrueGlow 映真 · BeautyProof Agent
 
-面向美妆内容生态的 AI 内容核验与信任辅助系统。
+面向美妆内容生态的 AI 内容核验与信任辅助系统（L'Oréal 黑客松赛道 2）。
+一个 Main Agent + 五个专业 Tool + 结构化证据层：`plan → execute → fuse → grade → report`。
 
-Main Agent 与系统架构 的交付：
+> 本仓库已整合 5 位成员的交付物，按成员用文件夹区分（见下表）。
 
-| 交付物 | 位置 | 状态 |
-|---|---|---|
-| 接口规范文档（P0 冻结物，目标 09-06） | `docs/API_SPEC.md` | ✅ v1.0 |
-| 最终报告 JSON Schema（Markdown + 机器可读） | `docs/REPORT_SCHEMA.md` + `schemas/*.json` | ✅ |
-| Main Agent 可运行骨架 | `backend/app/` | ✅ 已跑通 |
-| Demo（比赛 3 案例闭环） | `backend/demo/` | ✅ |
+## 一、成员内容索引（文件夹 → 归属 → 状态）
 
-## 架构
+| 路径 | 负责成员 | 内容 | 真实 / 模拟 |
+|---|---|---|---|
+| 仓库根 `backend/` `app.py` `api/` `schemas/` `examples/` | **成员 1**（Main Agent 与架构） | 5 Tool 接口、Agent 编排、证据融合、风险分级、报告 schema、Streamlit 前端 | 框架真实可跑 |
+| `backend/app/tools/source_trace.py` `backend/app/integrations/metadata_parser.py` | **成员 2**（来源溯源） | EXIF/XMP/C2PA 解析骨架 + TruFor 接入约定 | EXIF 真实；C2PA 三态已规整；TruFor 待接官方权重 |
+| `member2_forensics/` | **成员 2** | 独立版 `metadata_parser.py` + TruFor 官方使用参考 + FFHQR 许可说明 | 参考文档 |
+| `backend/app/tools/before_after.py` + 数据集 | **成员 3**（底妆修饰与妆效归因） | Before/After 一致性接口；100 对 FFHQ-FHQR 数据集 | 接口已修（未计算→Unknown）；算法待做实 |
+| `member3_dataset/` | **成员 3** | 100 对「原图 vs 修饰图」配对数据集（含 SHA256、许可、loader、划分） | 数据真实（248MB） |
+| `backend/app/integrations/member4/` | **成员 4**（文本/评论/功效） | OCR（PP-OCRv5）、宣称提取、全文管线、功效证据 | 真实实现，非 mock |
+| `member4_text/` | **成员 4** | Mini 功效证据 JSON/XLSX、OCR 脚本 | 真实 |
+| `app.py` `api/` `assets/` `styles/` `tests/` | **成员 5**（前端/数据集/评测） | Streamlit 单页、API 路由、评测页 | 前端真实；评测数字已治理 |
+| `docs/progress/` | 全员 | 分工与行动清单、群同步消息、项目白话详解 | 进度文档 |
 
-```
-一个 Main Agent + 五个专业 Tool + 一个结构化证据层
-plan（任务拆解）→ execute（调用 Tool）→ fuse（证据融合）→ grade（风险分级）→ report（报告生成）
-```
+## 二、已实现 vs 待完成
 
-- **5 个 Tool**：`page_understanding` / `source_trace` / `image_forensics` / `before_after` / `text_integrity`
-  （当前为 Mock 实现，成员 2/3/4 交付真实模型后按同一契约替换，见 `app/tools/__init__.py`）
-- **统一信封**：所有端点 `POST /api/v1/tools/{name}`，请求/响应 schema 见 `docs/API_SPEC.md` §4
-- **风险分级**：4 级结论（已验证/部分可疑/证据不足/高风险误导）+ 3 个风险维度 + 决策路径可追溯
-- **报告**：`full_report`（证据链）+ `trust_card`（Beauty Trust Card）
-- **LLM 可插拔**：默认规则模板（离线可用），配置 DeepSeek 后自动升级解释质量
-- **日志追踪**：每个 `request_id` 一条 JSONL（`data/logs/`），证据落盘（`data/evidence/`）
+**已实现（真实）**
+- 成员 1：Agent 全链路 + 5 Tool JSON 接口 + 报告 schema，可运行骨架。
+- 成员 4：OCR 真实跑通 + 宣称词典 + 5 产品功效 JSON（测试集 20/20、盲测 20/30，F1 0.906）。
+- 成员 3：100 对配对数据集（SHA256 校验通过、许可登记完整）。
+- 成员 5：前端 5 分区 + 评测页（已去除手写假数字）。
 
-## 快速开始
+**本轮已修复的正确性缺陷**
+- `before_after`：未计算时归因强度/维度一律 `Unknown`（原先默认 `Strong`，等于没算就归功产品）。
+- `C2paInfo`：状态扩为 6 态（`valid/invalid/absent/not_verified/unsupported_format/error`）。
+- 评测数字：`benchmark_summary.json` 中手写占位（F1=0.78 等）已清空，改为「目标值/待测」口径。
+
+**仍为模拟 / 待做实（演示前必须补）**
+- `image_forensics`（图像鉴伪）：mock → 需成员 2 接 TruFor 官方权重。
+- `before_after` 算法：mock → 需成员 3 用经典 CV 做实。
+- `text_integrity` AI 文本检测：仅作提示，不用于定罪。
+- 志愿者真实采集数据：测试集仅 10 对，需成员 5 启动采集。
+
+## 三、快速开始
 
 ```bash
 cd backend
-python3 -m venv .venv && .venv/bin/pip install -r ../requirements.txt   # 首次
-.venv/bin/uvicorn app.main:app --reload --port 8000                     # 启动
+python3 -m venv .venv && .venv/bin/pip install -r ../requirements.txt
+.venv/bin/uvicorn app.main:app --reload --port 8000
+# 打开 http://127.0.0.1:8000/docs
 ```
 
-打开 http://127.0.0.1:8000/docs 查看 OpenAPI 交互文档。
+跑比赛 Demo（3 案例闭环）：`../.venv/bin/python -m demo.run_demo`
+前端：`streamlit run app.py`（需安装 `requirements-ocr.txt` 中的 OCR 依赖）
 
-### 跑比赛 Demo（3 案例闭环）
+## 四、成员 2 接 TruFor 的关键护栏
 
-```bash
-cd backend
-../.venv/bin/python -m demo.run_demo
-```
+TruFor 官方 `score` **越高越可疑**；本系统 `integrity_score` **越高越完整**。
+接入时必须：`integrity_score = 1 - trufor_score`。**不转换会把整条判断逻辑判反。**
+权重与运行命令见 `member2_forensics/TRUFOR_REFERENCE.md`。
 
-- **案例 A**：真实但缺少来源信息 → `证据不足`（不因元数据缺失误判伪造）
-- **案例 B**：After 图磨皮 + 曝光变化 + 宣称"原相机零滤镜" → `高风险误导`
-- **案例 C**：创作者补交原视频 → 复核后结论更新为 `部分可疑` + 可信妆效凭证
+## 五、已知问题与注意事项（审计结论）
 
-### 一键核验
-curl -X POST http://127.0.0.1:8000/api/v1/verify \
-  -H 'Content-Type: application/json' -d @payload.json
+| 问题 | 处置 |
+|---|---|
+| Groupmate `TruFor_交付物` 为模拟、且分数方向/误报率错误 | **未纳入仓库**；改用官方权重（见 `member2_forensics/`） |
+| Groupmate `full_pipeline_v1.py` 缺 `claim_extractor_mock_v2_1`，跑不起来 | **未纳入仓库**；功能已由 `backend/app/integrations/member4/` 取代 |
+| `member3_dataset` 中 `ground_truth_strength` 全为占位 `medium` | 已注明：**不可当真值**训练/验证强度分类器 |
+| FFHQR 为非商业许可（CC BY-NC-SA 4.0） | 赛事已确认接受；答辩需声明来源与许可 |
+| Mirror-of-Truth 为另一组的项目 | 本仓库未引入；如需借用另行授权 |
 
-# 单个 Tool（各成员自测）
-curl -X POST http://127.0.0.1:8000/api/v1/tools/source_trace \
-  -H 'Content-Type: application/json' \
-  -d '{"tool":"source_trace","request_id":"t1","payload":{"files":[{"kind":"image","ref":"a.jpg"}]}}'
-
-# 创作者补证复核
-curl -X POST http://127.0.0.1:8000/api/v1/creators/review \
-  -H 'Content-Type: application/json' -d @review.json
-
-# 追踪日志 / 证据
-curl http://127.0.0.1:8000/api/v1/logs/{request_id}
-curl http://127.0.0.1:8000/api/v1/evidence/{request_id}
-```
-
-### 素材上传（成员 5 对接用，推荐路径）
-
-```bash
-# 1) 上传图片/视频 → 拿 media_ref / media_url
-curl -F "files=@before.jpg" -F "files=@after.jpg" http://127.0.0.1:8000/api/v1/upload
-# 2) 把 media_ref 填进 /verify 的 content.media[].ref（见 docs/API_SPEC.md §6.4）
-# 3) 预览： curl http://127.0.0.1:8000/api/v1/uploads/<path>
-```
-
-> 也可在 Demo 阶段直接 `multipart/form-data` 调 `/verify`（表单字段 `payload` + `files`），后端自动注入 `media_ref`。依赖 `python-multipart`（已在 `requirements.txt`）。
-
-### 前端 Mock 接入示例 JSON
-
-仓库已生成三份**完整、无省略**的冻结响应，可直接接进 `mock_api.py`（切换真实 API 时 UI 无需重写）：
-
-| 文件 | 场景 | 结论 |
-|---|---|---|
-| `examples/case_a_response.json` | 真实但缺来源 | `insufficient_evidence` |
-| `examples/case_b_response.json` | 磨皮 + 曝光变化 + "原相机零滤镜" | `high_risk_misleading` |
-| `examples/case_c_review_response.json` | 创作者补证复核 | `high_risk_misleading` → `partially_suspicious` + 凭证 |
-
-由 `backend/demo/generate_examples.py` 经真实端点生成，结构与联调完全一致。
-
-## 启用 DeepSeek 解释（可选）
-
-```bash
-cp ../.env.example ../.env   # 修改：
-# LLM_PROVIDER=deepseek
-# DEEPSEEK_API_KEY=sk-xxx
-```
-
-不配置则走规则模板，完全离线可用。
-
-## 目录结构
+## 六、目录结构（节选）
 
 ```
 beautyproof-agent/
-├── docs/
-│   ├── API_SPEC.md          # 接口规范（P0 冻结物）
-│   └── REPORT_SCHEMA.md     # 最终报告 JSON schema 说明
-├── schemas/                 # 机器可读 JSON Schema（report/evidence/trust_card）
-├── examples/               # 三份完整冻结响应 JSON（前端 Mock 接入用）
-├── backend/
-│   ├── app/
-│   │   ├── main.py          # FastAPI 入口
-│   │   ├── media.py         # 素材上传 / 回流（/api/v1/upload、/api/v1/uploads）
-│   │   ├── config.py        # 环境配置
-│   │   ├── schemas/         # Pydantic 模型（信封/Tool/证据/报告）
-│   │   ├── tools/           # 5 个 Tool（Mock 实现 + HTTP 端点 + 注册表）
-│   │   ├── agent/           # planner / orchestrator / fuser / grader / reporter
-│   │   ├── llm/             # LLM Provider（mock + deepseek）
-│   │   ├── logging/         # JSONL 追踪日志
-│   │   └── storage/         # 证据层 JSON 落盘
-│   └── demo/                # 比赛 3 案例闭环 Demo（含 generate_examples.py）
-└── requirements.txt / .env.example
+├── backend/                 # 成员1 核心 + 成员2/3/4 集成
+│   ├── app/{tools,agent,integrations/llm,schemas,storage,logging}
+│   └── demo/                # 3 案例 Demo
+├── api/  app.py  assets/  styles/  tests/   # 成员5 前端与路由
+├── schemas/  examples/  docs/               # 接口契约 / 示例 / 文档
+├── member2_forensics/       # 成员2 独立交付 + TruFor 参考
+├── member3_dataset/         # 成员3 100 对数据集（248MB）
+├── member4_text/            # 成员4 功效证据与 OCR 脚本
+└── docs/progress/           # 分工与行动清单等进度文档
 ```
 
-## 成员对接快速索引
-
-| 成员 | 对接点 |
-|---|---|
-| 成员 2/3/4 | 替换 `app/tools/*.py` 中对应 mock handler（契约见 `docs/API_SPEC.md` §5），可先用 `curl POST /api/v1/tools/{name}` 自测 |
-| 成员 5 | `POST /api/v1/verify` + `POST /api/v1/creators/review`；素材上传见 `docs/API_SPEC.md §6.4`（推荐先 `/upload` 拿 `media_ref`）；渲染 `report.trust_card`（必填字段见 §6.5）；高级视图 `trust_card.advanced`（固定英文键见 §6.5）；Mock 阶段直接用 `examples/*.json` 三份完整 JSON |
+> 密钥/权重/运行时数据不入库：`.venv/`、`backend/data/`、`data/models/`、`.env` 已在 `.gitignore` 排除。

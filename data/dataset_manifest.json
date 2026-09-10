@@ -1,0 +1,73 @@
+{
+  "dataset_version": "beautyproof-mvp-v0.1",
+  "owner": "member_5_frontend_dataset_eval",
+  "split_policy": "person_identity_split",
+  "storage_layout": [
+    {
+      "path": "data/raw/original",
+      "purpose": "Authorized original camera images and videos."
+    },
+    {
+      "path": "data/raw/edited",
+      "purpose": "Retouched, exposure-adjusted, compressed, or locally edited variants."
+    },
+    {
+      "path": "data/processed/cases",
+      "purpose": "Demo-ready cases with normalized metadata and thumbnails."
+    },
+    {
+      "path": "data/annotations",
+      "purpose": "Label sheets, reviewer notes, split files, and disagreement logs."
+    }
+  ],
+  "required_labels": [
+    "content_id",
+    "person_id",
+    "split",
+    "scenario",
+    "skin_type",
+    "claim_type",
+    "edit_type",
+    "edit_strength",
+    "affected_region",
+    "before_after_consistency",
+    "lighting_condition",
+    "platform_compression",
+    "creator_evidence_status",
+    "human_review_label"
+  ],
+  "negative_samples": [
+    "soft_natural_light",
+    "phone_noise_reduction",
+    "hdr_processing",
+    "shallow_depth_of_field",
+    "platform_compression",
+    "naturally_smooth_skin",
+    "different_focal_length",
+    "declared_reasonable_adjustment"
+  ],
+  "splits": [
+    {
+      "name": "train",
+      "target_ratio": 0.7,
+      "rule": "No person_id overlap with validation or test."
+    },
+    {
+      "name": "validation",
+      "target_ratio": 0.15,
+      "rule": "Used for threshold tuning only."
+    },
+    {
+      "name": "test",
+      "target_ratio": 0.15,
+      "rule": "Held out for final benchmark and demo reporting."
+    }
+  ],
+  "version_checklist": [
+    "Consent captured before storing original media.",
+    "Two independent annotators reviewed each labeled sample.",
+    "Disagreements routed to a third reviewer.",
+    "Split files regenerated after adding new people.",
+    "Benchmark summary refreshed after each version bump."
+  ]
+}

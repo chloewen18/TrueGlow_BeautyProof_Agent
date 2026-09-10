@@ -1,0 +1,608 @@
+/* TrueGlow 映真 — painterly dark atelier theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+  --bp-ink: #12151c;
+  --bp-ink-soft: #1a1f2c;
+  --bp-slate: #243044;
+  --bp-mist: #e8e4dc;
+  --bp-mist-dim: #a8a296;
+  --bp-ochre: #c4a574;
+  --bp-ochre-soft: rgba(196, 165, 116, 0.18);
+  --bp-line: rgba(232, 228, 220, 0.12);
+  --bp-glass: rgba(28, 34, 48, 0.55);
+  --bp-radius: 14px;
+  --bp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html, body, [data-testid="stAppViewContainer"], .stApp {
+  background: transparent !important;
+  color: var(--bp-mist) !important;
+  font-family: "Outfit", "Noto Sans SC", sans-serif !important;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* Layered painterly backdrop */
+[data-testid="stAppViewContainer"] {
+  background:
+    radial-gradient(ellipse 90% 70% at 88% 8%, rgba(196, 165, 116, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 12% 92%, rgba(70, 90, 110, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 40%, rgba(36, 48, 68, 0.45) 0%, transparent 70%),
+    linear-gradient(165deg, #0e1118 0%, #161b26 42%, #1a2230 72%, #12151c 100%) !important;
+  background-attachment: fixed !important;
+}
+
+[data-testid="stAppViewContainer"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+[data-testid="stHeader"] {
+  background: transparent !important;
+}
+
+[data-testid="stToolbar"] {
+  right: 1rem;
+  top: 0.5rem;
+}
+
+[data-testid="stSidebar"] {
+  background: rgba(18, 21, 28, 0.92) !important;
+  border-right: 1px solid var(--bp-line) !important;
+}
+
+.block-container {
+  padding-top: 2.2rem !important;
+  padding-bottom: 4rem !important;
+  max-width: 1120px !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
+h1, h2, h3, h4, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif !important;
+  font-weight: 500 !important;
+  color: var(--bp-mist) !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.25 !important;
+}
+
+h1 {
+  font-size: 2.75rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.08em !important;
+}
+
+h2 {
+  font-size: 1.65rem !important;
+  margin-top: 0.4rem !important;
+}
+
+h3 {
+  font-size: 1.25rem !important;
+  color: var(--bp-ochre) !important;
+  font-weight: 500 !important;
+}
+
+p, .stMarkdown p, label, .stCaption, li {
+  font-family: "Outfit", "Noto Sans SC", sans-serif !important;
+}
+
+.stCaption, [data-testid="stCaptionContainer"] {
+  color: var(--bp-mist-dim) !important;
+  letter-spacing: 0.06em !important;
+  font-weight: 300 !important;
+}
+
+/* Hero */
+.bp-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: end;
+  min-height: 42vh;
+  margin: 0 0 2.75rem 0;
+  padding: 0 0 2.5rem 0;
+  border-bottom: 1px solid var(--bp-line);
+  overflow: hidden;
+  animation: bp-fade-up 0.9s var(--bp-ease) both;
+}
+
+.bp-hero-copy {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 0.5rem;
+}
+
+.bp-brand {
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.1rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--bp-mist);
+  margin: 0 0 0.85rem 0;
+  line-height: 1.1;
+}
+
+.bp-brand em {
+  font-style: italic;
+  color: var(--bp-ochre);
+  letter-spacing: 0.08em;
+}
+
+.bp-tagline {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: var(--bp-mist-dim);
+  margin: 0;
+  max-width: 28rem;
+  line-height: 1.7;
+}
+
+.bp-hero-visual {
+  position: relative;
+  height: min(48vh, 380px);
+  border-radius: 2px;
+  overflow: hidden;
+  animation: bp-soft-reveal 1.4s var(--bp-ease) 0.15s both;
+}
+
+.bp-hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 40%;
+  display: block;
+  filter: saturate(0.85) contrast(1.05) brightness(0.92);
+  transition: transform 1.8s var(--bp-ease), filter 0.8s ease;
+}
+
+.bp-hero-visual:hover img {
+  transform: scale(1.03);
+  filter: saturate(0.95) contrast(1.08) brightness(0.96);
+}
+
+.bp-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(18, 21, 28, 0.55) 0%,
+    rgba(18, 21, 28, 0.08) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.bp-hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--bp-line);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Demo steps — quiet process strip */
+.bp-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
+  margin: 0 0 2.25rem 0;
+  animation: bp-fade-up 0.9s var(--bp-ease) 0.2s both;
+}
+
+.bp-step {
+  padding: 1rem 0.85rem 1.1rem;
+  border-top: 1px solid var(--bp-line);
+  transition: border-color 0.45s var(--bp-ease), background 0.45s ease;
+}
+
+.bp-step:hover {
+  border-top-color: var(--bp-ochre);
+  background: rgba(196, 165, 116, 0.04);
+}
+
+.bp-step-index {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
+  color: var(--bp-ochre);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.45rem;
+}
+
+.bp-step-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--bp-mist);
+  line-height: 1.45;
+  margin-bottom: 0.35rem;
+}
+
+.bp-step-status {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bp-mist-dim);
+}
+
+/* Section label */
+.bp-section-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bp-ochre);
+  margin: 0 0 0.6rem 0;
+}
+
+.bp-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bp-line) 20%, var(--bp-line) 80%, transparent);
+  margin: 1.75rem 0;
+  border: none;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+  gap: 0.25rem;
+  background: transparent !important;
+  border-bottom: 1px solid var(--bp-line) !important;
+  padding-bottom: 0 !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+  background: transparent !important;
+  color: var(--bp-mist-dim) !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.82rem !important;
+  padding: 0.85rem 1.25rem !important;
+  border: none !important;
+  border-radius: 0 !important;
+  transition: color 0.35s ease !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+  color: var(--bp-mist) !important;
+}
+
+.stTabs [aria-selected="true"] {
+  color: var(--bp-mist) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--bp-ochre) !important;
+}
+
+.stTabs [data-baseweb="tab-highlight"],
+.stTabs [data-baseweb="tab-border"] {
+  display: none !important;
+}
+
+.stTabs [data-baseweb="tab-panel"] {
+  padding-top: 1.75rem !important;
+}
+
+/* Metrics as quiet figures */
+[data-testid="stMetric"] {
+  background: var(--bp-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--bp-line);
+  border-radius: var(--bp-radius);
+  padding: 1.1rem 1.2rem !important;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+
+[data-testid="stMetric"]:hover {
+  border-color: rgba(196, 165, 116, 0.35);
+  background: rgba(28, 34, 48, 0.72);
+}
+
+[data-testid="stMetricLabel"] {
+  color: var(--bp-mist-dim) !important;
+  letter-spacing: 0.08em !important;
+  font-size: 0.75rem !important;
+}
+
+[data-testid="stMetricValue"] {
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif !important;
+  font-weight: 500 !important;
+  color: var(--bp-mist) !important;
+  font-size: 1.55rem !important;
+}
+
+[data-testid="stMetricDelta"] {
+  color: var(--bp-ochre) !important;
+}
+
+/* Inputs */
+.stTextInput input,
+.stTextArea textarea,
+.stSelectbox [data-baseweb="select"] > div,
+[data-baseweb="input"] {
+  background: rgba(18, 21, 28, 0.65) !important;
+  border: 1px solid var(--bp-line) !important;
+  border-radius: 10px !important;
+  color: var(--bp-mist) !important;
+  font-family: "Outfit", sans-serif !important;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+.stTextInput input:focus,
+.stTextArea textarea:focus,
+.stSelectbox [data-baseweb="select"] > div:focus-within {
+  border-color: rgba(196, 165, 116, 0.55) !important;
+  box-shadow: 0 0 0 1px rgba(196, 165, 116, 0.2) !important;
+}
+
+.stTextInput label,
+.stTextArea label,
+.stSelectbox label,
+.stFileUploader label {
+  font-family: "Outfit", sans-serif !important;
+  letter-spacing: 0.06em !important;
+  color: var(--bp-mist-dim) !important;
+  font-size: 0.82rem !important;
+}
+
+[data-testid="stFileUploader"] {
+  background: rgba(18, 21, 28, 0.4);
+  border: 1px dashed rgba(232, 228, 220, 0.18);
+  border-radius: var(--bp-radius);
+  padding: 0.75rem;
+  transition: border-color 0.4s ease;
+}
+
+[data-testid="stFileUploader"]:hover {
+  border-color: rgba(196, 165, 116, 0.4);
+}
+
+/*
+  Streamlit file-uploader buttons render the label twice (button text + inner node).
+  Hide every internal layer and paint a single label via ::after.
+*/
+[data-testid="stFileUploader"] button,
+[data-testid="stFileUploaderDropzone"] button,
+[data-testid="stFileUploader"] [data-testid="baseButton-secondary"],
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] {
+  position: relative !important;
+  min-height: 2.4rem !important;
+  min-width: 5.5rem !important;
+  padding: 0.55rem 1.15rem !important;
+  background: rgba(18, 21, 28, 0.65) !important;
+  border: 1px solid var(--bp-line) !important;
+  border-radius: 10px !important;
+  color: transparent !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  overflow: hidden !important;
+}
+
+[data-testid="stFileUploader"] button *,
+[data-testid="stFileUploaderDropzone"] button *,
+[data-testid="stFileUploader"] [data-testid="baseButton-secondary"] *,
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] * {
+  visibility: hidden !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  opacity: 0 !important;
+  text-shadow: none !important;
+}
+
+[data-testid="stFileUploader"] button::after,
+[data-testid="stFileUploaderDropzone"] button::after,
+[data-testid="stFileUploader"] [data-testid="baseButton-secondary"]::after,
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"]::after {
+  content: "上传" !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--bp-mist) !important;
+  font-family: "Outfit", "Noto Sans SC", sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+[data-testid="stFileUploader"] button:hover,
+[data-testid="stFileUploaderDropzone"] button:hover,
+[data-testid="stFileUploader"] [data-testid="baseButton-secondary"]:hover,
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"]:hover {
+  border-color: rgba(196, 165, 116, 0.55) !important;
+  background: rgba(196, 165, 116, 0.1) !important;
+  transform: none !important;
+}
+
+[data-testid="stFileUploader"] button:hover::after,
+[data-testid="stFileUploaderDropzone"] button:hover::after,
+[data-testid="stFileUploader"] [data-testid="baseButton-secondary"]:hover::after,
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"]:hover::after {
+  color: var(--bp-ochre) !important;
+}
+
+/* Buttons — only main action buttons, not file-uploader */
+.stButton > button {
+  background: transparent !important;
+  color: var(--bp-mist) !important;
+  border: 1px solid rgba(196, 165, 116, 0.55) !important;
+  border-radius: 2px !important;
+  padding: 0.65rem 1.85rem !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  font-size: 0.72rem !important;
+  transition: background 0.4s var(--bp-ease), color 0.4s ease, border-color 0.4s ease, transform 0.35s var(--bp-ease) !important;
+}
+
+.stButton > button p,
+.stButton > button span {
+  color: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+}
+
+.stButton > button:hover {
+  background: var(--bp-ochre) !important;
+  color: var(--bp-ink) !important;
+  border-color: var(--bp-ochre) !important;
+  transform: translateY(-1px);
+}
+
+.stButton > button[kind="primary"],
+.stButton > button[data-testid="baseButton-primary"] {
+  background: var(--bp-ochre-soft) !important;
+  border-color: var(--bp-ochre) !important;
+  color: var(--bp-mist) !important;
+}
+
+.stButton > button[kind="primary"]:hover,
+.stButton > button[data-testid="baseButton-primary"]:hover {
+  background: var(--bp-ochre) !important;
+  color: var(--bp-ink) !important;
+}
+
+/* Dataframes & expanders */
+[data-testid="stDataFrame"],
+[data-testid="stExpander"] {
+  border: 1px solid var(--bp-line) !important;
+  border-radius: var(--bp-radius) !important;
+  background: rgba(18, 21, 28, 0.45) !important;
+  overflow: hidden;
+}
+
+[data-testid="stExpander"] details summary {
+  color: var(--bp-mist) !important;
+  letter-spacing: 0.04em;
+}
+
+/* Alerts */
+[data-testid="stAlert"] {
+  border-radius: var(--bp-radius) !important;
+  border: 1px solid var(--bp-line) !important;
+  background: rgba(28, 34, 48, 0.7) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Progress */
+.stProgress > div > div {
+  background: linear-gradient(90deg, #8a734f, var(--bp-ochre)) !important;
+}
+
+/* Trust card panel */
+.bp-trust-panel {
+  margin-top: 1.5rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--bp-line);
+  border-radius: var(--bp-radius);
+  background: rgba(28, 34, 48, 0.42);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: bp-fade-up 0.7s var(--bp-ease) both;
+}
+
+.bp-verdict {
+  display: inline-block;
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--bp-ochre);
+  margin: 0.25rem 0 1rem;
+}
+
+/* Footer whisper */
+.bp-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--bp-line);
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(168, 162, 150, 0.55);
+}
+
+@keyframes bp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bp-soft-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .bp-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 1.75rem;
+  }
+
+  .bp-hero-visual {
+    height: 240px;
+    order: -1;
+  }
+
+  .bp-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1, .bp-brand {
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 520px) {
+  .bp-steps {
+    grid-template-columns: 1fr;
+  }
+}

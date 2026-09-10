@@ -1,0 +1,4 @@
+-r requirements.txt
+paddlepaddle>=3.0,<4
+paddleocr>=3.0,<4
+opencv-contrib-python==4.10.0.84

@@ -1,0 +1,46 @@
+{
+  "request_id": "req_case_a_001",
+  "content_id": "content_case_a",
+  "report": {
+    "trust_card": {
+      "verdict": "low_confidence",
+      "verdict_label": "证据不足",
+      "main_findings": [
+        "图片画质和拍摄角度不足以支持对底妆持妆效果的明确判断。",
+        "文案中的遮瑕和持妆描述缺少可核验的时间线或对照素材。",
+        "暂未发现明显误导证据，但当前材料无法形成高置信结论。"
+      ],
+      "sections": [
+        {
+          "title": "这会怎样影响你的判断？",
+          "content": [
+            "你可以参考产品色号和妆感描述，但不宜只依据这条内容判断持妆能力。",
+            "缺少相同光线、相同角度的前后对比，会降低结论可靠性。"
+          ]
+        },
+        {
+          "title": "哪些信息仍可参考？",
+          "content": [
+            "产品名称、使用步骤和主观体验仍有参考价值。",
+            "图片可以作为妆效风格参考，但不能单独证明长期效果。"
+          ]
+        }
+      ],
+      "creator_actions": [
+        "补充原始图片或原始视频。",
+        "提供拍摄时间、光线条件和是否开启美颜的信息。",
+        "增加上妆前、上妆后、带妆数小时后的同条件对照。"
+      ],
+      "advanced": {
+        "schema_version": "0.1.0",
+        "confidence": 0.42,
+        "tool_results": {
+          "image_quality": "low",
+          "texture_loss": "unknown",
+          "lighting_consistency": "unknown",
+          "claim_support": "insufficient"
+        }
+      }
+    }
+  }
+}

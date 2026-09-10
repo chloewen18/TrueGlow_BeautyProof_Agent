@@ -1,0 +1,53 @@
+{
+  "request_id": "req_case_c_review_001",
+  "content_id": "content_case_b",
+  "report": {
+    "trust_card": {
+      "verdict": "updated_after_evidence",
+      "verdict_label": "补证后结论更新",
+      "main_findings": [
+        "创作者已提交原始素材，来源信息缺失问题得到改善。",
+        "原始素材显示皮肤纹理保留更完整，磨皮风险从高降为中低。",
+        "仍建议补充更完整的带妆时间线，以验证长时持妆表述。"
+      ],
+      "sections": [
+        {
+          "title": "补证前后变化",
+          "content": [
+            "高风险误导 → 部分可疑。",
+            "来源信息缺失 → 已收到原始素材。",
+            "归因可靠性低 → 归因可靠性提升。"
+          ]
+        },
+        {
+          "title": "消费者现在可以如何理解？",
+          "content": [
+            "当前内容的可信度较补证前提升。",
+            "关于即时妆效的判断更可靠，但长时持妆仍需要更多证据。"
+          ]
+        }
+      ],
+      "creator_actions": [
+        "继续补充 4 小时、8 小时、12 小时后的同条件素材。",
+        "保留并公开关键拍摄参数。",
+        "避免在没有时间线证据时使用绝对化持妆表述。"
+      ],
+      "advanced": {
+        "schema_version": "0.1.0",
+        "confidence": 0.81,
+        "review": {
+          "original_verdict": "部分可疑",
+          "updated_verdict": "补证后结论更新",
+          "source_traceability": "improved",
+          "attribution_reliability": "improved"
+        },
+        "tool_results": {
+          "original_material_received": true,
+          "skin_smoothing": "medium_low",
+          "texture_loss": "low",
+          "claim_support": "partial"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+content_id,person_id,split,scenario,skin_type,claim_type,edit_type,edit_strength,affected_region,before_after_consistency,lighting_condition,platform_compression,creator_evidence_status,human_review_label,annotator_id,review_notes
+sample_001,p001,train,before_after_foundation,dry,coverage,none,none,full_face,unknown,indoor_soft,none,missing,insufficient_evidence,a01,真实内容但缺少同条件对照
+sample_002,p002,validation,before_after_foundation,oily,pore_blur,skin_smoothing,high,cheeks,low,exposure_changed,medium,missing,partially_suspicious,a02,After 纹理损失明显
+sample_003,p002,test,creator_review,oily,long_wear,declared_adjustment,low,full_face,medium,matched_low_light,low,received,updated_after_evidence,a03,原始素材改善来源可信度

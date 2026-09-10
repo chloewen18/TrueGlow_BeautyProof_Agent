@@ -220,6 +220,7 @@ class TextIntegrityEvidence(BaseModel):
     """输出：文本完整性 + 功效证据 + 用户解释。"""
 
     claims: list[Claim] = Field(default_factory=list)
+    member4_analysis: dict[str, Any] = Field(default_factory=dict)
     integrity_issues: list[IntegrityIssue] = Field(default_factory=list)
     disclosure: Literal["found", "not_found", "unknown"] = "unknown"
     efficacy_evidence: list[EfficacyEvidence] = Field(default_factory=list)

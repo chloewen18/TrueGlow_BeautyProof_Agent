@@ -13,6 +13,8 @@ from .agent.router import router as agent_router
 from .media import router as media_router
 from .tools import register_builtin_tools
 from .tools.router import router as tools_router
+from .deliverables import router as deliverables_router
+from .member4_api import router as member4_router
 
 app = FastAPI(
     title="TrueGlow 映真 - Main Agent",
@@ -25,6 +27,8 @@ register_builtin_tools()
 app.include_router(tools_router)
 app.include_router(agent_router)
 app.include_router(media_router)
+app.include_router(deliverables_router)
+app.include_router(member4_router)
 
 
 @app.get("/", summary="服务信息")

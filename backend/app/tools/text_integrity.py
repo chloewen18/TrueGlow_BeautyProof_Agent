@@ -22,12 +22,35 @@ EXAGGERATED = ["永久", "绝对", "100%", "立竿见影", "一夜", "完全根�
 class TextIntegrityHandler(ToolHandler):
     name = "text_integrity"
     description = "T5 文本完整性、功效证据与用户解释：宣称提取、矛盾/夸大检测、披露检查、功效证据、通俗解释"
-    mode = "mock"
+    mode = "rules"
+    version = "member4-v2.2"
 
     def handle(self, request: ToolRequest) -> dict[str, Any]:
         p = request.payload
         s = p.get("signals", {})
         text = p.get("text") or p.get("ocr_text") or ""
+        if not s:
+            from ..integrations.member4.service import analyze
+            analysis = analyze(text, p.get("product") or "", p.get("comments"))
+            claims = [Claim(text=c["matched_text"], kind="efficacy",
+                severity=Severity.HIGH if c["is_exaggerated"] and c["polarity"] == "positive" else Severity.LOW,
+                evidence_supported=c["evidence_supported"]) for c in analysis["claims"]]
+            efficacy = []
+            for c in analysis["claims"]:
+                matches = c["evidence_matches"] if c["evidence_supported"] else []
+                efficacy.append(EfficacyEvidence(product=p.get("product") or "未指定产品",
+                    claim=c["canonical_claim"], claim_type=c["canonical_claim"],
+                    official_source=matches[0].get("source_url") if matches else None,
+                    evidence_method=matches[0].get("evidence_type") if matches else None,
+                    evidence_level=Strength.MODERATE if matches else Strength.WEAK, matched=bool(matches)))
+            issues = [IntegrityIssue(type="exaggerated_quantified", severity=Severity.MEDIUM,
+                detail=f"「{c['matched_text']}」含夸张表达，需核对证据边界") for c in analysis["claims"]
+                if c["is_exaggerated"] and c["polarity"] == "positive"]
+            return TextIntegrityEvidence(claims=claims, efficacy_evidence=efficacy,
+                integrity_issues=issues, disclosure="unknown", member4_analysis=analysis,
+                user_explanation="；".join(f"{c['canonical_claim']}：{c['audience_explanation']}" for c in analysis["claims"])
+                    or "未提取到功效宣称，不代表内容已被验证。"
+            ).model_dump(exclude_none=True)
 
         # 1) 宣称提取（词典匹配；按强度分级：量化强宣称 High / 一般功效 Medium / 轻描淡写 Low）
         claims_raw = s.get("claims")

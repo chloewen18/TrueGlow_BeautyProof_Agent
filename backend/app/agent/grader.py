@@ -150,7 +150,7 @@ class RiskGrader:
             elif unsupported and strong_claims:
                 p.claim_sufficiency = RISK_MEDIUM
                 p.reasons.append(f"{len(strong_claims)} 项量化/强宣称未找到官方功效证据支持")
-                p.affected_claims.extend(e.claim for e in strong_claims[:5])
+                p.affected_claims.extend(e.text for e in strong_claims[:5])
                 path.append("rule: 强宣称无证据支持 -> claim_sufficiency=Medium")
             elif te.disclosure == "not_found" and strong_claims:
                 p.claim_sufficiency = RISK_MEDIUM
