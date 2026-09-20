@@ -1,0 +1,40 @@
+# 构建上下文瘦身：把大体积演示资产与本地文件排除在外
+# 保留运行所需的 data/（除 datasets）、member4_text/、vendor/（除训练列表）
+
+.git
+.github
+.gitignore
+
+# 虚拟环境与缓存
+.venv
+venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+
+# 本地配置与密钥
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# 编辑器/系统
+.idea
+.vscode
+.DS_Store
+
+# 大体积演示资产（不参与运行）
+data/datasets
+data/models
+data/volunteers
+data/evaluation_runs
+member2_forensics/deliverables
+vendor/trufor/dataset/data
+
+# 与运行无关
+tests
+scratch
+*.log
+*.pth
+*.pth.tar

@@ -57,19 +57,58 @@ streamlit run app.py --server.port 8503
 
 > Windows 可用仓库自带的 `scripts/start_local.ps1`。
 
-## 5. 上线前置条件
+## 5. Docker 启动（推荐）
 
-- [ ] **仓库体积**：大体积演示资产（`member2_forensics/deliverables/`、`data/datasets/`、
-      `vendor/trufor/dataset/data/*_COCO_*_list.txt`）已移出版本库，当前被跟踪文件约 9MB。
-      注意：历史提交中的 Blob 仍在，GitHub 仓库总体积不会因此下降；如需彻底瘦身须重写历史。
-- [ ] **部署配置**：仓库尚无 `Dockerfile` / `Procfile` / CI。双进程应用推荐 Docker + supervisord。
-- [ ] **真实模型（可选）**：当前五个 Tool 为 Mock 实现，无需权重即可跑通全流程。
-      接入真实模型需 `requirements-models.txt` 与 `data/models/` 下的权重。
+仓库已包含 `Dockerfile`（`python:3.12-slim` + supervisor）、`deploy/supervisord.conf`、
+`.dockerignore` 与 `docker-compose.yml`。容器内**同时**运行后端（127.0.0.1:8000，不对外）
+与前端（0.0.0.0:7860，对外）。
 
-## 6. 目标平台：Hugging Face Spaces
+```bash
+# 本地起容器
+docker compose up --build
+# 打开 http://localhost:7860/
+```
 
-推荐用 **Docker SDK**（一个 Space 同时跑前端与后端）。创建 Space 时需要：
+不会 Docker 时，macOS / Linux 可直接用等价脚本（与容器内命令一致）：
 
-1. 在 Space 的 Settings → Variables and secrets 中配置上表的环境变量；
-2. 容器内同时启动两个进程（docker-compose 或 supervisord），并让前端指向 `http://127.0.0.1:8000`；
-3. 健康检查走 `/healthz`（公开，不需要 Key）。
+```bash
+bash scripts/start_local.sh          # 默认 UI 7860 / API 8000
+```
+
+镜像体积关键点：`.dockerignore` 已排除 `data/datasets`、`member2_forensics/deliverables`、
+`vendor/trufor/dataset/data` 等大体积资产，构建上下文只有约 10MB。
+
+> 容器内 `DATA_DIR=/tmp/trueglow-data`，因为运行时上传/产物需要可写目录，
+> 且平台（如 HF Spaces）可能以非 root 用户运行。**容器重启后这些文件会丢失**，
+> 这符合演示场景；如需持久化请挂载卷并改回该变量。
+
+## 6. 部署到 Hugging Face Spaces
+
+在 Space 页面选 **Docker** SDK，然后把本仓库推上去（当前被跟踪文件仅约 9MB，可直接推）。
+**关键**：Space 仓库根目录的 `README.md` 顶部必须带 SDK frontmatter，否则不会按 Docker 构建 ——
+可直接复制 `deploy/huggingface-README.md` 的内容作为该 Space 的 README。
+
+随后在 **Settings → Variables and secrets** 配置：
+
+| 类型 | 变量 | 建议 |
+|---|---|---|
+| Secret | `BEAUTYPROOF_API_KEY` | 随机长字符串 |
+| Secret | `BEAUTYPROOF_ACCESS_CODE` | 演示口令 |
+| Variable | `BEAUTYPROOF_RATE_LIMIT_PER_MINUTE` | `120` |
+| Variable | `BEAUTYPROOF_RUNTIME_RETENTION_HOURS` | `24` |
+
+注意：
+
+- 默认 Space 是 **Public**，代码与构建日志公开可见；**不要把密钥写进仓库**，只用 Secrets。
+- 健康检查走 `/healthz`（公开，不需要 Key），可作平台探针。
+- 只暴露 7860 一个端口；后端 8000 仅监听容器内回环，公网不可达。
+- 免费 CPU Space 会休眠，首次访问需等待唤醒。
+
+## 7. 上线自查清单
+
+- [x] 大体积演示资产移出版本库（被跟踪文件 479 → 203，体积 663MB → 9.0MB）
+- [x] 部署配置：`Dockerfile` + `supervisord.conf` + `docker-compose.yml` + `.dockerignore`
+- [x] 跨平台启动脚本 `scripts/start_local.sh`
+- [x] 公网安全：API Key、限流、访问口令、CORS 收敛、运行时文件清理
+- [ ] 历史瘦身（可选）：历史 Blob 仍在，仓库总体积不降；彻底瘦身须重写历史，需团队知情
+- [ ] 真实模型（可选）：当前五个 Tool 为 Mock 实现，无需权重即可跑通全流程

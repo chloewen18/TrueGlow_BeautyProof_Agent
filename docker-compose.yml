@@ -1,0 +1,16 @@
+# 本地起容器验证用：docker compose up --build
+# 公网部署请把下面的变量写进平台的环境变量/Secrets，不要提交 .env
+services:
+  trueglow:
+    build: .
+    image: trueglow:local
+    ports:
+      - "7860:7860"
+    environment:
+      # 留空 = 关闭该保护（仅本地开发可留空）
+      BEAUTYPROOF_API_KEY: ${BEAUTYPROOF_API_KEY:-}
+      BEAUTYPROOF_ACCESS_CODE: ${BEAUTYPROOF_ACCESS_CODE:-}
+      BEAUTYPROOF_CORS_ORIGINS: ${BEAUTYPROOF_CORS_ORIGINS:-}
+      BEAUTYPROOF_RATE_LIMIT_PER_MINUTE: ${BEAUTYPROOF_RATE_LIMIT_PER_MINUTE:-120}
+      BEAUTYPROOF_RUNTIME_RETENTION_HOURS: ${BEAUTYPROOF_RUNTIME_RETENTION_HOURS:-24}
+    restart: unless-stopped
