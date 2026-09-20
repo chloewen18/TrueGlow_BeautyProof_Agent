@@ -1,6 +1,7 @@
 {
-  "mode": "dictionary_rules_mock_semantic",
-  "scope": "canonical claim sets only; no OCR/polarity/evidence validation",
+  "mode": "real_rules",
+  "engine": "member4_final_v2",
+  "scope": "canonical claim sets only; no OCR/polarity/evidence validation; previously used development sets, not an independent blind benchmark",
   "datasets": {
     "Test Set": {
       "count": 20,
@@ -317,9 +318,9 @@
     },
     "Blind Test": {
       "count": 30,
-      "exact_match_count": 20,
-      "exact_match_rate": 0.6666666666666666,
-      "micro_f1": 0.90625,
+      "exact_match_count": 30,
+      "exact_match_rate": 1.0,
+      "micro_f1": 1.0,
       "errors": 0,
       "cases": [
         {
@@ -347,11 +348,10 @@
             "持妆"
           ],
           "predicted": [
+            "不易泛油",
             "持妆"
           ],
-          "missing": [
-            "不易泛油"
-          ],
+          "missing": [],
           "extra": [],
           "error": null
         },
@@ -363,15 +363,11 @@
             "高遮瑕"
           ],
           "predicted": [
-            "低遮瑕",
-            "遮痘印"
-          ],
-          "missing": [
+            "遮痘印",
             "高遮瑕"
           ],
-          "extra": [
-            "低遮瑕"
-          ],
+          "missing": [],
+          "extra": [],
           "error": null
         },
         {
@@ -447,16 +443,12 @@
             "自然光泽"
           ],
           "predicted": [
-            "不发灰",
+            "不发灰/发灰",
             "暗沉",
             "自然光泽"
           ],
-          "missing": [
-            "不发灰/发灰"
-          ],
-          "extra": [
-            "不发灰"
-          ],
+          "missing": [],
+          "extra": [],
           "error": null
         },
         {
@@ -495,11 +487,10 @@
             "均匀肤色"
           ],
           "predicted": [
-            "低妆感"
-          ],
-          "missing": [
+            "低妆感",
             "均匀肤色"
           ],
+          "missing": [],
           "extra": [],
           "error": null
         },
@@ -513,11 +504,10 @@
           ],
           "predicted": [
             "低遮瑕",
+            "遮痘印",
             "遮黑眼圈"
           ],
-          "missing": [
-            "遮痘印"
-          ],
+          "missing": [],
           "extra": [],
           "error": null
         },
@@ -530,13 +520,10 @@
           ],
           "predicted": [
             "容易泛油",
-            "控油",
             "油皮适用"
           ],
           "missing": [],
-          "extra": [
-            "控油"
-          ],
+          "extra": [],
           "error": null
         },
         {
@@ -669,11 +656,10 @@
             "防水"
           ],
           "predicted": [
+            "不斑驳",
             "防水"
           ],
-          "missing": [
-            "不斑驳"
-          ],
+          "missing": [],
           "extra": [],
           "error": null
         },
@@ -700,11 +686,10 @@
             "即时提亮"
           ],
           "predicted": [
+            "不假白",
             "即时提亮"
           ],
-          "missing": [
-            "不假白"
-          ],
+          "missing": [],
           "extra": [],
           "error": null
         },
@@ -716,14 +701,11 @@
             "轻薄"
           ],
           "predicted": [
-            "卡粉/浮粉",
             "厚重/面具感",
             "轻薄"
           ],
           "missing": [],
-          "extra": [
-            "卡粉/浮粉"
-          ],
+          "extra": [],
           "error": null
         },
         {
@@ -794,14 +776,11 @@
             "自然光泽"
           ],
           "predicted": [
-            "容易泛油",
             "控油",
             "自然光泽"
           ],
           "missing": [],
-          "extra": [
-            "容易泛油"
-          ],
+          "extra": [],
           "error": null
         }
       ]

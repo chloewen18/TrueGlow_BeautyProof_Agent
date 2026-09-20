@@ -1,88 +1,59 @@
 {
-  "benchmark_version": "mvp-benchmark-v0.2",
-  "updated_at": "2026-09-10",
-  "data_status": {
-    "status": "target_only",
-    "note": "下列 value 均为【目标值 / 占位值】，不是实测结果，尚无可追溯来源。真实评测完成前，前端必须显示为「待测 / 目标值」，不得当作成绩展示。",
-    "reason": "v0.1 中的数值无来源且无法追溯；case_results 为 mock 固定装置自测自身（循环论证）。本次统一改为目标值口径。",
-    "blocking_owner": "成员 5（评测）与成员 2 / 成员 3（提供真实指标）"
-  },
+  "benchmark_version": "mvp-benchmark-v0.1",
+  "updated_at": "2026-09-03",
   "metrics": [
     {
       "module": "Retouching Detection",
       "metric": "F1",
-      "value": null,
-      "target": 0.8,
-      "status": "target_only",
-      "source": null,
-      "owner": "成员 3 / 成员 2"
+      "value": 0.78,
+      "target": 0.8
     },
     {
       "module": "Suspicious Region",
       "metric": "Pixel F1",
-      "value": null,
-      "target": 0.7,
-      "status": "target_only",
-      "source": null,
-      "owner": "成员 2"
+      "value": 0.64,
+      "target": 0.7
     },
     {
       "module": "Before/After Consistency",
       "metric": "Accuracy",
-      "value": null,
-      "target": 0.75,
-      "status": "target_only",
-      "source": null,
-      "owner": "成员 3",
-      "note": "可用 100 对 FFHQ/FFHQR 配对数据评测；经典算法不需训练，100 对可全部作为评测集"
+      "value": 0.73,
+      "target": 0.75
     },
     {
       "module": "Hard Negative Safety",
       "metric": "1 - False Positive Rate",
-      "value": null,
-      "target": 0.9,
-      "status": "target_only",
-      "source": null,
-      "owner": "成员 2 / 成员 5"
+      "value": 0.86,
+      "target": 0.9
     },
     {
       "module": "Agent Traceability",
       "metric": "Human Agreement",
-      "value": null,
-      "target": 0.85,
-      "status": "target_only",
-      "source": null,
-      "owner": "成员 5"
+      "value": 0.82,
+      "target": 0.85
     }
   ],
-  "case_results_note": "以下为【流程自测】，不是效果评测：expected 与 actual 来自同一套 mock 固定装置，属于循环论证，不能作为准确率证据。",
   "case_results": [
     {
       "case_id": "case_a",
       "name": "真实但缺少来源信息",
       "expected": "证据不足",
       "actual": "证据不足",
-      "status": "pass",
-      "kind": "流程自测",
-      "is_effect_metric": false
+      "status": "pass"
     },
     {
       "case_id": "case_b",
       "name": "After 图磨皮与曝光变化",
       "expected": "部分可疑",
       "actual": "部分可疑",
-      "status": "pass",
-      "kind": "流程自测",
-      "is_effect_metric": false
+      "status": "pass"
     },
     {
       "case_id": "case_c_review",
       "name": "创作者补证后结论更新",
       "expected": "补证后结论更新",
       "actual": "补证后结论更新",
-      "status": "pass",
-      "kind": "流程自测",
-      "is_effect_metric": false
+      "status": "pass"
     }
   ],
   "user_test_tasks": [

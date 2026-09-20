@@ -25,6 +25,7 @@ class Severity(str, Enum):
     LOW = "Low"
     MEDIUM = "Medium"
     HIGH = "High"
+    UNKNOWN = "Unknown"
 
 
 class Strength(str, Enum):
@@ -66,6 +67,7 @@ class EvidenceReliability(str, Enum):
     LOW = "Low"
     MEDIUM = "Medium"
     HIGH = "High"
+    UNKNOWN = "Unknown"
 
 
 class FinalLabel(str, Enum):

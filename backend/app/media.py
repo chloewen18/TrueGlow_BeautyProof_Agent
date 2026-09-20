@@ -43,10 +43,14 @@ def _uploads_dir() -> Path:
 
 def save_upload(upload: UploadFile, batch_id: str) -> UploadedMedia:
     """保存单个上传文件，返回可被 /verify 引用的 media_ref。"""
-    data = upload.file.read()
+    data = upload.file.read(20 * 1024 * 1024 + 1)
+    if len(data) > 20 * 1024 * 1024:
+        raise HTTPException(413, "素材不得超过20MB")
     content_type = upload.content_type or ""
     kind = "video" if content_type.startswith("video") else "image"
     suffix = Path(upload.filename or "blob").suffix or (".mp4" if kind == "video" else ".jpg")
+    if suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp", ".mp4", ".mov"):
+        raise HTTPException(422, "不支持该文件格式")
     # 同批次顺序编号，避免文件名冲突
     existing = [p.name for p in _uploads_dir().glob(f"{batch_id}_*")]
     safe_name = f"{batch_id}_{len(existing)}{suffix}"
@@ -117,3 +121,14 @@ async def parse_multipart_verify(request: Request) -> tuple[dict, list[UploadedM
         if isinstance(f, UploadFile):
             uploaded.append(save_upload(f, batch_id))
     return inject_uploads_into_payload(payload, uploaded), uploaded
+
+
+@router.get("/artifacts/{path:path}", summary="检测证据图与原始输出")
+def artifact(path: str):
+    root = (settings.resolved_data_dir / "artifacts").resolve()
+    target = (root / path).resolve()
+    if root not in target.parents or target.suffix not in (".png", ".npz"):
+        raise HTTPException(403, "Invalid artifact path")
+    if not target.is_file():
+        raise HTTPException(404, "Artifact not found")
+    return FileResponse(target)

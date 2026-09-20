@@ -33,19 +33,24 @@ class ToolHandler(ABC):
         t0 = time.perf_counter()
         try:
             evidence = self.handle(request)
-            status = "success"
+            mode = "mock" if "signals" in request.payload else {"page_understanding": "real_rules", "source_trace": "real_exif", "text_integrity": "real_rules"}.get(self.name, "real")
+            if evidence.get("file_info", {}).get("mode") == "real_exif":
+                mode = "real_exif"
+            evidence.setdefault("provenance", {}).update(mode=mode, engine=self.name, version=self.version)
+            status = evidence.pop("_status", "success")
             error = None
         except Exception as exc:  # noqa: BLE001 - 统一转错误信封
             evidence = {}
             status = "error"
             error = ToolError(code="TOOL_INTERNAL_ERROR", message=str(exc))
+            mode = "unavailable"
         latency_ms = int((time.perf_counter() - t0) * 1000)
         return ToolResponse(
             tool=request.tool,
             request_id=request.request_id,
             status=status,
             evidence=evidence,
-            meta=ToolMeta(version=self.version, model=self.mode, latency_ms=latency_ms),
+            meta=ToolMeta(version=self.version, model=mode, latency_ms=latency_ms),
             error=error,
         )
 

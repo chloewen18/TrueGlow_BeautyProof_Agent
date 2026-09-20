@@ -62,10 +62,10 @@ class EvidenceFuser:
         if creator_submission:
             real_source = tool_results.get("source_trace", {}).get("file_info", {}).get("mode") == "real_exif"
             layer.creator_submission = CreatorSubmission(
-                status="received" if real_source else "done",
+                status="done" if tool_results.get("source_trace", {}).get("provenance", {}).get("mode") == "mock" else "received",
                 materials=creator_submission,
                 review_result="补证材料已纳入复核",
-                credential=None if real_source else {"scope": "来源与拍摄条件", "date": "2026-09-02"},
+                credential=None,
             )
         notes: list[str] = []
 
@@ -95,9 +95,16 @@ class EvidenceFuser:
         if t3:
             e = ImageForensicsEvidence(**t3)
             items: list[EvidenceItem] = []
+            for index, image in enumerate(t3.get("per_image", [])):
+                result = image.get("member3", {}).get("result", {})
+                if result.get("generic_retouch", {}).get("detected"):
+                    items.append(_ev(f"vis-generic-{index}", "image_forensics", "通用专业修饰模型触发辅助信号，不能确定具体操作", {"generic_retouch": "Detected", "media_ref": image["media_ref"]}, EvidenceReliability.LOW, "成员三Stage1", "域内阈值，未做独立跨域验证"))
+                eye = result.get("operations", {}).get("eyeenlarging", {})
+                if eye.get("detected"):
+                    items.append(_ev(f"vis-eye-{index}", "image_forensics", "放大眼睛模型触发辅助信号，需人工复核", {"eyeenlarging": "Detected", "media_ref": image["media_ref"]}, EvidenceReliability.LOW, "成员三Stage2", "未经跨域校准"))
             for attr, label in [("local_replacement", "局部替换"), ("splicing", "拼接"), ("inpainting", "inpainting/局部生成")]:
                 status = getattr(e, attr).value
-                if status != "Not detected":
+                if status == "Detected":
                     items.append(_ev(f"vis-{attr}", "image_forensics", f"检出{label}: {status}", {attr: status}, e.reliability, "TruFor/取证模型"))
             if e.ai_generated.value != "Unknown" and e.ai_generated.value != "Not detected":
                 items.append(_ev("vis-ai", "image_forensics", f"AI 生成痕迹: {e.ai_generated.value}", {"ai_generated": e.ai_generated.value}, e.reliability))
@@ -106,9 +113,10 @@ class EvidenceFuser:
                 if sev in ("Medium", "High"):
                     items.append(_ev(f"vis-{attr}", "image_forensics", f"{label}: {sev}", {attr: sev}, e.reliability, "底妆专项分类器", "需结合 reliability 综合判断"))
             if not items:
-                items = [_ev("vis-none", "image_forensics", "未检出明显篡改/修饰痕迹", {"integrity_score": e.integrity_score}, e.reliability, "TruFor/取证模型")]
+                items = [_ev("vis-none", "image_forensics", "未获得可确定具体篡改类型的证据；低分不证明真实", {"integrity_score": e.integrity_score}, e.reliability, "TruFor/取证模型")]
+            score_text = f"{e.integrity_score:.3f}" if e.integrity_score is not None else "未完成"
             layer.visual_evidence = VisualEvidenceLayer(
-                summary=f"完整性评分 {e.integrity_score:.2f}，可靠性 {e.reliability.value}",
+                summary=f"完整性评分 {score_text}，可靠性 {e.reliability.value}",
                 items=items, raw=e.model_dump(exclude_none=True),
             )
 
@@ -152,8 +160,9 @@ class EvidenceFuser:
 
         # ---- 工具可靠性汇总 ----
         layer.tool_reliability = [
-            ToolReliabilityMap(tool=tool, status="success", reliability=EvidenceReliability.MEDIUM)
-            for tool in tool_results
+            ToolReliabilityMap(tool=tool, status="partial" if result.get("errors") else "success",
+                               reliability=EvidenceReliability(result.get("reliability", result.get("comparison_reliability", "Medium"))))
+            for tool, result in tool_results.items()
         ]
         # 若某个 Tool 未返回（计划跳过/失败），记录缺失
         for tool in _TOOL_LABELS:
@@ -168,7 +177,7 @@ class EvidenceFuser:
             t5e = TextIntegrityEvidence(**t5)
             t3e = ImageForensicsEvidence(**t3)
             declared_raw = any("原相机" in (i.detail or "") or "零滤镜" in (i.detail or "") for i in t5e.integrity_issues)
-            visual_mod = t3e.skin_smoothing.value in ("Medium", "High") or t3e.local_replacement.value != "Not detected"
+            visual_mod = t3e.skin_smoothing.value in ("Medium", "High") or t3e.local_replacement.value == "Detected"
             if declared_raw and visual_mod:
                 notes.append("冲突：文案宣称原相机/零滤镜，但视觉证据检出修饰痕迹——该宣称直接存疑")
         # 冲突 2：C2PA invalid + 其余证据
@@ -179,6 +188,11 @@ class EvidenceFuser:
         # 缺失：T4 需要 before/after 对，若未提供则归因维度缺失
         if "before_after" not in tool_results and (t1_ev and "before_after_consistency" in (t1_ev.media_tasks or [])):
             notes.append("证据缺失：内容类型需要前后对比核验，但未提供 before/after 素材，妆效归因无法判断")
+
+        for section in (layer.source_evidence, layer.visual_evidence, layer.before_after_evidence, layer.text_evidence):
+            provenance = section.raw.get("provenance", {})
+            for item in section.items:
+                item.finding["provenance"] = provenance
 
         # 把冲突/缺失说明挂到 agent_decision 之前的暂存区（grader 读取）
         layer.agent_decision = AgentDecision(

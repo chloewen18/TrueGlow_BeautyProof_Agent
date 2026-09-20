@@ -1,0 +1,25 @@
+{
+  "package_version": "1.1.0",
+  "schema_version": "1.1.0",
+  "tool_name": "beauty_effect_attribution",
+  "models": [
+    {
+      "file": "models/stage1_ffhqr_best_model.pth",
+      "role": "generic_retouch_binary",
+      "dataset": "FFHQR",
+      "sha256": "680359792a01aff6b498f5a5ee47c240a4fea8feda1ddcd6e2af0e68528e2d37"
+    },
+    {
+      "file": "models/stage2_mixed_rehearsal_best_model.pth",
+      "role": "fine_grained_retouch_operations_and_pair_backbone",
+      "dataset": "RetouchingFFHQ with FFHQR rehearsal",
+      "sha256": "60ff356010d97602ff19bdb4027380af52d56bd33eb33e61ade6451440075465"
+    },
+    {
+      "file": "models/stage3_ppr10k_balanced_best_model.pth",
+      "role": "before_after_condition_delta",
+      "dataset": "PPR10K with identity controls",
+      "sha256": "08b27625d9af6ca706c2dabd1ab74ae18fa8b3913c9c20263f5a86ad2d7f2059"
+    }
+  ]
+}

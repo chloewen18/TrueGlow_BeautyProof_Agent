@@ -1,0 +1,9 @@
+-r requirements.txt
+torch>=2.6
+torchvision>=0.21
+timm==0.6.13
+yacs==0.1.8
+numpy>=1.26
+opencv-contrib-python==4.10.0.84
+scipy>=1.13
+scikit-learn>=1.5

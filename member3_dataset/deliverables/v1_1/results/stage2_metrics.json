@@ -1,0 +1,259 @@
+{
+  "best_epoch": 8,
+  "thresholds": {
+    "binary": 0.739,
+    "operations": {
+      "whitening": 0.972,
+      "smoothing": 0.964,
+      "facelifting": 0.9510000000000001,
+      "eyeenlarging": 0.907
+    }
+  },
+  "dataset_pairs": {
+    "retouching": {
+      "train": 12860,
+      "validation": 1674,
+      "test": 1623
+    },
+    "ffhqr": {
+      "train": 37955,
+      "validation": 1000,
+      "test": 999
+    }
+  },
+  "retouching_validation": {
+    "thresholds": {
+      "binary": 0.739,
+      "operations": {
+        "whitening": 0.972,
+        "smoothing": 0.964,
+        "facelifting": 0.9510000000000001,
+        "eyeenlarging": 0.907
+      }
+    },
+    "binary": {
+      "threshold": 0.739,
+      "accuracy": 0.8739545997610514,
+      "precision": 0.942090395480226,
+      "recall": 0.7968936678614098,
+      "f1": 0.8634304207119741,
+      "false_positive_rate": 0.04898446833930705,
+      "tn": 1592,
+      "fp": 82,
+      "fn": 340,
+      "tp": 1334,
+      "roc_auc": 0.9404719592217183
+    },
+    "operations": {
+      "whitening": {
+        "threshold": 0.972,
+        "accuracy": 0.9704301075268817,
+        "precision": 0.7631578947368421,
+        "recall": 0.5471698113207547,
+        "f1": 0.6373626373626373,
+        "false_positive_rate": 0.008466603951081843,
+        "tn": 3162,
+        "fp": 27,
+        "fn": 72,
+        "tp": 87,
+        "roc_auc": 0.94504892012835
+      },
+      "smoothing": {
+        "threshold": 0.964,
+        "accuracy": 0.9740143369175627,
+        "precision": 0.9721030042918455,
+        "recall": 0.9658848614072495,
+        "f1": 0.9689839572192513,
+        "false_positive_rate": 0.02009273570324575,
+        "tn": 1902,
+        "fp": 39,
+        "fn": 48,
+        "tp": 1359,
+        "roc_auc": 0.9963441788628068
+      },
+      "facelifting": {
+        "threshold": 0.9510000000000001,
+        "accuracy": 0.9543010752688172,
+        "precision": 0.9612771739130435,
+        "recall": 0.9364659166115156,
+        "f1": 0.9487093530003352,
+        "false_positive_rate": 0.031028851388132824,
+        "tn": 1780,
+        "fp": 57,
+        "fn": 96,
+        "tp": 1415,
+        "roc_auc": 0.9881783271793456
+      },
+      "eyeenlarging": {
+        "threshold": 0.907,
+        "accuracy": 0.9172640382317802,
+        "precision": 0.9491961414790997,
+        "recall": 0.8817204301075269,
+        "f1": 0.9142149272220502,
+        "false_positive_rate": 0.047192353643966546,
+        "tn": 1595,
+        "fp": 79,
+        "fn": 198,
+        "tp": 1476,
+        "roc_auc": 0.9658215322116737
+      }
+    },
+    "strength_exact_retouched": {
+      "whitening": {
+        "samples": 417,
+        "accuracy": 0.6546762589928058,
+        "macro_f1": 0.44407463650648726,
+        "mean_absolute_level_error": 14.532374100719425
+      },
+      "smoothing": {
+        "samples": 417,
+        "accuracy": 0.6187050359712231,
+        "macro_f1": 0.49480598799175357,
+        "mean_absolute_level_error": 14.964028776978417
+      },
+      "facelifting": {
+        "samples": 417,
+        "accuracy": 0.6139088729016786,
+        "macro_f1": 0.5368523430254049,
+        "mean_absolute_level_error": 15.683453237410072
+      },
+      "eyeenlarging": {
+        "samples": 417,
+        "accuracy": 0.47961630695443647,
+        "macro_f1": 0.36301320853694863,
+        "mean_absolute_level_error": 19.06474820143885
+      }
+    }
+  },
+  "retouching_test": {
+    "thresholds": {
+      "binary": 0.739,
+      "operations": {
+        "whitening": 0.972,
+        "smoothing": 0.964,
+        "facelifting": 0.9510000000000001,
+        "eyeenlarging": 0.907
+      }
+    },
+    "binary": {
+      "threshold": 0.739,
+      "accuracy": 0.8798521256931608,
+      "precision": 0.9363057324840764,
+      "recall": 0.8151571164510166,
+      "f1": 0.8715415019762845,
+      "false_positive_rate": 0.05545286506469501,
+      "tn": 1533,
+      "fp": 90,
+      "fn": 300,
+      "tp": 1323,
+      "roc_auc": 0.9442745590667732
+    },
+    "operations": {
+      "whitening": {
+        "threshold": 0.972,
+        "accuracy": 0.9636475662353666,
+        "precision": 0.7398373983739838,
+        "recall": 0.5141242937853108,
+        "f1": 0.6066666666666667,
+        "false_positive_rate": 0.010426849136526556,
+        "tn": 3037,
+        "fp": 32,
+        "fn": 86,
+        "tp": 91,
+        "roc_auc": 0.9343277867061356
+      },
+      "smoothing": {
+        "threshold": 0.964,
+        "accuracy": 0.973505853357979,
+        "precision": 0.9647988505747126,
+        "recall": 0.9731884057971014,
+        "f1": 0.9689754689754689,
+        "false_positive_rate": 0.026259378349410504,
+        "tn": 1817,
+        "fp": 49,
+        "fn": 37,
+        "tp": 1343,
+        "roc_auc": 0.9972365907078615
+      },
+      "facelifting": {
+        "threshold": 0.9510000000000001,
+        "accuracy": 0.9547134935304991,
+        "precision": 0.9557705597788528,
+        "recall": 0.9433833560709414,
+        "f1": 0.9495365602471678,
+        "false_positive_rate": 0.035955056179775284,
+        "tn": 1716,
+        "fp": 64,
+        "fn": 83,
+        "tp": 1383,
+        "roc_auc": 0.9899541287919433
+      },
+      "eyeenlarging": {
+        "threshold": 0.907,
+        "accuracy": 0.9118915588416513,
+        "precision": 0.9315687540348612,
+        "recall": 0.88909426987061,
+        "f1": 0.9098360655737705,
+        "false_positive_rate": 0.06531115218730746,
+        "tn": 1517,
+        "fp": 106,
+        "fn": 180,
+        "tp": 1443,
+        "roc_auc": 0.9686879420104332
+      }
+    },
+    "strength_exact_retouched": {
+      "whitening": {
+        "samples": 434,
+        "accuracy": 0.6543778801843319,
+        "macro_f1": 0.4822422598658893,
+        "mean_absolute_level_error": 15.0
+      },
+      "smoothing": {
+        "samples": 434,
+        "accuracy": 0.6267281105990783,
+        "macro_f1": 0.5053168401727757,
+        "mean_absolute_level_error": 14.23963133640553
+      },
+      "facelifting": {
+        "samples": 434,
+        "accuracy": 0.5645161290322581,
+        "macro_f1": 0.4959231374740763,
+        "mean_absolute_level_error": 17.419354838709676
+      },
+      "eyeenlarging": {
+        "samples": 434,
+        "accuracy": 0.4815668202764977,
+        "macro_f1": 0.34913326379734055,
+        "mean_absolute_level_error": 19.56221198156682
+      }
+    }
+  },
+  "ffhqr_validation": {
+    "threshold": 0.739,
+    "accuracy": 0.7215,
+    "precision": 0.9064220183486239,
+    "recall": 0.494,
+    "f1": 0.6394822006472491,
+    "false_positive_rate": 0.051,
+    "tn": 949,
+    "fp": 51,
+    "fn": 506,
+    "tp": 494,
+    "roc_auc": 0.867117
+  },
+  "ffhqr_test": {
+    "threshold": 0.739,
+    "accuracy": 0.7217217217217218,
+    "precision": 0.8934280639431617,
+    "recall": 0.5035035035035035,
+    "f1": 0.6440460947503202,
+    "false_positive_rate": 0.06006006006006006,
+    "tn": 939,
+    "fp": 60,
+    "fn": 496,
+    "tp": 503,
+    "roc_auc": 0.8623468313158003
+  },
+  "notes": "Joint binary threshold selected on the combined validation sets at target FPR <= 5%. Test data never tunes thresholds."
+}

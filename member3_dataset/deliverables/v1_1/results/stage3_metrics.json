@@ -1,0 +1,240 @@
+{
+  "best_epoch": 29,
+  "real_test": {
+    "parameters": {
+      "exposure": {
+        "samples": 3228,
+        "mae": 0.24418173730373383,
+        "rmse": 0.3336558938026428
+      },
+      "temperature": {
+        "samples": 3228,
+        "mae": 353.22467041015625,
+        "rmse": 610.6013793945312
+      },
+      "tint": {
+        "samples": 3228,
+        "mae": 5.908349514007568,
+        "rmse": 8.213234901428223
+      },
+      "contrast": {
+        "samples": 3228,
+        "mae": 9.608701705932617,
+        "rmse": 13.041976928710938
+      },
+      "highlights": {
+        "samples": 3228,
+        "mae": 17.98387336730957,
+        "rmse": 22.855504989624023
+      },
+      "shadows": {
+        "samples": 3228,
+        "mae": 13.125161170959473,
+        "rmse": 16.4958438873291
+      },
+      "whites": {
+        "samples": 3228,
+        "mae": 15.32533073425293,
+        "rmse": 20.21786117553711
+      },
+      "blacks": {
+        "samples": 3228,
+        "mae": 11.234890937805176,
+        "rmse": 15.01206111907959
+      },
+      "clarity": {
+        "samples": 3228,
+        "mae": 1.9648045301437378,
+        "rmse": 2.650642156600952
+      },
+      "saturation": {
+        "samples": 3228,
+        "mae": 4.184873580932617,
+        "rmse": 6.517163276672363
+      },
+      "vibrance": {
+        "samples": 3228,
+        "mae": 7.075901508331299,
+        "rmse": 9.799858093261719
+      },
+      "texture": {
+        "samples": 1322,
+        "mae": 0.6379973292350769,
+        "rmse": 0.8605837821960449
+      }
+    },
+    "change_groups": {
+      "exposure_changed": {
+        "accuracy": 0.8956009913258984,
+        "precision": 0.8974199564811937,
+        "recall": 0.997581202487906,
+        "f1": 0.9448535427916871,
+        "roc_auc": 0.7488283626251298,
+        "false_positive_rate": 0.9880239520958084,
+        "specificity": 0.011976047904191617,
+        "confusion_matrix": {
+          "tn": 4,
+          "fp": 330,
+          "fn": 7,
+          "tp": 2887
+        }
+      },
+      "white_balance_changed": {
+        "accuracy": 0.8906443618339529,
+        "precision": 0.893134513824169,
+        "recall": 0.996879334257975,
+        "f1": 0.9421595936424709,
+        "roc_auc": 0.7261661169886785,
+        "false_positive_rate": 1.0,
+        "specificity": 0.0,
+        "confusion_matrix": {
+          "tn": 0,
+          "fp": 344,
+          "fn": 9,
+          "tp": 2875
+        }
+      },
+      "tone_changed": {
+        "accuracy": 0.9907063197026023,
+        "precision": 0.9916279069767442,
+        "recall": 0.9990627928772259,
+        "f1": 0.9953314659197012,
+        "roc_auc": 0.7246404480081456,
+        "false_positive_rate": 1.0,
+        "specificity": 0.0,
+        "confusion_matrix": {
+          "tn": 0,
+          "fp": 27,
+          "fn": 3,
+          "tp": 3198
+        }
+      }
+    }
+  },
+  "identity_test": {
+    "parameters": {
+      "exposure": {
+        "samples": 4408,
+        "mae": 0.008464574813842773,
+        "rmse": 0.01052496861666441
+      },
+      "temperature": {
+        "samples": 4408,
+        "mae": 4.027240753173828,
+        "rmse": 6.1882405281066895
+      },
+      "tint": {
+        "samples": 4408,
+        "mae": 0.047796398401260376,
+        "rmse": 0.05962320417165756
+      },
+      "contrast": {
+        "samples": 4408,
+        "mae": 0.1237138882279396,
+        "rmse": 0.15839838981628418
+      },
+      "highlights": {
+        "samples": 4408,
+        "mae": 0.8068677186965942,
+        "rmse": 1.0332441329956055
+      },
+      "shadows": {
+        "samples": 4408,
+        "mae": 0.4069419801235199,
+        "rmse": 0.5174880623817444
+      },
+      "whites": {
+        "samples": 4408,
+        "mae": 0.16306985914707184,
+        "rmse": 0.19896957278251648
+      },
+      "blacks": {
+        "samples": 4408,
+        "mae": 0.25255095958709717,
+        "rmse": 0.30193042755126953
+      },
+      "clarity": {
+        "samples": 4408,
+        "mae": 0.03791849687695503,
+        "rmse": 0.04670175537467003
+      },
+      "saturation": {
+        "samples": 4408,
+        "mae": 0.08043700456619263,
+        "rmse": 0.10300783067941666
+      },
+      "vibrance": {
+        "samples": 4408,
+        "mae": 0.11404795944690704,
+        "rmse": 0.147131085395813
+      },
+      "texture": {
+        "samples": 4408,
+        "mae": 0.012298871763050556,
+        "rmse": 0.015128225088119507
+      }
+    },
+    "change_groups": {
+      "exposure_changed": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": null,
+        "false_positive_rate": 0.0,
+        "specificity": 1.0,
+        "confusion_matrix": {
+          "tn": 4408,
+          "fp": 0,
+          "fn": 0,
+          "tp": 0
+        }
+      },
+      "white_balance_changed": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": null,
+        "false_positive_rate": 0.0,
+        "specificity": 1.0,
+        "confusion_matrix": {
+          "tn": 4408,
+          "fp": 0,
+          "fn": 0,
+          "tp": 0
+        }
+      },
+      "tone_changed": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": null,
+        "false_positive_rate": 0.0,
+        "specificity": 1.0,
+        "confusion_matrix": {
+          "tn": 4408,
+          "fp": 0,
+          "fn": 0,
+          "tp": 0
+        }
+      }
+    }
+  },
+  "dataset_sizes": {
+    "train": {
+      "real": 24442,
+      "identity": 33334
+    },
+    "validation": {
+      "real": 3021,
+      "identity": 4110
+    },
+    "test": {
+      "real": 3228,
+      "identity": 4408
+    }
+  },
+  "notes": "Identity controls are zero-change sanity negatives; harder JPEG/resize/screenshot negatives remain external tests."
+}

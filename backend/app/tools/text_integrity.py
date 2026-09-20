@@ -23,7 +23,7 @@ class TextIntegrityHandler(ToolHandler):
     name = "text_integrity"
     description = "T5 文本完整性、功效证据与用户解释：宣称提取、矛盾/夸大检测、披露检查、功效证据、通俗解释"
     mode = "rules"
-    version = "member4-v2.2"
+    version = "member4-final-v2"
 
     def handle(self, request: ToolRequest) -> dict[str, Any]:
         p = request.payload
@@ -42,10 +42,15 @@ class TextIntegrityHandler(ToolHandler):
                     claim=c["canonical_claim"], claim_type=c["canonical_claim"],
                     official_source=matches[0].get("source_url") if matches else None,
                     evidence_method=matches[0].get("evidence_type") if matches else None,
+                    evidence_level_original=matches[0].get("evidence_strength") if matches else None,
+                    limitations=matches[0].get("limitations", []) if matches else [],
                     evidence_level=Strength.MODERATE if matches else Strength.WEAK, matched=bool(matches)))
             issues = [IntegrityIssue(type="exaggerated_quantified", severity=Severity.MEDIUM,
                 detail=f"「{c['matched_text']}」含夸张表达，需核对证据边界") for c in analysis["claims"]
                 if c["is_exaggerated"] and c["polarity"] == "positive"]
+            if "零滤镜" in text or "原相机" in text:
+                issues.append(IntegrityIssue(type="cross_check", severity=Severity.LOW,
+                    detail="原相机/零滤镜表述需结合视觉证据复核，不能仅凭措辞认定冲突"))
             return TextIntegrityEvidence(claims=claims, efficacy_evidence=efficacy,
                 integrity_issues=issues, disclosure="unknown", member4_analysis=analysis,
                 user_explanation="；".join(f"{c['canonical_claim']}：{c['audience_explanation']}" for c in analysis["claims"])

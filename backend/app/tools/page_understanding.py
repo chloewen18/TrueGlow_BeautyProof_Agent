@@ -15,7 +15,7 @@ from .base import ToolHandler
 class PageUnderstandingHandler(ToolHandler):
     name = "page_understanding"
     description = "T1 页面理解与任务拆解：把用户浏览的内容转化为可分析对象与待核验任务清单"
-    mode = "mock"
+    mode = "real_rules_or_explicit_mock"
 
     def handle(self, request: ToolRequest) -> dict[str, Any]:
         p = request.payload

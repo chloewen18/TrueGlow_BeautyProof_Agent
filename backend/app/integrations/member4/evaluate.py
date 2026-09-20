@@ -31,7 +31,7 @@ def evaluate():
         output[sheet] = {"count":len(cases), "exact_match_count":exact,
                          "exact_match_rate":exact/len(cases), "micro_f1":2*tp/(2*tp+fp+fn) if tp+fp+fn else 0,
                          "errors":sum(c["error"] is not None for c in cases), "cases":cases}
-    return {"mode":"dictionary_rules_mock_semantic", "scope":"canonical claim sets only; no OCR/polarity/evidence validation",
+    return {"mode":"real_rules", "engine":"member4_final_v2", "scope":"canonical claim sets only; no OCR/polarity/evidence validation; previously used development sets, not an independent blind benchmark",
             "datasets":output}
 
 if __name__ == "__main__":

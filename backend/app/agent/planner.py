@@ -71,7 +71,7 @@ class Planner:
         # T4 前后对比：有 before/after 对才执行
         ba = content.get("before_after")
         if ba:
-            steps.append(ToolPlan(tool="before_after", payload=with_signals("before_after", {"before": ba["before"], "after": ba["after"], "claimed_effect": ba.get("claimed_effect")}), reason="判断前后对比可比较性与妆效归因"))
+            steps.append(ToolPlan(tool="before_after", payload=with_signals("before_after", {"before": ba["before"], "after": ba["after"], "mask": ba.get("mask"), "claimed_effect": ba.get("claimed_effect")}), reason="判断前后对比可比较性与妆效归因"))
         else:
             skipped.append("before_after: 未提供 before/after 素材，妆效归因无法判断")
 

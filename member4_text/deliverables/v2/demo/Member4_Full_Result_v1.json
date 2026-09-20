@@ -1,0 +1,43 @@
+{
+  "pipeline_name": "member4_full_demo",
+  "version": "v1",
+  "input": {
+    "image_path": "/Users/gracehan/Downloads/test.PNG",
+    "product_filter": null
+  },
+  "ocr": {
+    "extracted_text": "然后鼻翼也没有干卡",
+    "lines": [
+      {
+        "text": "然后鼻翼也没有干卡",
+        "confidence": 0.9874,
+        "source": "enhanced",
+        "chinese_ratio": 1.0,
+        "quality_score": 1.2174,
+        "merged_candidates": [
+          "然后鼻翼也没有干卡",
+          "然后鼻翼也没有干卡",
+          "然后鼻翼也没有千卡"
+        ]
+      }
+    ]
+  },
+  "claims": [
+    {
+      "canonical_claim": "不卡粉",
+      "matched_text": "没有干卡",
+      "polarity": "positive",
+      "strength": "medium",
+      "duration": null,
+      "is_slang": true,
+      "is_exaggerated": false,
+      "consumer_meaning": "简单说：粉底不容易在皮肤表面结块、浮起来，看上去更贴肤。",
+      "evidence_matches": [],
+      "audience_explanation": {
+        "status": "no_matching_evidence",
+        "evidence_strength": "None",
+        "consumer_explanation": "这条内容提到「不卡粉」，但目前这个 Demo 证据库里还没有找到与它直接对应的证据。更适合先把它当作个人使用体验或内容中的功效表达，不要直接理解成已经被验证的产品结论。"
+      }
+    }
+  ]
+}

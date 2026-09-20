@@ -108,7 +108,7 @@ class MainAgent:
             status="done",
             materials=creator_submission,
             review_result="补证材料已纳入复核",
-            credential={"scope": "来源真实性与拍摄条件", "date": "2026-09-02"},
+            credential=None,
         )
 
         tool_calls: list[dict[str, Any]] = []
@@ -119,13 +119,23 @@ class MainAgent:
             "signals": {"c2pa_status": "valid", "metadata_complete": True, "creator_submission_status": "done"},
             "creator_submission": creator_submission,
         }
+        if any(isinstance(m, dict) and str(m.get("ref", "")).startswith("uploads/") for m in t2_payload["files"]):
+            t2_payload.pop("signals", None)
         tr = ToolRequest(tool="source_trace", request_id=rid, payload=t2_payload)
         resp = registry.get("source_trace").run(tr)
-        tool_calls.append({"tool": "source_trace", "status": resp.status, "latency_ms": resp.meta.latency_ms, "evidence_keys": list(resp.evidence.keys()), "reason": "补证后重新核验来源"})
+        tool_calls.append({"tool": "source_trace", "status": resp.status, "model": resp.meta.model, "error": resp.error.model_dump() if resp.error else None, "latency_ms": resp.meta.latency_ms, "evidence_keys": list(resp.evidence.keys()), "reason": "补证后重新核验来源"})
 
         # 2) 基础证据：原证据层还原 + 补证后复测覆盖
         tool_results = self._collect_static_evidence(original_evidence)
         tool_results["source_trace"] = resp.evidence
+        originals = creator_submission.get("original_file") or []
+        real_uploads = [m for m in originals if isinstance(m, dict) and str(m.get("ref", "")).startswith("uploads/")]
+        if real_uploads:
+            recheck = dict(recheck or {})
+            recheck["image_forensics"] = {"images": real_uploads}
+            previous = original_evidence.visual_evidence.raw.get("per_image", [])
+            if previous:
+                recheck["before_after"] = {"before": real_uploads[0], "after": {"ref": previous[-1]["media_ref"], "kind": "image"}}
         for tool, payload in (recheck or {}).items():
             handler = registry.get(tool)
             if not handler:
@@ -133,7 +143,7 @@ class MainAgent:
             tr = ToolRequest(tool=tool, request_id=rid, payload=payload)
             r = handler.run(tr)
             tool_results[tool] = r.evidence
-            tool_calls.append({"tool": tool, "status": r.status, "latency_ms": r.meta.latency_ms, "evidence_keys": list(r.evidence.keys()), "reason": "补证后基于原始素材复测"})
+            tool_calls.append({"tool": tool, "status": r.status, "model": r.meta.model, "error": r.error.model_dump() if r.error else None, "latency_ms": r.meta.latency_ms, "evidence_keys": list(r.evidence.keys()), "reason": "补证后基于原始素材复测"})
 
         # 3) 重新融合 + 分级 + 报告
         layer = fuser.fuse(
@@ -146,6 +156,9 @@ class MainAgent:
         layer.agent_decision = decision
         layer.final_label = decision.final_label
         report = reporter.generate(layer, rid, tool_calls, content_id=content_id)
+        for call in tool_calls:
+            if call["status"] != "success":
+                report.limitations.append(f"{call['tool']} 复测未完整完成：{call.get('error') or '部分输出不可用'}")
 
         evidence_store.save_evidence(rid, layer)
 
@@ -160,7 +173,7 @@ class MainAgent:
         if cs is not None:
             credential = cs.credential if isinstance(cs, CreatorSubmission) else (cs.get("credential"))
         if real_source:
-            summary = f"补证文件已收件并解析元数据，当前结论为「{after_label}」。C2PA 尚未验证，未签发可信凭证；视觉检测仍为模拟实现。"
+            summary = f"补证文件已收件并解析元数据，当前结论为「{after_label}」。C2PA 尚未验证，未签发可信凭证；实际检测状态见证据链。"
         elif changed:
             summary = (
                 f"创作者补充原始素材并重新核验后，结论由「{before_label}」更新为「{after_label}」。"
@@ -220,6 +233,7 @@ class MainAgent:
                 "model": resp.meta.model,
                 "evidence_keys": list(resp.evidence.keys()),
                 "reason": step.reason,
+                "error": resp.error.model_dump() if resp.error else None,
             })
             trace.log(rid, "tool_call", tool=step.tool, status=resp.status, latency_ms=resp.meta.latency_ms)
             if resp.status in ("success", "partial"):
@@ -229,6 +243,9 @@ class MainAgent:
     # ------------------------------------------------------------------
     @staticmethod
     def _result(rid: str, report: FullReport, layer: EvidenceLayer, reviewed: bool = False) -> dict[str, Any]:
+        for call in report.tool_calls:
+            if call["status"] != "success":
+                report.limitations.append(f"{call['tool']} 未完整完成：{call.get('error') or '请查看模块错误详情'}")
         return {
             "request_id": rid,
             "content_id": report.content_id,

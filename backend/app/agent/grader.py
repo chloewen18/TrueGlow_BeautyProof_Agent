@@ -67,7 +67,7 @@ class RiskGrader:
         vis = ImageForensicsEvidence(**layer.visual_evidence.raw) if layer.visual_evidence.raw else None
 
         # 来源状态：C2PA 缺失/错误 且 无创作者补证 → Unknown（不判伪造，但无法确证真实性）
-        if src and src.c2pa.status in ("absent", "error") and layer.creator_submission.status != "done":
+        if src is None or src.c2pa.status in ("absent", "error"):
             p.source_unknown = True
             path.append("rule: c2pa=absent/error 且无补证 -> source_unknown=True")
 
@@ -77,15 +77,19 @@ class RiskGrader:
             path.append("rule: c2pa=invalid -> content_integrity=High")
         elif vis:
             hard_forge = (
-                vis.local_replacement.value != "Not detected"
-                or vis.splicing.value != "Not detected"
-                or vis.inpainting.value != "Not detected"
+                vis.local_replacement.value == "Detected"
+                or vis.splicing.value == "Detected"
+                or vis.inpainting.value == "Detected"
             )
             if hard_forge and vis.reliability.value in ("Medium", "High"):
                 p.content_integrity = RISK_HIGH
                 p.reasons.append("检出局部替换/拼接/inpainting 且可靠性达标")
                 path.append("rule: 硬篡改检出+可靠性达标 -> content_integrity=High")
-            elif vis.skin_smoothing.value == "High" or vis.ai_generated.value == "Detected":
+            elif getattr(vis, "trufor_score", None) is not None and vis.trufor_score >= 0.5:
+                p.content_integrity = RISK_MEDIUM
+                p.reasons.append("TruFor 可疑分超过演示参考阈值；未做美妆域校准，需人工复核")
+                path.append("rule: raw_trufor_score>=0.5 -> auxiliary suspicion only")
+            elif vis.skin_smoothing.value in ("Medium", "High") or vis.ai_generated.value == "Detected":
                 p.content_integrity = RISK_MEDIUM
                 p.reasons.append("较强平滑处理或 AI 生成痕迹，需结合可靠性综合判断")
                 path.append("rule: smoothing=High/ai=Detected -> content_integrity=Medium")
@@ -103,6 +107,10 @@ class RiskGrader:
                         p.content_integrity = RISK_HIGH
                         p.reasons.append("平滑处理与「原相机/零滤镜」宣称相互印证，直接影响核心功效表达")
                         path.append("rule: smoothing=High + 文案矛盾相互印证 -> content_integrity=High")
+            elif any(r.get("member3", {}).get("result", {}).get("generic_retouch", {}).get("detected") for r in layer.visual_evidence.raw.get("per_image", [])):
+                p.content_integrity = RISK_MEDIUM
+                p.reasons.append("通用修饰模型触发辅助信号，但不能确定操作或意图")
+                path.append("rule: member3 generic_retouch -> auxiliary suspicion only")
             elif src and src.metadata_anomalies:
                 p.content_integrity = RISK_MEDIUM
                 p.reasons.append("存在元数据异常")
@@ -118,29 +126,19 @@ class RiskGrader:
             from ..schemas.tools import BeforeAfterEvidence
 
             be = BeforeAfterEvidence(**ba)
-            reliability = be.comparison_reliability.value
-            # 归因强度 Unknown = 未计算或证据不足。按项目原则应落在「存疑」而非「高风险误导」，
-            # 也不能因为它不是 Low/Medium 就掉进「可比较、归因可靠」。
-            if be.attribution_strength.value == "Unknown":
+            if be.comparison_reliability.value == "Unknown":
                 p.attribution = RISK_MEDIUM
-                p.limitations.append("前后对比未产生有效计算结果，妆效归因无法判断（不等于可归因于产品）")
-                path.append("rule: attribution_strength=Unknown -> attribution=Medium(存疑)")
-            elif reliability == "Low":
+                p.limitations.append("前后对比不可可靠计算，妆效归因未知")
+            elif be.comparison_reliability.value == "Low":
                 p.attribution = RISK_HIGH
                 p.reasons.append("前后对比条件差异显著，效果归因不可靠")
                 path.append("rule: comparison_reliability=Low -> attribution=High")
-            elif reliability == "Medium":
+            elif be.comparison_reliability.value == "Medium":
                 p.attribution = RISK_MEDIUM
                 p.reasons.append("前后对比条件存在部分差异")
                 path.append("rule: comparison_reliability=Medium -> attribution=Medium")
-            elif reliability == "High":
-                p.attribution = RISK_LOW
-                path.append("rule: comparison_reliability=High -> attribution=Low")
             else:
-                # 枚举未来新增取值时不得落入默认的「可比较/可靠」分支，一律保守处理
-                p.attribution = RISK_MEDIUM
-                p.limitations.append(f"前后对比可靠性取值无法识别（{reliability}），按存疑处理")
-                path.append("rule: comparison_reliability 取值未知 -> attribution=Medium(存疑)")
+                path.append("rule: 前后对比可比较 -> attribution=Low")
         else:
             p.attribution = RISK_MEDIUM  # 缺失按中等风险处理并提示
             p.limitations.append("未提供 before/after 素材，妆效归因无法完整判断")
@@ -180,8 +178,8 @@ class RiskGrader:
         # ---- 置信度 ----
         reliabilities = [r.reliability.value for r in layer.tool_reliability if r.status == "success"]
         low_cnt = reliabilities.count("Low")
-        missing = [r for r in layer.tool_reliability if r.status == "missing"]
-        if low_cnt >= 2 or len(missing) >= 2:
+        missing = [r for r in layer.tool_reliability if r.status != "success"]
+        if low_cnt >= 1 or len(missing) >= 2:
             p.confidence = "Low"
         elif low_cnt == 1 or len(missing) == 1:
             p.confidence = "Medium"

@@ -18,6 +18,10 @@ CASE_A: dict[str, Any] = {
         "body_text": "这款粉底液上脸自然，遮瑕一般，持妆半天没问题。没有很惊艳，胜在价格合适。",
         "product": "某品牌粉底液",
         "media": [{"kind": "image", "ref": "sample_a_before.jpg"}],
+        "signals": {
+            "source_trace": {"c2pa_status": "absent", "metadata_complete": False},
+            "image_forensics": {"integrity_score": 0.82, "reliability": "Low", "notes": ["模拟案例A：预设信号，未执行真实图像检测"]},
+        },
     },
     "user_context": {"skin_type": "混合皮", "concerns": "遮瑕", "goal": "核验可信度"},
 }
@@ -38,6 +42,8 @@ CASE_B: dict[str, Any] = {
             "claimed_effect": "隐形毛孔",
         },
         "signals": {
+            "source_trace": {"c2pa_status": "absent", "metadata_complete": False},
+            "text_integrity": {"disclosure": "not_found"},
             "image_forensics": {
                 "integrity_score": 0.61,
                 "skin_smoothing": "High",

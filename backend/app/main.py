@@ -10,13 +10,12 @@ from __future__ import annotations
 from fastapi import FastAPI
 
 from .agent.router import router as agent_router
-from .config import settings
-from .integrations.member3 import register_member3_handlers
 from .media import router as media_router
 from .tools import register_builtin_tools
 from .tools.router import router as tools_router
 from .deliverables import router as deliverables_router
 from .member4_api import router as member4_router
+from .volunteers import router as volunteer_router
 
 app = FastAPI(
     title="TrueGlow 映真 - Main Agent",
@@ -25,14 +24,13 @@ app = FastAPI(
 )
 
 register_builtin_tools()
-# 成员 3 真实模型服务（member3_enabled=true 时替换 image_forensics / before_after）
-MEMBER3_TOOLS = register_member3_handlers()
 
 app.include_router(tools_router)
 app.include_router(agent_router)
 app.include_router(media_router)
 app.include_router(deliverables_router)
 app.include_router(member4_router)
+app.include_router(volunteer_router)
 
 
 @app.get("/", summary="服务信息")
@@ -43,5 +41,4 @@ def root() -> dict:
         "docs": "/docs",
         "tools": "/api/v1/tools",
         "verify": "POST /api/v1/verify",
-        "member3_tools": MEMBER3_TOOLS,
     }

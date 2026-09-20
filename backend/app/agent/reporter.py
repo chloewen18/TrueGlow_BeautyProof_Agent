@@ -98,6 +98,8 @@ class ReportGenerator:
         # 视觉/前后对比证据
         for item in evidence.visual_evidence.items:
             f = item.finding
+            if f.get("generic_retouch") == "Detected" or f.get("eyeenlarging") == "Detected":
+                findings.append(item.claim)
             sev = f.get("skin_smoothing") or f.get("texture_loss") or f.get("whitening") or f.get("exposure_shift")
             if sev in ("Medium", "High"):
                 findings.append(f"画面检出{sev.value if hasattr(sev, 'value') else sev}强度修饰痕迹：{item.claim}")
@@ -113,7 +115,7 @@ class ReportGenerator:
             if not any(c in f for f in findings):
                 findings.append(f"宣称存疑：{c}")
         if not findings:
-            findings.append("未发现足以影响主要结论的可疑处理痕迹")
+            findings.append("当前证据不足以作出确定判断；未触发规则不等于内容真实")
         return findings[:6]
 
     # ------------------------------------------------------------------
@@ -130,7 +132,7 @@ class ReportGenerator:
             if item.finding.get("level") == "Significant difference" and "前后" in item.claim:
                 impact.append("前后拍摄条件不一致会干扰对产品真实效果的判断")
         if not impact:
-            impact.append("当前证据未显示明显会影响判断的加工痕迹")
+            impact.append("当前未形成明确影响判断的证据，仍需结合检测局限与原始素材")
 
         # 2) 哪些信息仍可参考？
         if label == FinalLabel.VERIFIED:
@@ -160,7 +162,7 @@ class ReportGenerator:
     def _creator_actions(evidence: EvidenceLayer) -> list[str]:
         base = ["原始视频/未压缩图片", "滤镜参数与拍摄设置", "同条件复测片段"]
         if evidence.creator_submission.status in ("received", "processing", "done"):
-            return ["已提交补证材料，系统将重新核验", "复核通过后可获得「可信妆效凭证」"]
+            return ["已提交补证材料，仍需结合原始素材复核", "当前不签发来源认证或功效证明"]
         return base
 
     # ------------------------------------------------------------------
@@ -188,6 +190,13 @@ class ReportGenerator:
     # ------------------------------------------------------------------
     def _limitations(self, evidence: EvidenceLayer, label: FinalLabel) -> list[str]:
         limitations = ["Not detected 不等于一定没有，只表示当前证据中未检出"]
+        for section in (evidence.visual_evidence, evidence.before_after_evidence):
+            limitations.extend(section.raw.get("notes", []))
+            limitations.extend(section.raw.get("limitations", []))
+        modes = {section.raw.get("provenance", {}).get("mode") for section in
+                 (evidence.source_evidence, evidence.visual_evidence, evidence.before_after_evidence, evidence.text_evidence)}
+        if "mock" in modes:
+            limitations.append("含模拟证据，仅供流程演示，不能用于内容真实性判断。")
         if evidence.source_evidence.raw.get("c2pa", {}).get("status") in ("absent", "error"):
             limitations.append("未核验到 C2PA/来源信息，真实性无法确证（C2PA 缺失≠伪造）")
         if not evidence.before_after_evidence.raw:

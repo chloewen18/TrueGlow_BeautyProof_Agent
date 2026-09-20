@@ -3,6 +3,7 @@ import json
 import tempfile
 import shutil
 from pathlib import Path
+from ...paths import MEMBER4_CURRENT
 
 from .claim_extractor import (
     ClaimExtractor,
@@ -157,11 +158,11 @@ def main():
     parser.add_argument("--image", required=True)
     parser.add_argument(
         "--dictionary",
-        default=str(Path(__file__).resolve().parents[4] / "data/deliverables/member4/Claim Dictionary V2.2.xlsx")
+        default=str(MEMBER4_CURRENT / "Foundation_Claim_Dictionary_V2_2_Separate_Slang_Exaggerated.xlsx")
     )
     parser.add_argument(
         "--evidence",
-        default=str(Path(__file__).resolve().parents[4] / "data/deliverables/member4/Mini功效证据JSON.json")
+        default=str(MEMBER4_CURRENT / "Member4_Mini_Efficacy_Evidence_Library_v2.json")
     )
     parser.add_argument(
         "--product",

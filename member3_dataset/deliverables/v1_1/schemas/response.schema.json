@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://beautyproof.local/schemas/member3-response-v1.1.json",
+  "title": "BeautyProof Member-3 Tool Response",
+  "type": "object",
+  "required": ["schema_version", "tool", "request_id", "status", "mode", "engine", "provenance", "result", "evidence", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "tool": {"const": "beauty_effect_attribution"},
+    "request_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["ok", "error"]},
+    "mode": {"enum": ["single_image", "before_after_pair"]},
+    "engine": {
+      "type": "object",
+      "required": ["name", "version", "device", "routes"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "device": {"type": "string"},
+        "routes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["model_manifest", "model_integrity", "model_sha256", "content_provenance", "content_provenance_owner"],
+      "properties": {
+        "model_manifest": {"type": "string"},
+        "model_integrity": {"enum": ["verified", "invalid", "unknown"]},
+        "model_sha256": {"type": "object", "additionalProperties": {"type": "string"}},
+        "content_provenance": {"enum": ["not_checked", "verified", "invalid", "unknown"]},
+        "content_provenance_owner": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "result": {
+      "type": "object",
+      "required": ["comparison_reliability"],
+      "properties": {
+        "comparison_reliability": {"enum": ["Low", "Medium", "High", "Unknown"]}
+      },
+      "additionalProperties": true
+    },
+    "consumer_explanation": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "label", "reliability"],
+        "properties": {
+          "type": {"type": "string"},
+          "label": {"type": "string"},
+          "score": {"type": "number", "minimum": 0, "maximum": 1},
+          "reliability": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

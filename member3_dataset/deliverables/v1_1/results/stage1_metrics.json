@@ -1,0 +1,40 @@
+{
+  "device": "mps",
+  "best_epoch": 7,
+  "validation_threshold_selection": {
+    "target_false_positive_rate": 0.05,
+    "selected_threshold": 0.731,
+    "metrics": {
+      "threshold": 0.731,
+      "accuracy": 0.871,
+      "precision": 0.94377990430622,
+      "recall": 0.789,
+      "f1": 0.8594771241830066,
+      "false_positive_rate": 0.047,
+      "tn": 953,
+      "fp": 47,
+      "fn": 211,
+      "tp": 789,
+      "roc_auc": 0.957119
+    }
+  },
+  "test_metrics": {
+    "threshold": 0.731,
+    "accuracy": 0.8623623623623624,
+    "precision": 0.9289099526066351,
+    "recall": 0.7847847847847848,
+    "f1": 0.8507867607162235,
+    "false_positive_rate": 0.06006006006006006,
+    "tn": 939,
+    "fp": 60,
+    "fn": 215,
+    "tp": 784,
+    "roc_auc": 0.9477014552089628
+  },
+  "dataset_sizes": {
+    "train": 10000,
+    "validation": 2000,
+    "test": 1998
+  },
+  "scope_warning": "FFHQR supports generic professional-retouch binary detection only; it has no fine-grained operation or intensity labels."
+}

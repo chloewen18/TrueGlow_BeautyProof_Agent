@@ -1,7 +1,10 @@
 import pandas as pd
 import streamlit as st
 
-from backend.app.deliverables import DATASET, TRUFOR, dataset_records, trufor_results
+from backend.app.deliverables import DATASET, dataset_records
+from api.evidence_ui import show_artifact
+import json
+from pathlib import Path
 
 
 def render_team_deliverables():
@@ -14,21 +17,23 @@ def render_team_deliverables():
     pair_id = st.selectbox("配对编号", selected["pair_id"].tolist())
     row = selected[selected["pair_id"] == pair_id].iloc[0]
     before, after = st.columns(2)
-    before.image(str(DATASET / row["original_path"]), caption="FFHQ 原图", use_container_width=True)
-    after.image(str(DATASET / row["retouched_path"]), caption="FFHQR 专业修饰", use_container_width=True)
+    before.image(str(DATASET / row["original_path"]), caption="FFHQ 原图", width="stretch")
+    after.image(str(DATASET / row["retouched_path"]), caption="FFHQR 专业修饰", width="stretch")
     st.caption(f"作者：{row['ffhq_author']} · 原图许可：{row['ffhq_license']} · 修饰图许可：{row['ffhqr_license']}")
     st.dataframe(selected, hide_index=True)
 
-    st.subheader("TruFor 交付样例")
-    st.warning("这4组评分和图片由模拟逻辑生成。交付包不含推理脚本、模型权重或输入原图，不能检测新上传图片。")
-    threshold = st.slider("可疑分阈值", 0.0, 1.0, 0.65, 0.01)
-    results = trufor_results(threshold)
-    left, right = st.columns(2)
-    left.metric("样例误报率", f"{results['false_positive_rate']:.0%}")
-    right.metric("样例检出率", f"{results['true_positive_rate']:.0%}")
-    st.dataframe(results["samples"], hide_index=True)
-    sample = st.selectbox("结果样例", [r["sample"] for r in results["samples"]])
-    left, right = st.columns(2)
-    left.image(str(TRUFOR / f"{sample}_localization_map.png"), caption="交付定位图")
-    right.image(str(TRUFOR / f"{sample}_confidence_map.png"), caption="交付置信度图")
-    st.caption("按交付分数重新计算：阈值0.65时误报率为0%；原报告的50%为计算错误。以上不是模型实测性能。")
+    path = Path(__file__).resolve().parents[1] / "data/integrated_evaluation.json"
+    if path.exists():
+        st.subheader("本机 TruFor 真实推理样例")
+        for item in json.loads(path.read_text(encoding="utf-8")).get("trufor_live", []):
+            tf = item.get("output")
+            if not tf:
+                st.warning(item.get("error"))
+                continue
+            st.write(f"{item['sample']} · 可疑分 {tf['trufor_score']:.3f}")
+            a,b = st.columns(2)
+            with a:
+                show_artifact(tf["manipulation_map"], "异常定位 · 黑0 / 红1")
+            with b:
+                show_artifact(tf["reliability_map"], "定位置信度 · 黑0 / 红1")
+            st.caption("原始输出、权重哈希和输入哈希见评测导出。历史模拟包仅存档，不再作为评测数字展示。")

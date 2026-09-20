@@ -25,6 +25,11 @@ from .common import (
 )
 
 
+class ComputedEvidence(BaseModel):
+    model_config = {"extra": "allow"}
+    provenance: dict[str, Any] = Field(default_factory=dict)
+
+
 # ---------------------------------------------------------------------------
 # T1 页面理解与任务拆解
 # ---------------------------------------------------------------------------
@@ -49,7 +54,7 @@ class PageUnderstandingRequest(BaseModel):
     )
 
 
-class PageUnderstandingEvidence(BaseModel):
+class PageUnderstandingEvidence(ComputedEvidence):
     """输出：可分析对象 + 待核验任务清单。"""
 
     content_type: str = Field(..., description="如 foundation_before_after_review / unboxing / single_try_on")
@@ -67,20 +72,9 @@ class PageUnderstandingEvidence(BaseModel):
 # T2 来源溯源与创作者证明
 # ---------------------------------------------------------------------------
 class C2paInfo(BaseModel):
-    """C2PA / Content Credentials 状态。
+    """C2PA / Content Credentials 状态。"""
 
-    状态语义（成员 2 规整为三态区分，避免一律返回 error 掩盖真实情况）：
-      - valid              检测到 C2PA 数据且签名验证通过
-      - invalid            检测到 C2PA 数据但签名验证失败
-      - absent             未检测到 C2PA 数据（不含凭证或已被平台剥离）→ 不代表伪造，按 Unknown
-      - not_verified       检测到疑似 C2PA 数据，但当前环境无签名验证库 → Unknown，不作为判真/判假依据
-      - unsupported_format 文件格式不在可检查范围内
-      - error              读取/解析过程异常
-    """
-
-    status: Literal[
-        "valid", "invalid", "absent", "not_verified", "unsupported_format", "error"
-    ] = "absent"
+    status: Literal["valid", "invalid", "absent", "error"] = "absent"
     detail: Optional[str] = None
 
 
@@ -93,7 +87,7 @@ class SourceTraceRequest(BaseModel):
     )
 
 
-class SourceTraceEvidence(BaseModel):
+class SourceTraceEvidence(ComputedEvidence):
     """输出：来源信息 + 元数据异常 + 文件基础信息。"""
 
     c2pa: C2paInfo = Field(default_factory=C2paInfo)
@@ -123,10 +117,10 @@ class ManipulationMapRef(BaseModel):
     value: str = Field(..., description="热力图引用或说明")
 
 
-class ImageForensicsEvidence(BaseModel):
+class ImageForensicsEvidence(ComputedEvidence):
     """输出：通用鉴伪 + 底妆专项。"""
 
-    integrity_score: float = Field(..., ge=0.0, le=1.0, description="全图完整性评分（仅作参考，不单独定罪）")
+    integrity_score: Optional[float] = Field(None, ge=0.0, le=1.0, description="1-TruFor可疑分数；失败时为空")
     manipulation_map: Optional[ManipulationMapRef] = Field(None, description="像素级可疑区域图")
     reliability_map: Optional[ManipulationMapRef] = Field(None, description="可靠性图")
     local_replacement: DetectStatus = DetectStatus.NOT_DETECTED
@@ -161,7 +155,7 @@ class ConsistencyDimension(BaseModel):
     detail: str = Field(..., description="如 'After +24% 曝光' / 'After 平滑强于 Before'")
 
 
-class BeforeAfterEvidence(BaseModel):
+class BeforeAfterEvidence(ComputedEvidence):
     """输出：可比较性 + 归因提示。"""
 
     dimensions: list[ConsistencyDimension] = Field(default_factory=list)
@@ -197,6 +191,9 @@ class EfficacyEvidence(BaseModel):
     """功效证据检索结果（对应方案文档功效证据库结构）。"""
 
     product: str
+    evidence_level_original: Optional[str] = None
+    limitations: list[str] = Field(default_factory=list)
+    source_verification: str = "delivery_library_not_online_verified"
     claim: str
     claim_type: str = Field(..., description="如 抗皱/紧致/舒缓/控油/遮瑕/持妆")
     evidence_method: Optional[str] = None
@@ -216,7 +213,7 @@ class TextIntegrityRequest(BaseModel):
     user_context: dict[str, Any] = Field(default_factory=dict)
 
 
-class TextIntegrityEvidence(BaseModel):
+class TextIntegrityEvidence(ComputedEvidence):
     """输出：文本完整性 + 功效证据 + 用户解释。"""
 
     claims: list[Claim] = Field(default_factory=list)

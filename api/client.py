@@ -52,4 +52,4 @@ def submit_creator_evidence(content_id, original_request_id, original_file, filt
             "shooting_params": {"description": filter_info},
         },
     }
-    return _result(requests.post(f"{API_BASE_URL}/api/v1/creators/review", json=payload, timeout=120))
+    return _result(requests.post(f"{API_BASE_URL}/api/v1/creators/review", json=payload, timeout=600))

@@ -1,0 +1,412 @@
+{
+  "version": "v2",
+  "purpose": "Demo efficacy evidence library with explicit evidence level, official source, and limitations",
+  "important_note": "证据等级用于 Demo 中的信息排序，不等同于独立医学或科学验证。品牌官网和品牌消费者测试均属于品牌提供的信息，应结合测试设计、样本量、使用环境和个体差异理解。",
+  "products": [
+    {
+      "product_name": "L'Oréal Paris Infallible 32 Hour Fresh Wear Foundation",
+      "claims": [
+        {
+          "canonical_claim": "32小时持妆",
+          "claim_text": "Up to 32 hours of staying power",
+          "evidence_type": "品牌测试声明",
+          "evidence_detail": "官方产品页写明该产品经过最长 32 小时持妆测试（Tested for up to 32 hours of wear）。",
+          "evidence_strength": "Medium-High",
+          "supports_claim": true,
+          "consumer_explanation": "这个“最长32小时持妆”的说法有品牌测试说明支持，比单纯营销文案更有参考价值，但页面没有公开完整测试方法，因此不能理解成所有人都一定能持妆32小时。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond",
+          "evidence_level_cn": "中高",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "标注时长通常表示特定测试条件下的最长或目标表现，不代表所有用户都能达到相同时长。"
+          ]
+        },
+        {
+          "canonical_claim": "抗转移",
+          "claim_text": "Transfer-resistant",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页明确写明 transfer-resistant。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持“抗转移”这一功效，但没有公开具体摩擦次数或测试条件，所以更适合表述为“有品牌证据支持”，而不是“完全不蹭”。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        },
+        {
+          "canonical_claim": "中高遮瑕",
+          "claim_text": "Medium-to-full buildable coverage",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页描述为 medium-to-full buildable coverage。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持它具有可叠加的中到高遮瑕力，但遮瑕效果仍会受到用量、肤况和瑕疵类型影响。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/infallible-32-hour-fresh-wear-foundation-lightweight-487-warm-almond"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        }
+      ]
+    },
+    {
+      "product_name": "L'Oréal Paris True Match Super-Blendable Foundation",
+      "claims": [
+        {
+          "canonical_claim": "24小时保湿",
+          "claim_text": "24-hour hydration",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页写明含透明质酸并提供 24-hour hydration。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持“24小时保湿”的说法，但页面没有公开完整的保湿仪器测试数据，所以目前属于品牌层面的功效证据。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "标注时长通常表示特定测试条件下的最长或目标表现，不代表所有用户都能达到相同时长。"
+          ]
+        },
+        {
+          "canonical_claim": "中等遮瑕",
+          "claim_text": "Medium, buildable coverage",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页描述为 medium, buildable coverage。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "产品定位本身就是中等、可叠加遮瑕，因此这一说法有官方信息支持，但最终遮盖程度仍和用量及瑕疵深浅有关。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        },
+        {
+          "canonical_claim": "均匀肤色",
+          "claim_text": "Evens skin tone and conceals redness/dark spots",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页写明可均匀肤色、遮盖泛红和色斑。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持“均匀肤色”和一定程度遮盖泛红、色斑，但没有看到独立第三方测试，因此属于品牌提供的功效信息。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        },
+        {
+          "canonical_claim": "色号匹配",
+          "claim_text": "99% found their True Match",
+          "evidence_type": "消费者测试",
+          "evidence_detail": "官方页面写明在 312 名女性消费者测试中，99% 找到了合适色号。",
+          "evidence_strength": "High",
+          "supports_claim": true,
+          "consumer_explanation": "这个色号匹配说法有明确消费者测试样本数（312人）和结果（99%）支持，因此在这个证据库里属于相对较强的证据。",
+          "source_url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup",
+          "evidence_level_cn": "高",
+          "official_source": {
+            "source_name": "L'Oréal Paris USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lorealparisusa.com/makeup/face/foundation-makeup/true-match-super-blendable-makeup"
+          },
+          "limitations": [
+            "消费者测试结果受样本构成、测试设计和使用场景影响，不能直接外推到所有消费者。",
+            "色号匹配结果受参与者肤色分布、色号范围及个人匹配标准影响。"
+          ]
+        }
+      ]
+    },
+    {
+      "product_name": "Maybelline Super Stay Lumi-Matte Foundation",
+      "claims": [
+        {
+          "canonical_claim": "30小时持妆",
+          "claim_text": "Up to 30-hour wear",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页写明 up to 30-hour wear，但页面未公开详细测试方法。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "“最长30小时持妆”有官方产品资料支持，但缺少公开的测试细节，所以可以说“品牌有这一功效声明”，不应说成已经被独立验证。",
+          "source_url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Maybelline USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "标注时长通常表示特定测试条件下的最长或目标表现，不代表所有用户都能达到相同时长。"
+          ]
+        },
+        {
+          "canonical_claim": "中高遮瑕",
+          "claim_text": "Buildable medium-to-full coverage",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页明确描述为可叠加的中到高遮瑕。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持中到高遮瑕定位，但具体能遮多少痘印、斑点仍需结合实际使用画面判断。",
+          "source_url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Maybelline USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        },
+        {
+          "canonical_claim": "防汗",
+          "claim_text": "Sweat-resistant",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页写明配方可抵抗 sweat。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持“抗汗”这一说法，但没有看到具体汗液测试条件，因此更适合作为品牌功效证据。",
+          "source_url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Maybelline USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        },
+        {
+          "canonical_claim": "抗转移",
+          "claim_text": "Transfer-resistant",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方页面写明 flexible film 可抵抗 transfer。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "有官方资料支持抗转移，但“抗转移”不等于“完全不沾口罩或纸巾”。",
+          "source_url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Maybelline USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.maybelline.com/face-makeup/foundation-makeup/super-stay-lumi-matte-foundation"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        }
+      ]
+    },
+    {
+      "product_name": "Lancôme Teint Idole Ultra Wear Foundation",
+      "claims": [
+        {
+          "canonical_claim": "24小时持妆",
+          "claim_text": "Up to 24-hour undetectable long wear",
+          "evidence_type": "消费者测试",
+          "evidence_detail": "官方产品页明确标注该长效持妆说法来自 consumer test。",
+          "evidence_strength": "High",
+          "supports_claim": true,
+          "consumer_explanation": "“最长24小时持妆”有消费者测试支持，因此比单纯产品描述更可靠；不过页面仍未公开完整测试方法，所以不能理解成每个人都一定达到24小时。",
+          "source_url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html",
+          "evidence_level_cn": "高",
+          "official_source": {
+            "source_name": "Lancôme USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html"
+          },
+          "limitations": [
+            "消费者测试结果受样本构成、测试设计和使用场景影响，不能直接外推到所有消费者。",
+            "标注时长通常表示特定测试条件下的最长或目标表现，不代表所有用户都能达到相同时长。"
+          ]
+        },
+        {
+          "canonical_claim": "不卡纹",
+          "claim_text": "Doesn't crease, cake or settle into fine lines",
+          "evidence_type": "消费者测试",
+          "evidence_detail": "官方页面将不卡纹、不卡粉、不过度沉积于细纹等描述标注为 consumer test。",
+          "evidence_strength": "High",
+          "supports_claim": true,
+          "consumer_explanation": "这类妆面表现有消费者测试作为依据，因此有较强支持，但实际结果仍可能受到干皮状态、底妆搭配和用量影响。",
+          "source_url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html",
+          "evidence_level_cn": "高",
+          "official_source": {
+            "source_name": "Lancôme USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html"
+          },
+          "limitations": [
+            "消费者测试结果受样本构成、测试设计和使用场景影响，不能直接外推到所有消费者。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        },
+        {
+          "canonical_claim": "抗转移",
+          "claim_text": "Transfer-resistant",
+          "evidence_type": "消费者测试",
+          "evidence_detail": "官方产品页将 sweat, humidity & transfer-resistant 标注为 consumer test。",
+          "evidence_strength": "High",
+          "supports_claim": true,
+          "consumer_explanation": "抗转移表现有消费者测试支持，但仍不应翻译成“完全零转移”。",
+          "source_url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html",
+          "evidence_level_cn": "高",
+          "official_source": {
+            "source_name": "Lancôme USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html"
+          },
+          "limitations": [
+            "消费者测试结果受样本构成、测试设计和使用场景影响，不能直接外推到所有消费者。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        },
+        {
+          "canonical_claim": "防汗",
+          "claim_text": "Sweat-resistant",
+          "evidence_type": "消费者测试",
+          "evidence_detail": "官方产品页把抗汗表现列在 consumer test 支持项中。",
+          "evidence_strength": "High",
+          "supports_claim": true,
+          "consumer_explanation": "有消费者测试支持抗汗表现，因此相对有参考价值，但并不代表在所有运动、高温或高湿环境下都完全不受影响。",
+          "source_url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html",
+          "evidence_level_cn": "高",
+          "official_source": {
+            "source_name": "Lancôme USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.lancome-usa.com/makeup/face-makeup/foundation/teint-idole-ultra-wear-foundation/3614273793445.html"
+          },
+          "limitations": [
+            "消费者测试结果受样本构成、测试设计和使用场景影响，不能直接外推到所有消费者。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        }
+      ]
+    },
+    {
+      "product_name": "Giorgio Armani Power Fabric + Foundation",
+      "claims": [
+        {
+          "canonical_claim": "24小时持妆",
+          "claim_text": "Up to 24 hours of wear and comfort",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页写明 up to 24 hours of wear and comfort，但未公开具体测试说明。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方资料支持最长24小时持妆和舒适度的说法，但缺少公开测试细节，因此证据强度低于明确标注 consumer test 的项目。",
+          "source_url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Giorgio Armani Beauty USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "标注时长通常表示特定测试条件下的最长或目标表现，不代表所有用户都能达到相同时长。"
+          ]
+        },
+        {
+          "canonical_claim": "中高遮瑕",
+          "claim_text": "Medium to full coverage",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方页面描述为 medium to full coverage。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "官方定位支持中到高遮瑕，但具体遮盖效果仍需看实际肤况和上妆量。",
+          "source_url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Giorgio Armani Beauty USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "实际妆效会受到肤质、皮肤状态、用量、上妆工具及底妆搭配影响。"
+          ]
+        },
+        {
+          "canonical_claim": "防汗",
+          "claim_text": "Sweat-resistant",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页描述为 sweat-resistant。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "品牌资料支持抗汗，但没有公开测试条件，所以更适合作为品牌证据，而不是独立验证结果。",
+          "source_url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Giorgio Armani Beauty USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        },
+        {
+          "canonical_claim": "抗转移",
+          "claim_text": "Transfer-resistant",
+          "evidence_type": "官方产品声明",
+          "evidence_detail": "官方产品页明确写明 transfer-resistant。",
+          "evidence_strength": "Medium",
+          "supports_claim": true,
+          "consumer_explanation": "品牌资料支持抗转移，但仍不能等同于任何情况下都完全不蹭妆。",
+          "source_url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html",
+          "evidence_level_cn": "中",
+          "official_source": {
+            "source_name": "Giorgio Armani Beauty USA 官方产品页",
+            "source_type": "品牌官网",
+            "url": "https://www.giorgioarmanibeauty-usa.com/makeup/foundation-makeup/liquid-foundation/power-fabric-foundation/A20177.html"
+          },
+          "limitations": [
+            "证据主要来自品牌官方页面，不等同于独立第三方验证。",
+            "抗转移或抗汗不等于在所有摩擦、高温、高湿或运动环境下完全无转移、无脱妆。"
+          ]
+        }
+      ]
+    }
+  ]
+}

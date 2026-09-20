@@ -15,10 +15,13 @@ from .base import ToolHandler
 class BeforeAfterHandler(ToolHandler):
     name = "before_after"
     description = "T4 前后对比一致性与妆效归因：人脸角度/裁切/曝光/白平衡/皮肤纹理/平滑强度 + 归因结论"
-    mode = "mock"
+    mode = "real_or_explicit_mock"
+    version = "member3-1.1-integrated"
 
     def handle(self, request: ToolRequest) -> dict[str, Any]:
         p = request.payload
+        if "signals" not in p:
+            return self.real(request)
         s = p.get("signals", {})
 
         dims_raw = s.get("dimensions", p.get("dimensions"))
@@ -79,6 +82,30 @@ class BeforeAfterHandler(ToolHandler):
             ),
         )
         return evidence.model_dump(exclude_none=True)
+
+    def real(self, request):
+        from ..integrations.visual import uploaded_path, pair, pair_difference
+        p = request.payload
+        if not p.get("before") or not p.get("after"):
+            return {"dimensions": [], "comparison_reliability": "Unknown", "attribution_strength": "Unknown",
+                    "attribution_summary": "缺少前后图片，未计算。", "_status": "partial"}
+        before, after = uploaded_path(p["before"]), uploaded_path(p["after"])
+        mask = uploaded_path(p["mask"]) if p.get("mask") else None
+        result = pair(before, after, request.request_id, mask)
+        difference = pair_difference(before, after)
+        reliability = result["result"]["comparison_reliability"]
+        if difference["status"] != "success":
+            reliability = "Unknown"
+        dims = [{"dimension": cue, "level": "Different", "detail": f"模型估计存在{cue}；不是产品因果证据"}
+                for cue in result["result"]["reliability_rule_cues"]]
+        if not dims:
+            dims = [{"dimension": "条件差异", "level": "Unknown", "detail": "未触发强差异规则，不等于条件完全一致。"}]
+        return {"dimensions": dims, "comparison_reliability": reliability,
+                "attribution_summary": "仅评估对比条件；不能判断产品贡献。" if reliability != "Low" else result["consumer_explanation"],
+                "attribution_strength": "Unknown", "member3_analysis": result, "difference": difference,
+                "limitations": result["limitations"] + difference.get("limitations", []) +
+                               ([difference["reason"]] if difference.get("reason") else []),
+                "suggested_viewer_actions": ["补充同条件、无滤镜、可追溯的原始素材"]}
 
 
 handler = BeforeAfterHandler()

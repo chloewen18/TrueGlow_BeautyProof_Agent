@@ -3,10 +3,11 @@ import csv
 from pathlib import Path
 
 from fastapi import APIRouter
+from .paths import MEMBER2_LEGACY
 
 ROOT = Path(__file__).resolve().parents[2]
 DATASET = ROOT / "data/datasets/FFHQ_FFHQR_100_pairs_v1"
-TRUFOR = ROOT / "data/deliverables/TruFor_交付物"
+TRUFOR = MEMBER2_LEGACY
 router = APIRouter(prefix="/api/v1/deliverables", tags=["deliverables"])
 
 

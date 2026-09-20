@@ -13,7 +13,7 @@ def verify(text, product, image=None, before=None, comments=""):
         first = _upload(before)
         payload["content"]["media"].insert(0,first)
         payload["content"]["before_after"] = {"before":first,"after":media[-1]}
-    return _result(requests.post(f"{API_BASE_URL}/api/v1/verify",json=payload,timeout=120))
+    return _result(requests.post(f"{API_BASE_URL}/api/v1/verify",json=payload,timeout=600))
 
 def demo(case):
     result = _result(requests.post(f"{API_BASE_URL}/api/v1/verify",

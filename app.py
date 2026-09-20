@@ -6,6 +6,8 @@ from api.client import submit_creator_evidence
 from api.workbench_client import verify, demo, ocr
 from api.member4_ui import render_member4
 from api.deliverables_ui import render_team_deliverables
+from api.evidence_ui import render_evidence, render_collection
+from api.evaluation_ui import render_evaluation
 
 ROOT = Path(__file__).resolve().parent
 st.set_page_config(page_title="TrueGlow 映真 · 内容信任工作台",page_icon=":material/verified_user:",layout="wide")
@@ -31,7 +33,8 @@ def render_report(result):
     c1,c2 = st.columns([3,1])
     with c1:
         st.subheader(card.get("verdict_label","待核验"))
-        st.caption("演示案例 · 预设检测信号" if result.get("demo_mode") else "辅助判断 · 图像检测仍为模拟，不能作为真实鉴伪结论")
+        modes = {c.get("model") for c in report.get("tool_calls", [])}
+        st.caption("模拟演示 · 不构成真实核验结论" if result.get("demo_mode") or "mock" in modes else "真实处理 · 模型信号仅供辅助，不能证明造假意图或产品因果")
     with c2:
         st.download_button("导出报告",json.dumps(result,ensure_ascii=False,indent=2),
             file_name=f"trueglow-{result['request_id']}.json",mime="application/json",icon=":material/download:")
@@ -51,6 +54,7 @@ def render_report(result):
             st.info(result["review_summary"])
         st.caption("核验记录")
         st.code(result.get("request_id",""),language=None)
+    render_evidence(report)
     with st.expander("证据链与检测状态"):
         st.dataframe(report.get("tool_calls",[]),hide_index=True)
         st.json(card.get("advanced",{}))
@@ -60,7 +64,8 @@ with st.sidebar:
     page = st.radio("工作区",PAGES,label_visibility="collapsed")
     st.divider()
     st.caption("当前能力")
-    st.markdown("EXIF / OCR　已接入\n\n文案 / 功效　规则与资料库\n\n图像鉴伪　模拟演示\n\nC2PA 认证　尚未接入")
+    st.markdown("EXIF / OCR　真实处理\n\n文案 / 功效　新版规则与资料库\n\nTruFor / 修饰模型　已接入\n\n前后条件　模型估计 + 差异图\n\nC2PA 认证　尚未接入")
+    st.caption("运行成功与否以每次报告状态为准")
     st.divider()
     st.caption("信任守护师 · 创造者的 AI 卫士")
     st.link_button("赛道二", "https://tianchi.aliyun.com/competition/entrance/532496",icon=":material/open_in_new:")
@@ -84,7 +89,7 @@ if page == "内容核验":
                 except Exception as exc:
                     st.error(f"案例运行失败：{exc}")
         else:
-            uploaded = st.file_uploader("图片 / 内容截图",type=["jpg","jpeg","png"],key="verify_image")
+            uploaded = st.file_uploader("图片 / 内容截图",type=["jpg","jpeg","png"],key="verify_image",max_upload_size=20)
             if st.button("提取图片文字",icon=":material/document_scanner:",disabled=uploaded is None):
                 try:
                     with st.spinner("正在识别……"):
@@ -94,7 +99,7 @@ if page == "内容核验":
             text = st.text_area("文案",key="verify_text",height=110,placeholder="种草文案、产品宣称或图片中的文字")
             product = st.text_input("产品名称（可选）",placeholder="填写完整产品名以匹配功效资料")
             with st.expander("前后对比与评论"):
-                before = st.file_uploader("使用前图片",type=["jpg","jpeg","png"],key="verify_before")
+                before = st.file_uploader("使用前图片",type=["jpg","jpeg","png"],key="verify_before",max_upload_size=20)
                 comments = st.text_area("评论（每行一条）",key="verify_comments")
             if st.button("开始核验",type="primary",icon=":material/fact_check:"):
                 if not text.strip() and not uploaded:
@@ -119,7 +124,7 @@ if page == "内容核验":
             two.image(str(folder/"retouched/00001.png"),caption="专业修饰",width="stretch")
             st.caption("FFHQ / FFHQR 配对样例 · Cyber Shaman · 原图 Attribution / 修饰 CC BY-NC-SA 4.0。样例不代表当前检测结果。")
         st.markdown('<div class="scope"><b>核验关注</b><p>来源与元数据</p><p>画面修饰与前后条件</p><p>文案宣称与功效证据</p></div>',unsafe_allow_html=True)
-        st.caption("元数据缺失不等于伪造。视觉模型尚未接入，相关分析仅供演示。")
+        st.caption("元数据缺失不等于伪造。模型低分不证明原图真实，操作分数不代表产品功效。")
     if st.session_state.get("active_report"):
         render_report(st.session_state["active_report"])
 
@@ -133,7 +138,7 @@ elif page == "创作者复核":
     with left:
         rid = st.text_input("核验记录编号",value=source,key=f"rid_{source}")
         cid = st.text_input("内容编号",value=original.get("content_id",""),key=f"cid_{source}")
-        file = st.file_uploader("原始图片",type=["jpg","jpeg","png"],key="review_file")
+        file = st.file_uploader("原始图片",type=["jpg","jpeg","png"],key="review_file",max_upload_size=20)
         note = st.text_area("拍摄条件与滤镜说明",placeholder="设备、光线、滤镜参数、曝光调整")
         if st.button("提交复核",type="primary",icon=":material/assignment_turned_in:"):
             if not rid or not cid or not file:
@@ -175,8 +180,9 @@ elif page == "文案与功效":
 else:
     st.title("评测工作台")
     st.caption("可复跑的测试结果与数据边界。")
-    test_tab,data_tab=st.tabs(["宣称提取评测","配对数据与视觉样例"])
+    test_tab,data_tab,collection_tab=st.tabs(["真实输出评测","配对数据与视觉样例","志愿者采集"])
     with test_tab:
+        render_evaluation()
         path=ROOT/"data/member4_evaluation.json"
         if path.exists():
             report=json.loads(path.read_text(encoding="utf-8"))
@@ -184,19 +190,21 @@ else:
             test = report['datasets']['Test Set']
             blind = report['datasets']['Blind Test']
             a.metric("测试题完全匹配",f"{test['exact_match_count']} / {test['count']}")
-            b.metric("盲测题完全匹配",f"{blind['exact_match_count']} / {blind['count']}")
-            c.metric("盲测 micro F1",f"{report['datasets']['Blind Test']['micro_f1']:.3f}")
-            st.caption("成员交付测试集复跑；仅评价宣称集合，不代表独立泛化能力或图像检测性能。")
+            b.metric("原盲测题复测匹配",f"{blind['exact_match_count']} / {blind['count']}")
+            c.metric("原盲测集复测 F1",f"{report['datasets']['Blind Test']['micro_f1']:.3f}")
+            st.caption("这些题目已参与迭代，不是新的独立盲测；仅评价宣称集合，不涵盖OCR、极性、时长、证据支持或图像检测准确率。")
             for name,metrics in report["datasets"].items():
                 with st.expander(name):
                     st.dataframe(metrics["cases"],hide_index=True)
         st.subheader("能力边界")
-        st.dataframe([{"模块":k,"状态":v} for k,v in [("OCR / EXIF","本地真实处理"),("宣称提取","词典与确定性规则"),("功效资料","交付品牌资料，未在线复核"),("图像鉴伪 / 前后对比","模拟信号，非模型实测"),("C2PA","尚未接入")]],hide_index=True)
+        st.dataframe([{"模块":k,"状态":v} for k,v in [("OCR / EXIF","本地真实处理"),("宣称提取","新版词典与确定性规则"),("功效资料","交付品牌资料，未在线复核"),("图像鉴伪 / 前后对比","真实模型；跨域性能及因果解释受限"),("C2PA","尚未接入")]],hide_index=True)
     with data_tab:
         render_team_deliverables()
         with st.expander("采集与标注模板"):
             labels = ROOT / "data/annotations/label_template.csv"
             st.download_button("下载标注模板",labels.read_bytes(),file_name="label_template.csv",mime="text/csv",icon=":material/download:")
             st.json(json.loads((ROOT/"data/dataset_manifest.json").read_text(encoding="utf-8")))
+    with collection_tab:
+        render_collection()
 
 st.markdown('<div class="footer">TrueGlow 映真 · 内容信任源于证据</div>',unsafe_allow_html=True)

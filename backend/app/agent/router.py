@@ -9,6 +9,7 @@ import time
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
+from starlette.concurrency import run_in_threadpool
 
 from ..config import settings
 from ..logging.trace import trace
@@ -24,7 +25,7 @@ router = APIRouter(prefix="/api/v1", tags=["agent"])
 def _mock_warnings() -> list[str]:
     """Mock 模式下给出明确提示，便于前端联调时区分模拟/真实数据。"""
     if settings.llm_provider == "mock":
-        return ["Mock 模式：检测结果由规则模拟生成，仅供前后端联调，不代表真实检测结论"]
+        return ["解释层使用规则模板；各检测模块真实/模拟状态请查看tool_calls及provenance"]
     return []
 
 
@@ -50,7 +51,7 @@ async def verify(request: Request) -> ApiResponse:
             payload, _uploaded = await parse_multipart_verify(request)
         else:
             payload = await request.json()
-        result = main_agent.verify(payload)
+        result = await run_in_threadpool(main_agent.verify, payload)
         return ApiResponse(
             request_id=result["request_id"],
             status="success",

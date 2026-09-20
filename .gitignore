@@ -15,3 +15,14 @@ __pycache__/
 
 # 本地环境变量（含密钥，勿提交；模板 .env.example 可提交）
 .env
+.integration/
+*.pth
+*.pth.tar
+data/volunteers/
+data/evaluation_runs/
+
+# 本地编辑器配置与密钥
+.vscode/
+.env.*
+!.env.example
+.streamlit/secrets.toml

@@ -11,7 +11,7 @@ def render_member4():
     st.caption("词典与规则提取；品牌资料来自交付证据库，未在线复核，不等同于独立科学验证。")
     product = st.selectbox("证据库产品", [""]+[p["product_name"] for p in evidence_db()["products"]],
                            format_func=lambda p:p or "未指定 / 其他产品", key="m4_product")
-    image = st.file_uploader("含文字图片", type=["png","jpg","jpeg"], key="m4_image")
+    image = st.file_uploader("含文字图片", type=["png","jpg","jpeg"], key="m4_image", max_upload_size=20)
     crop = st.checkbox("仅识别下方字幕区域", value=False)
     if st.button("识别图片文字", disabled=image is None):
         try:
@@ -48,7 +48,10 @@ def render_member4():
                 st.write(claim["consumer_meaning"])
                 st.write(claim["audience_explanation"])
                 for evidence in claim["evidence_matches"]:
+                    st.caption(f"交付证据等级：{evidence.get('evidence_level_cn', evidence.get('evidence_strength', '未标注'))} · 品牌资料，未独立验证")
                     st.write(evidence.get("evidence_detail",""))
+                    for limitation in evidence.get("limitations", []):
+                        st.caption(limitation)
                     st.caption(evidence.get("consumer_explanation",""))
                     if evidence.get("source_url"):
                         st.link_button("查看资料来源",evidence["source_url"])

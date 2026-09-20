@@ -1,0 +1,688 @@
+{
+  "summary": {
+    "test_cases": 30,
+    "true_positive_claims": 65,
+    "false_positive_claims": 0,
+    "false_negative_claims": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "details": [
+    {
+      "id": "B01",
+      "input_text": "这粉底上脸很轻，像没化妆一样，但鼻翼还是会有一点浮粉。",
+      "expected_claims": [
+        "轻薄",
+        "低妆感",
+        "卡粉/浮粉"
+      ],
+      "predicted_claims": [
+        "轻薄",
+        "低妆感",
+        "卡粉/浮粉"
+      ],
+      "matched": [
+        "低妆感",
+        "卡粉/浮粉",
+        "轻薄"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "轻薄/低妆感 positive；卡粉 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B02",
+      "input_text": "早上七点化完到下午五点，妆面基本还在，T区只是微微出油。",
+      "expected_claims": [
+        "持妆",
+        "不易泛油"
+      ],
+      "predicted_claims": [
+        "持妆",
+        "不易泛油"
+      ],
+      "matched": [
+        "不易泛油",
+        "持妆"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": "10h",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B03",
+      "input_text": "遮瑕没有想象中那么高，红痘印能遮住，深色痘印还是能看出来。",
+      "expected_claims": [
+        "遮痘印",
+        "高遮瑕"
+      ],
+      "predicted_claims": [
+        "高遮瑕",
+        "遮痘印"
+      ],
+      "matched": [
+        "遮痘印",
+        "高遮瑕"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "整体高遮瑕 claim 应为 negative/limited；红痘印 positive，深痘印 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B04",
+      "input_text": "油皮夏天用真的稳，三十多度走了一下午也没怎么脱。",
+      "expected_claims": [
+        "油皮适用",
+        "持妆",
+        "不易脱妆"
+      ],
+      "predicted_claims": [
+        "油皮适用",
+        "持妆",
+        "不易脱妆"
+      ],
+      "matched": [
+        "不易脱妆",
+        "持妆",
+        "油皮适用"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": "afternoon",
+      "expected_slang": true,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B05",
+      "input_text": "毛孔确实被柔化了不少，但绝对没有网上说的‘磨皮到没纹理’那么夸张。",
+      "expected_claims": [
+        "毛孔修饰",
+        "柔焦"
+      ],
+      "predicted_claims": [
+        "毛孔修饰",
+        "柔焦"
+      ],
+      "matched": [
+        "柔焦",
+        "毛孔修饰"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive；同时否定极端效果",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B06",
+      "input_text": "我干皮用到晚上都不紧绷，不过眼下会稍微卡纹。",
+      "expected_claims": [
+        "干皮适用",
+        "不拔干",
+        "卡纹"
+      ],
+      "predicted_claims": [
+        "干皮适用",
+        "不拔干",
+        "卡纹"
+      ],
+      "matched": [
+        "不拔干",
+        "卡纹",
+        "干皮适用"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "前两项 positive；卡纹 negative",
+      "expected_duration": "evening",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B07",
+      "input_text": "戴口罩通勤三个小时，口罩上有一点粉，但是脸上的妆没有明显掉。",
+      "expected_claims": [
+        "易转移",
+        "不易脱妆"
+      ],
+      "predicted_claims": [
+        "易转移",
+        "不易脱妆"
+      ],
+      "matched": [
+        "不易脱妆",
+        "易转移"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "转移 negative；脱妆表现 positive",
+      "expected_duration": "3h",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B08",
+      "input_text": "这款刚涂完很有光泽，下午却有点发灰发暗。",
+      "expected_claims": [
+        "自然光泽",
+        "暗沉",
+        "不发灰/发灰"
+      ],
+      "predicted_claims": [
+        "自然光泽",
+        "不发灰/发灰",
+        "暗沉"
+      ],
+      "matched": [
+        "不发灰/发灰",
+        "暗沉",
+        "自然光泽"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "光泽 positive；暗沉/发灰 negative",
+      "expected_duration": "afternoon",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B09",
+      "input_text": "号称防汗，但我跑完步以后鼻翼和嘴角已经花了。",
+      "expected_claims": [
+        "防汗",
+        "斑驳"
+      ],
+      "predicted_claims": [
+        "防汗",
+        "斑驳"
+      ],
+      "matched": [
+        "斑驳",
+        "防汗"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B10",
+      "input_text": "不是完全不沾口罩，但比我之前那瓶好很多。",
+      "expected_claims": [
+        "不易蹭妆"
+      ],
+      "predicted_claims": [
+        "不易蹭妆"
+      ],
+      "matched": [
+        "不易蹭妆"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "mixed/relative positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B11",
+      "input_text": "妈生皮感很强，脸看起来还是自己的皮肤，只是更均匀。",
+      "expected_claims": [
+        "低妆感",
+        "均匀肤色"
+      ],
+      "predicted_claims": [
+        "均匀肤色",
+        "低妆感"
+      ],
+      "matched": [
+        "低妆感",
+        "均匀肤色"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": null,
+      "expected_slang": true,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B12",
+      "input_text": "一层只能盖住浅痘印，想遮黑眼圈还是得上遮瑕膏。",
+      "expected_claims": [
+        "低遮瑕",
+        "遮痘印",
+        "遮黑眼圈"
+      ],
+      "predicted_claims": [
+        "低遮瑕",
+        "遮痘印",
+        "遮黑眼圈"
+      ],
+      "matched": [
+        "低遮瑕",
+        "遮痘印",
+        "遮黑眼圈"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "痘印 limited positive；黑眼圈 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B13",
+      "input_text": "油皮亲妈我不敢说，我下午两点已经开始泛油了。",
+      "expected_claims": [
+        "油皮适用",
+        "容易泛油"
+      ],
+      "predicted_claims": [
+        "油皮适用",
+        "容易泛油"
+      ],
+      "matched": [
+        "容易泛油",
+        "油皮适用"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "油皮适用 claim 被否定；泛油 negative",
+      "expected_duration": "afternoon",
+      "expected_slang": true,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B14",
+      "input_text": "从早九到晚九都没大面积斑驳，但法令纹那里有积线。",
+      "expected_claims": [
+        "12小时持妆",
+        "不斑驳",
+        "卡纹"
+      ],
+      "predicted_claims": [
+        "不斑驳",
+        "卡纹",
+        "12小时持妆"
+      ],
+      "matched": [
+        "12小时持妆",
+        "不斑驳",
+        "卡纹"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "前两项 positive；卡纹 negative",
+      "expected_duration": "12h",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B15",
+      "input_text": "颜色刚上脸挺自然，半小时后会微微变黄，但没有严重氧化。",
+      "expected_claims": [
+        "氧化"
+      ],
+      "predicted_claims": [
+        "氧化"
+      ],
+      "matched": [
+        "氧化"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "negative but mild",
+      "expected_duration": "0.5h",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B16",
+      "input_text": "水冲之后基本还在，不过纸巾一擦就会掉不少。",
+      "expected_claims": [
+        "防水",
+        "耐摩擦"
+      ],
+      "predicted_claims": [
+        "防水",
+        "耐摩擦"
+      ],
+      "matched": [
+        "耐摩擦",
+        "防水"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "防水 positive；耐摩擦 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B17",
+      "input_text": "妆效偏柔雾，不是完全哑光，近看毛孔也没有被放大。",
+      "expected_claims": [
+        "柔雾",
+        "哑光",
+        "不显纹理"
+      ],
+      "predicted_claims": [
+        "柔雾",
+        "哑光",
+        "不显纹理"
+      ],
+      "matched": [
+        "不显纹理",
+        "哑光",
+        "柔雾"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "柔雾 positive；完全哑光被否定；不显纹理 positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B18",
+      "input_text": "宣传说24小时持妆我觉得太夸张，我实际戴了八小时整体还算完整。",
+      "expected_claims": [
+        "持妆",
+        "24小时持妆"
+      ],
+      "predicted_claims": [
+        "24小时持妆",
+        "持妆"
+      ],
+      "matched": [
+        "24小时持妆",
+        "持妆"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "24小时持妆被否定；8小时持妆 positive",
+      "expected_duration": "8h",
+      "expected_slang": false,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B19",
+      "input_text": "敏感肌的我上脸没刺痛，但是这只能代表我个人体验。",
+      "expected_claims": [
+        "敏感肌适用",
+        "低刺激/温和"
+      ],
+      "predicted_claims": [
+        "低刺激/温和",
+        "敏感肌适用"
+      ],
+      "matched": [
+        "低刺激/温和",
+        "敏感肌适用"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "individual positive experience",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B20",
+      "input_text": "粉底液很润，鼻翼和嘴角今天都没有起皮。",
+      "expected_claims": [
+        "保湿",
+        "不起皮"
+      ],
+      "predicted_claims": [
+        "保湿",
+        "不起皮"
+      ],
+      "matched": [
+        "不起皮",
+        "保湿"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B21",
+      "input_text": "遮泛红能力不错，但雀斑基本遮不住。",
+      "expected_claims": [
+        "遮泛红",
+        "遮斑"
+      ],
+      "predicted_claims": [
+        "遮泛红",
+        "遮斑"
+      ],
+      "matched": [
+        "遮斑",
+        "遮泛红"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "泛红 positive；遮斑 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B22",
+      "input_text": "今天出门淋了点雨，底妆没花，防水表现比我预想好。",
+      "expected_claims": [
+        "防水",
+        "不斑驳"
+      ],
+      "predicted_claims": [
+        "防水",
+        "不斑驳"
+      ],
+      "matched": [
+        "不斑驳",
+        "防水"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B23",
+      "input_text": "一到下午鼻翼就开始脱，脸颊倒是一直很服帖。",
+      "expected_claims": [
+        "易脱妆",
+        "服帖"
+      ],
+      "predicted_claims": [
+        "易脱妆",
+        "服帖"
+      ],
+      "matched": [
+        "易脱妆",
+        "服帖"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "鼻翼脱妆 negative；脸颊服帖 positive",
+      "expected_duration": "afternoon",
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B24",
+      "input_text": "上脸瞬间白了一个度，但不是那种很假的死白。",
+      "expected_claims": [
+        "即时提亮",
+        "不假白"
+      ],
+      "predicted_claims": [
+        "即时提亮",
+        "不假白"
+      ],
+      "matched": [
+        "不假白",
+        "即时提亮"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "positive",
+      "expected_duration": "instant",
+      "expected_slang": false,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B25",
+      "input_text": "这瓶号称轻薄，但我觉得粉感挺重，有点面具感。",
+      "expected_claims": [
+        "轻薄",
+        "厚重/面具感"
+      ],
+      "predicted_claims": [
+        "轻薄",
+        "厚重/面具感"
+      ],
+      "matched": [
+        "厚重/面具感",
+        "轻薄"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "轻薄 claim 被否定；厚重 negative",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B26",
+      "input_text": "熬夜到凌晨妆面居然还在线，不过T区油光已经很明显。",
+      "expected_claims": [
+        "持妆",
+        "容易泛油"
+      ],
+      "predicted_claims": [
+        "持妆",
+        "容易泛油"
+      ],
+      "matched": [
+        "容易泛油",
+        "持妆"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "持妆 positive；泛油 negative",
+      "expected_duration": "late night",
+      "expected_slang": true,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B27",
+      "input_text": "干皮闭眼冲这种话我觉得过头了，我鼻翼还是有轻微起皮。",
+      "expected_claims": [
+        "干皮适用",
+        "起皮"
+      ],
+      "predicted_claims": [
+        "干皮适用",
+        "起皮"
+      ],
+      "matched": [
+        "干皮适用",
+        "起皮"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "干皮适用 claim 被否定；起皮 negative",
+      "expected_duration": null,
+      "expected_slang": true,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B28",
+      "input_text": "口罩边缘蹭下来不少粉底，但整体遮瑕还在。",
+      "expected_claims": [
+        "易转移",
+        "遮瑕"
+      ],
+      "predicted_claims": [
+        "易转移",
+        "遮瑕"
+      ],
+      "matched": [
+        "易转移",
+        "遮瑕"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "转移 negative；遮瑕 positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    },
+    {
+      "id": "B29",
+      "input_text": "刚上完妆毛孔像隐形了一样，两个小时后纹理又变明显了。",
+      "expected_claims": [
+        "毛孔修饰",
+        "放大纹理"
+      ],
+      "predicted_claims": [
+        "毛孔修饰",
+        "放大纹理"
+      ],
+      "matched": [
+        "放大纹理",
+        "毛孔修饰"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "前者 initial positive；后者 later negative",
+      "expected_duration": "2h",
+      "expected_slang": true,
+      "expected_exaggerated": true
+    },
+    {
+      "id": "B30",
+      "input_text": "这款不算控油挂，但也没有很油，属于比较自然的光泽妆效。",
+      "expected_claims": [
+        "控油",
+        "自然光泽"
+      ],
+      "predicted_claims": [
+        "控油",
+        "自然光泽"
+      ],
+      "matched": [
+        "控油",
+        "自然光泽"
+      ],
+      "missed": [],
+      "extra": [],
+      "expected_polarity_notes": "控油 claim negative/weak；自然光泽 positive",
+      "expected_duration": null,
+      "expected_slang": false,
+      "expected_exaggerated": false
+    }
+  ]
+}
