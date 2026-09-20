@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent  # backend/
@@ -25,6 +26,28 @@ class Settings(BaseSettings):
     # 存储与日志
     data_dir: str = "./data"
     log_level: str = "INFO"
+
+    # 公网安全（留空/0 表示不启用该保护，便于本地开发）
+    api_key: str = Field(
+        default="",
+        validation_alias=AliasChoices("BEAUTYPROOF_API_KEY", "API_KEY"),
+    )
+    access_code: str = Field(
+        default="",
+        validation_alias=AliasChoices("BEAUTYPROOF_ACCESS_CODE", "ACCESS_CODE"),
+    )
+    cors_origins: str = Field(
+        default="",
+        validation_alias=AliasChoices("BEAUTYPROOF_CORS_ORIGINS", "CORS_ORIGINS"),
+    )
+    rate_limit_per_minute: int = Field(
+        default=120,
+        validation_alias=AliasChoices("BEAUTYPROOF_RATE_LIMIT_PER_MINUTE", "RATE_LIMIT_PER_MINUTE"),
+    )
+    runtime_retention_hours: int = Field(
+        default=24,
+        validation_alias=AliasChoices("BEAUTYPROOF_RUNTIME_RETENTION_HOURS", "RUNTIME_RETENTION_HOURS"),
+    )
 
     @property
     def resolved_data_dir(self) -> Path:

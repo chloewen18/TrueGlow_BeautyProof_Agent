@@ -17,6 +17,12 @@ from backend.app.integrations.visual import heat_image, pair_difference, uploade
 from backend.app.agent.orchestrator import main_agent
 from backend.demo.cases import CASE_A, CASE_B, CASE_C_SUBMISSION
 
+try:  # opencv 属于 requirements-models.txt，轻量（Mock）部署不安装
+    import cv2  # noqa: F401
+    HAS_CV2 = True
+except ImportError:  # pragma: no cover
+    HAS_CV2 = False
+
 
 class IntegrationV2Tests(unittest.TestCase):
     def test_unknown_is_not_hard_forgery(self):
@@ -62,6 +68,7 @@ class IntegrationV2Tests(unittest.TestCase):
             self.assertEqual(review["status"], "success")
             self.assertIsNone(review["result"]["credential"])
 
+    @unittest.skipUnless(HAS_CV2, "需要 opencv（requirements-models.txt），轻量部署未安装")
     def test_zero_change_map(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "same.png"

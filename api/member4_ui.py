@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
-import requests
 import streamlit as st
-from api.client import API_BASE_URL, _upload
+from api.client import _upload, api_post
 from backend.app.integrations.member4.service import evidence_db, workbook_rows
 
 
@@ -17,7 +16,7 @@ def render_member4():
         try:
             with st.spinner("正在识别图片文字……"):
                 media = _upload(image)
-                response = requests.post(f"{API_BASE_URL}/api/v1/member4/ocr",
+                response = api_post("/api/v1/member4/ocr",
                     json={"media_ref":media["ref"], "subtitle_crop":crop}, timeout=240)
                 if not response.ok:
                     raise ValueError(response.json().get("detail", "OCR failed"))
@@ -30,7 +29,7 @@ def render_member4():
     comments = st.text_area("评论（每行一条）", key="m4_comments")
     if st.button("提取宣称与匹配证据", type="primary", disabled=not text.strip()):
         try:
-            response = requests.post(f"{API_BASE_URL}/api/v1/member4/analyze",
+            response = api_post("/api/v1/member4/analyze",
                 json={"text":text, "product":product, "comments":comments.splitlines()}, timeout=60)
             response.raise_for_status()
             st.session_state["m4_result"] = response.json()

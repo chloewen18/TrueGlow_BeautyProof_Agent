@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import streamlit as st
 from PIL import Image
@@ -10,8 +11,31 @@ from api.evidence_ui import render_evidence, render_collection
 from api.evaluation_ui import render_evaluation
 
 ROOT = Path(__file__).resolve().parent
+ACCESS_CODE = os.getenv("BEAUTYPROOF_ACCESS_CODE", "").strip()
 st.set_page_config(page_title="TrueGlow 映真 · 内容信任工作台",page_icon=":material/verified_user:",layout="wide")
 st.markdown(f"<style>{(ROOT/'styles/theme.css').read_text(encoding='utf-8')}\n{(ROOT/'styles/workbench.css').read_text(encoding='utf-8')}</style>",unsafe_allow_html=True)
+
+
+def access_gate() -> bool:
+    """公网部署时的访问口令门槛。未设置 BEAUTYPROOF_ACCESS_CODE 则不启用。"""
+    if not ACCESS_CODE or st.session_state.get("_authorized"):
+        return True
+    st.title("TrueGlow 映真 · 内容信任工作台")
+    st.caption("演示环境受访问口令保护，请向团队获取口令后进入。")
+    with st.form("access_gate"):
+        code = st.text_input("访问口令", type="password")
+        submitted = st.form_submit_button("进入", type="primary")
+    if submitted:
+        if code.strip() == ACCESS_CODE:
+            st.session_state["_authorized"] = True
+            st.rerun()
+        else:
+            st.error("口令不正确。")
+    return False
+
+
+if not access_gate():
+    st.stop()
 
 PAGES = ["内容核验", "创作者复核", "证据档案", "文案与功效", "评测工作台"]
 
@@ -120,9 +144,14 @@ if page == "内容核验":
         else:
             one,two = st.columns(2)
             folder = ROOT / "data/datasets/FFHQ_FFHQR_100_pairs_v1"
-            one.image(str(folder/"originals/00001.png"),caption="原始素材",width="stretch")
-            two.image(str(folder/"retouched/00001.png"),caption="专业修饰",width="stretch")
-            st.caption("FFHQ / FFHQR 配对样例 · Cyber Shaman · 原图 Attribution / 修饰 CC BY-NC-SA 4.0。样例不代表当前检测结果。")
+            sample_before = folder/"originals/00001.png"
+            sample_after = folder/"retouched/00001.png"
+            if sample_before.is_file() and sample_after.is_file():
+                one.image(str(sample_before),caption="原始素材",width="stretch")
+                two.image(str(sample_after),caption="专业修饰",width="stretch")
+                st.caption("FFHQ / FFHQR 配对样例 · Cyber Shaman · 原图 Attribution / 修饰 CC BY-NC-SA 4.0。样例不代表当前检测结果。")
+            else:
+                st.info("演示配对样例未随本环境分发（大体积素材已移出版本库），不影响核验流程。")
         st.markdown('<div class="scope"><b>核验关注</b><p>来源与元数据</p><p>画面修饰与前后条件</p><p>文案宣称与功效证据</p></div>',unsafe_allow_html=True)
         st.caption("元数据缺失不等于伪造。模型低分不证明原图真实，操作分数不代表产品功效。")
     if st.session_state.get("active_report"):

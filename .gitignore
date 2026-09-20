@@ -26,3 +26,8 @@ data/evaluation_runs/
 .env.*
 !.env.example
 .streamlit/secrets.toml
+
+# 大体积演示资产——不随仓库分发，需要时从团队网盘/Release 单独获取
+member2_forensics/deliverables/
+data/datasets/
+vendor/trufor/dataset/data/*_COCO_*_list.txt

@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-from api.client import API_BASE_URL
+from api.client import api_get, api_post
 
 
 def show_artifact(reference, caption):
@@ -9,7 +9,7 @@ def show_artifact(reference, caption):
         st.caption(f"{caption}：未生成真实图像")
         return
     try:
-        response = requests.get(API_BASE_URL+value, timeout=30)
+        response = api_get(value, timeout=30)
         response.raise_for_status()
         st.image(response.content, caption=caption, width="stretch")
     except requests.RequestException:
@@ -73,7 +73,7 @@ def render_collection():
     st.subheader("志愿者内部评测采集")
     st.info("仅收集已成年志愿者本人的两张图片，用于本团队内部评测，不用于训练或公开展示。不填写姓名、联系方式或其他人的信息。人脸本身仍可识别个人；图片去除EXIF/GPS后保存在本机，30天到期后在采集服务下次访问时清理。可凭撤回码提前删除。")
     try:
-        response = requests.get(API_BASE_URL+"/api/v1/volunteers/status", timeout=10)
+        response = api_get("/api/v1/volunteers/status", timeout=10)
         response.raise_for_status()
         st.metric("已同意提交的图片对", response.json()["consented_pairs"])
     except requests.RequestException:
@@ -93,7 +93,7 @@ def render_collection():
             st.warning("请补齐两张图片、操作说明并明确同意。")
         else:
             try:
-                response = requests.post(API_BASE_URL+"/api/v1/volunteers/submit",
+                response = api_post("/api/v1/volunteers/submit",
                     files={"before": ("before.png", before.getvalue(), before.type), "after": ("after.png", after.getvalue(), after.type)},
                     data={"consent": "true", "adult_self": "true", "condition": condition, "edits": edits}, timeout=60)
                 response.raise_for_status()
@@ -111,7 +111,7 @@ def render_collection():
         token = st.text_input("撤回码", type="password")
         if st.button("确认撤回并删除", icon=":material/delete:"):
             try:
-                response = requests.post(API_BASE_URL+"/api/v1/volunteers/withdraw", json={"sample_id": sid, "token": token}, timeout=30)
+                response = api_post("/api/v1/volunteers/withdraw", json={"sample_id": sid, "token": token}, timeout=30)
                 if response.ok:
                     st.session_state.pop("volunteer_receipt", None)
                     st.success("已删除本次提交的图片与记录。")

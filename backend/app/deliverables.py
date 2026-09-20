@@ -2,7 +2,7 @@
 import csv
 from pathlib import Path
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from .paths import MEMBER2_LEGACY
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -10,10 +10,17 @@ DATASET = ROOT / "data/datasets/FFHQ_FFHQR_100_pairs_v1"
 TRUFOR = MEMBER2_LEGACY
 router = APIRouter(prefix="/api/v1/deliverables", tags=["deliverables"])
 
+# 大体积演示资产已移出版本库（见 .gitignore）。缺失时返回 404 而不是 500，
+# 让前端可以优雅降级，不影响核验主流程。
+MISSING_HINT = "该演示资产未随本环境分发（大体积素材已移出版本库），不影响核验主流程。"
+
 
 @router.get("/dataset")
 def dataset_records():
-    with (DATASET / "paired_manifest.csv").open(encoding="utf-8-sig", newline="") as file:
+    manifest = DATASET / "paired_manifest.csv"
+    if not manifest.is_file():
+        raise HTTPException(404, MISSING_HINT)
+    with manifest.open(encoding="utf-8-sig", newline="") as file:
         pairs = list(csv.DictReader(file))
     return {"pairs": pairs, "pair_count": len(pairs), "label_scope": "generic_professional_retouch"}
 
@@ -21,8 +28,9 @@ def dataset_records():
 @router.get("/trufor")
 def trufor_results(threshold: float = 0.65):
     if not 0 <= threshold <= 1:
-        from fastapi import HTTPException
         raise HTTPException(422, "Threshold must be between 0 and 1")
+    if not TRUFOR.is_dir():
+        raise HTTPException(404, MISSING_HINT)
     rows = []
     for file in sorted(TRUFOR.glob("*_integrity_score.txt")):
         sample = file.name.removesuffix("_integrity_score.txt")
