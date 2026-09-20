@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     deepseek_model: str = "deepseek-chat"
     llm_timeout_seconds: int = 60
 
+    # 成员 3 工具服务（beauty_effect_attribution）
+    # 关闭时两个相关 Tool 走原有 mock；开启后仍会在服务不可用时自动降级。
+    member3_enabled: bool = False
+    member3_base_url: str = "http://127.0.0.1:8003"
+    member3_timeout_seconds: int = 60
+
     # 存储与日志
     data_dir: str = "./data"
     log_level: str = "INFO"

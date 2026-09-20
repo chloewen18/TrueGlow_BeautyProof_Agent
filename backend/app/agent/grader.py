@@ -118,16 +118,29 @@ class RiskGrader:
             from ..schemas.tools import BeforeAfterEvidence
 
             be = BeforeAfterEvidence(**ba)
-            if be.comparison_reliability.value == "Low":
+            reliability = be.comparison_reliability.value
+            # 归因强度 Unknown = 未计算或证据不足。按项目原则应落在「存疑」而非「高风险误导」，
+            # 也不能因为它不是 Low/Medium 就掉进「可比较、归因可靠」。
+            if be.attribution_strength.value == "Unknown":
+                p.attribution = RISK_MEDIUM
+                p.limitations.append("前后对比未产生有效计算结果，妆效归因无法判断（不等于可归因于产品）")
+                path.append("rule: attribution_strength=Unknown -> attribution=Medium(存疑)")
+            elif reliability == "Low":
                 p.attribution = RISK_HIGH
                 p.reasons.append("前后对比条件差异显著，效果归因不可靠")
                 path.append("rule: comparison_reliability=Low -> attribution=High")
-            elif be.comparison_reliability.value == "Medium":
+            elif reliability == "Medium":
                 p.attribution = RISK_MEDIUM
                 p.reasons.append("前后对比条件存在部分差异")
                 path.append("rule: comparison_reliability=Medium -> attribution=Medium")
+            elif reliability == "High":
+                p.attribution = RISK_LOW
+                path.append("rule: comparison_reliability=High -> attribution=Low")
             else:
-                path.append("rule: 前后对比可比较 -> attribution=Low")
+                # 枚举未来新增取值时不得落入默认的「可比较/可靠」分支，一律保守处理
+                p.attribution = RISK_MEDIUM
+                p.limitations.append(f"前后对比可靠性取值无法识别（{reliability}），按存疑处理")
+                path.append("rule: comparison_reliability 取值未知 -> attribution=Medium(存疑)")
         else:
             p.attribution = RISK_MEDIUM  # 缺失按中等风险处理并提示
             p.limitations.append("未提供 before/after 素材，妆效归因无法完整判断")
