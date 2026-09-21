@@ -39,6 +39,34 @@ if not access_gate():
 
 PAGES = ["内容核验", "创作者复核", "证据档案", "文案与功效", "评测工作台"]
 
+
+@st.cache_resource(show_spinner=False)
+def real_models_ready() -> bool:
+    """当前环境是否具备运行真实视觉模型的条件（权重存在且 torch 可用）。
+
+    用 cache_resource 缓存是因为 Streamlit 每次交互都会重跑脚本，
+    若 torch 可用则首次 import 需要数秒，不应重复付出。
+    """
+    if not (ROOT / "data/models").is_dir():
+        return False
+    try:
+        import torch  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
+def report_mode_caption(result, report) -> str:
+    """报告顶部的模式说明：如实区分「模拟」「部分未完成」「真实处理」三种情况。"""
+    calls = report.get("tool_calls", [])
+    if result.get("demo_mode") or "mock" in {c.get("model") for c in calls}:
+        return "模拟演示 · 不构成真实核验结论"
+    degraded = [str(c.get("tool")) for c in calls if c.get("status") != "success"]
+    if degraded:
+        names = "、".join(dict.fromkeys(degraded))
+        return f"部分模块未完成（{names}）：相关维度未参与判定，本次结论仅供演示参考"
+    return "真实处理 · 模型信号仅供辅助，不能证明造假意图或产品因果"
+
 def remember(response, simulated=False):
     response["demo_mode"] = simulated
     st.session_state["active_report"] = response
@@ -57,8 +85,7 @@ def render_report(result):
     c1,c2 = st.columns([3,1])
     with c1:
         st.subheader(card.get("verdict_label","待核验"))
-        modes = {c.get("model") for c in report.get("tool_calls", [])}
-        st.caption("模拟演示 · 不构成真实核验结论" if result.get("demo_mode") or "mock" in modes else "真实处理 · 模型信号仅供辅助，不能证明造假意图或产品因果")
+        st.caption(report_mode_caption(result, report))
     with c2:
         st.download_button("导出报告",json.dumps(result,ensure_ascii=False,indent=2),
             file_name=f"trueglow-{result['request_id']}.json",mime="application/json",icon=":material/download:")
@@ -88,7 +115,9 @@ with st.sidebar:
     page = st.radio("工作区",PAGES,label_visibility="collapsed")
     st.divider()
     st.caption("当前能力")
-    st.markdown("EXIF / OCR　真实处理\n\n文案 / 功效　新版规则与资料库\n\nTruFor / 修饰模型　已接入\n\n前后条件　模型估计 + 差异图\n\nC2PA 认证　尚未接入")
+    model_line = "TruFor / 修饰模型　已接入" if real_models_ready() else "TruFor / 修饰模型　本环境未启用"
+    st.markdown("EXIF / OCR　真实处理\n\n文案 / 功效　新版规则与资料库\n\n" + model_line
+                + "\n\n前后条件　模型估计 + 差异图\n\nC2PA 认证　尚未接入")
     st.caption("运行成功与否以每次报告状态为准")
     st.divider()
     st.caption("信任守护师 · 创造者的 AI 卫士")
