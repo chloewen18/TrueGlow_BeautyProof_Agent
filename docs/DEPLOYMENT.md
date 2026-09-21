@@ -172,14 +172,43 @@ python -c "from backend.app.integrations.visual import trufor; print(trufor('你
 - 注意：TruFor 是通用篡改检测，**对美颜/滤镜的敏感度有限**，分数未经美妆场景校准，
   不能证明修饰意图。
 
-### 成员 3 修饰检测当前仍未接通
+### 成员 3 修饰检测：已接入（进程内方式，2026-09-21）
 
-仓库内存在两套互相冲突的接入设计，两条路目前都不通：
+采用**进程内方式**：把成员 3 交付包里的模型代码放进仓库，与 TruFor 在同一个
+`image_forensics` 工具里协同（TruFor 负责篡改定位，成员 3 负责修饰识别）。
 
-| 设计 | 位置 | 现状 |
-|---|---|---|
-| 进程内 | `integrations/visual.py::member3_engine()` 导入 `integrations/member3/tool.py` | 该文件**不存在**（交付压缩包内叫 `beautyproof_tool/tool.py`） |
-| HTTP 客户端 | `integrations/member3/handlers.py`（`Member3ForensicsHandler` 等） | 需要 8003 端口独立服务，且**没有任何地方调用 `replace_handler()` 注册它们** |
+**放置位置**（模型代码入库，权重不入库）：
 
-因此 `image_forensics` 在真实路径下返回 `status=partial`：**TruFor 的分数是真实的，
-但修饰维度（平滑/美白/瘦脸）为 `Unknown`**。侧边栏会如实区分二者。
+```
+backend/app/integrations/member3/
+    tool.py        ← 取自交付包 beautyproof_tool/tool.py
+    modeling.py    ← 取自交付包 beautyproof_tool/modeling.py
+    （不要覆盖本目录原有的 __init__.py —— 那是另一套 HTTP 接入方案的文件）
+
+data/models/member3/            ← 全部被 .gitignore 忽略
+    MODEL_MANIFEST.json         ← 取自交付包根目录
+    models/
+        stage1_ffhqr_best_model.pth
+        stage2_mixed_rehearsal_best_model.pth
+        stage3_ppr10k_balanced_best_model.pth
+```
+
+`visual.py` 传入的是 `<包根>/models`（即 `data/models/member3/models`），
+因为 `BeautyProofTool` 会把传入目录当作模型目录、并到**其父目录**找 `MODEL_MANIFEST.json`。
+目录结构必须保持一致，否则完整性校验（SHA256）或加载会失败。
+
+**实测表现（FFHQ/FFHQR 配对样例，CPU）**
+
+| 图片 | stage1 通用修图分数 | 判定 | 耗时 |
+|---|---|---|---|
+| 原图 | 0.0009 | 未检测到修饰 | ~1.3s |
+| 修饰图 | 0.9762 | 检测到修饰（high） | <0.1s |
+
+> 对比：TruFor 在同一组图上为 0.104 vs 0.132，区分度很低。
+> **结论：区分"原图 vs 修饰图"应主要依赖成员 3 的模型，TruFor 仅作篡改定位的辅助信号。**
+
+**仍存在但未启用的另一套方案**：`integrations/member3/` 下的
+`client.py` / `adapter.py` / `handlers.py`（HTTP 客户端方案，连 8003 端口独立服务）。
+它需要 `settings.member3_enabled` 等配置项（当前 `config.py` 中**不存在**）
+并调用 `register_member3_handlers()`（当前**无人调用**）。
+两套方案会争用同一个 `image_forensics` 槽位，**启用其中一套前需先明确废弃另一套**。

@@ -57,7 +57,9 @@ def member3_engine():
     import torch
     from .member3.tool import BeautyProofTool
     torch.set_num_threads(int(os.getenv("TRUEGLOW_CPU_THREADS", "4")))
-    return BeautyProofTool(ROOT / "data/models/member3", device="cpu")
+    # 成员3 的 BeautyProofTool 把传入目录当作「模型目录」，其父目录需放 MODEL_MANIFEST.json。
+    # 因此这里指向 <包根>/models，包根为 data/models/member3（与成员3 交付包结构一致）。
+    return BeautyProofTool(ROOT / "data/models/member3/models", device="cpu")
 
 
 @lru_cache(maxsize=1)
