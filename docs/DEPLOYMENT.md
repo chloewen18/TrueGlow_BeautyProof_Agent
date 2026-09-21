@@ -81,10 +81,30 @@ bash scripts/start_local.sh          # 默认 UI 7860 / API 8000
 > 容器内 `DATA_DIR=/tmp/trueglow-data`，因为运行时上传/产物需要可写目录，
 > 且平台（如 HF Spaces）可能以非 root 用户运行。**容器重启后这些文件会丢失**，
 > 这符合演示场景；如需持久化请挂载卷并改回该变量。
+>
+> ⚠️ `deploy/supervisord.conf` 中**不要**给 `[supervisord]` 加 `user=root`。
+> 部分平台以非 root 用户运行容器，supervisord 会因
+> `Can't drop privilege as nonroot user` 直接退出，导致整个服务起不来
+> （已实测复现并修正）。
 
 ## 6. 部署到 Hugging Face Spaces
 
-在 Space 页面选 **Docker** SDK，然后把本仓库推上去（当前被跟踪文件仅约 9MB，可直接推）。
+### 方式一：一条命令（推荐）
+
+```bash
+export HF_TOKEN=hf_xxxxxxxx            # https://huggingface.co/settings/tokens（需 write 权限）
+export HF_SPACE_ID=你的用户名/trueglow
+python deploy/hf_deploy.py --dry-run   # 先看会传哪些文件
+python deploy/hf_deploy.py             # 创建 Space 并上传
+```
+
+脚本用 `git archive` 只导出已跟踪文件（约 8.5MB，大体积资产自动排除），
+自动生成带 `sdk: docker` frontmatter 的 Space README，然后创建并上传。
+**它不会替你写密钥**，避免密钥进入 git 历史。
+
+### 方式二：手动
+
+在 Space 页面选 **Docker** SDK，然后把本仓库推上去。
 **关键**：Space 仓库根目录的 `README.md` 顶部必须带 SDK frontmatter，否则不会按 Docker 构建 ——
 可直接复制 `deploy/huggingface-README.md` 的内容作为该 Space 的 README。
 
@@ -110,5 +130,9 @@ bash scripts/start_local.sh          # 默认 UI 7860 / API 8000
 - [x] 部署配置：`Dockerfile` + `supervisord.conf` + `docker-compose.yml` + `.dockerignore`
 - [x] 跨平台启动脚本 `scripts/start_local.sh`
 - [x] 公网安全：API Key、限流、访问口令、CORS 收敛、运行时文件清理
+- [x] 容器启动配置已实测：按 `.dockerignore` 暂存 + 全新环境 + supervisord 起双进程，
+      前端 7860 / 后端 8000 均正常，鉴权 401/200 符合预期（非 root 用户下验证）
+- [x] 一键部署脚本 `deploy/hf_deploy.py`（需自备 `HF_TOKEN`，故未代跑）
+- [ ] **在 Hugging Face 创建 Space 并上传**（需你的 HF 账号，见 §6）
 - [ ] 历史瘦身（可选）：历史 Blob 仍在，仓库总体积不降；彻底瘦身须重写历史，需团队知情
 - [ ] 真实模型（可选）：当前五个 Tool 为 Mock 实现，无需权重即可跑通全流程
