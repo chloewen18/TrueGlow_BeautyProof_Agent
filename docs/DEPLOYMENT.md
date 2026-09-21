@@ -135,4 +135,51 @@ python deploy/hf_deploy.py             # 创建 Space 并上传
 - [x] 一键部署脚本 `deploy/hf_deploy.py`（需自备 `HF_TOKEN`，故未代跑）
 - [ ] **在 Hugging Face 创建 Space 并上传**（需你的 HF 账号，见 §6）
 - [ ] 历史瘦身（可选）：历史 Blob 仍在，仓库总体积不降；彻底瘦身须重写历史，需团队知情
-- [ ] 真实模型（可选）：当前五个 Tool 为 Mock 实现，无需权重即可跑通全流程
+
+## 8. 启用真实 TruFor 取证（可选，仅本地/自有服务器）
+
+线上演示用 Mock 即可；若要本地看到真实取证分数，按下面三步。**权重不能进 git，也不能进
+HF Space**（268MB 会让镜像暴涨且免费空间跑不动），所以真实模型只在本地或自有服务器可用。
+
+### 步骤
+
+```bash
+# 1) 放置权重：代码期望 <仓库根>/data/models/trufor.pth.tar
+mkdir -p data/models
+cp "TruFor_train_test/pretrained_models/weights/trufor.pth.tar" data/models/trufor.pth.tar
+
+# 2) 安装模型依赖（torch/timm/opencv 等，约 2GB）
+pip install -r requirements-models.txt
+```
+
+`data/models/` 与 `*.pth.tar` 均已在 `.gitignore` 中，权重不会被提交。
+
+### 不需要的文件
+
+`pretrained_models/segformers/mit_b2.pth`（94MB）**不需要** —— 代码把
+`cfg.MODEL.PRETRAINED` 置空，骨干权重已包含在 `trufor.pth.tar` 内。
+`vendor/trufor/pretrained_models/noiseprint++/noiseprint++.th` 已随仓库分发，无需另找。
+
+### 验证
+
+```bash
+python -c "from backend.app.integrations.visual import trufor; print(trufor('你的图.png')['trufor_score'])"
+```
+
+- CPU 单张推理约 **7~15 秒**（受图片尺寸与线程数影响，可用 `TRUEFOR_MAX_SIDE` /
+  `TRUEGLOW_CPU_THREADS` 调整）。
+- 判定方向：`trufor_score` 越高越可疑，`integrity_score = 1 - trufor_score`。
+- 注意：TruFor 是通用篡改检测，**对美颜/滤镜的敏感度有限**，分数未经美妆场景校准，
+  不能证明修饰意图。
+
+### 成员 3 修饰检测当前仍未接通
+
+仓库内存在两套互相冲突的接入设计，两条路目前都不通：
+
+| 设计 | 位置 | 现状 |
+|---|---|---|
+| 进程内 | `integrations/visual.py::member3_engine()` 导入 `integrations/member3/tool.py` | 该文件**不存在**（交付压缩包内叫 `beautyproof_tool/tool.py`） |
+| HTTP 客户端 | `integrations/member3/handlers.py`（`Member3ForensicsHandler` 等） | 需要 8003 端口独立服务，且**没有任何地方调用 `replace_handler()` 注册它们** |
+
+因此 `image_forensics` 在真实路径下返回 `status=partial`：**TruFor 的分数是真实的，
+但修饰维度（平滑/美白/瘦脸）为 `Unknown`**。侧边栏会如实区分二者。
