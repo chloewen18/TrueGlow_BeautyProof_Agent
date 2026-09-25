@@ -25,7 +25,7 @@ class BeautyProofTool:
     """Member-3 evidence tool. It reports signals, never deceptive intent."""
 
     schema_version = "1.1.0"
-    engine_version = "1.1.0"
+    engine_version = "1.1.1"
 
     def __init__(self, model_dir: str | Path | None = None, device: str = "auto"):
         root = Path(model_dir) if model_dir else Path(__file__).resolve().parents[1] / "models"
@@ -46,16 +46,16 @@ class BeautyProofTool:
             "content_provenance_owner": "image_forensics",
         }
         self.device = choose_device(device)
-        stage1_ckpt = torch.load(root / "stage1_ffhqr_best_model.pth", map_location="cpu", weights_only=False)
+        stage1_ckpt = torch.load(root / "stage1_ffhqr_best_model.pth", map_location="cpu", weights_only=True)
         self.stage1 = models.resnet18(weights=None); self.stage1.fc = nn.Linear(self.stage1.fc.in_features, 2)
         self.stage1.load_state_dict(stage1_ckpt["model_state"]); self.stage1 = self.stage1.to(self.device).eval()
         self.stage1_size = int(stage1_ckpt.get("image_size", 224)); self.stage1_threshold = float(stage1_ckpt.get("decision_threshold", 0.731))
 
-        stage2_ckpt = torch.load(root / "stage2_mixed_rehearsal_best_model.pth", map_location="cpu", weights_only=False)
+        stage2_ckpt = torch.load(root / "stage2_mixed_rehearsal_best_model.pth", map_location="cpu", weights_only=True)
         self.stage2 = MultiTaskRetouchModel(); self.stage2.load_state_dict(stage2_ckpt["model_state"]); self.stage2 = self.stage2.to(self.device).eval()
         self.stage2_size = int(stage2_ckpt.get("image_size", 224)); self.operation_thresholds = stage2_ckpt.get("thresholds", {}).get("operations", {name: 0.5 for name in OPERATIONS})
 
-        stage3_ckpt = torch.load(root / "stage3_ppr10k_balanced_best_model.pth", map_location="cpu", weights_only=False)
+        stage3_ckpt = torch.load(root / "stage3_ppr10k_balanced_best_model.pth", map_location="cpu", weights_only=True)
         self.stage3 = ConditionHead(int(stage3_ckpt["input_size"]), len(PARAMETERS)); self.stage3.load_state_dict(stage3_ckpt["model_state"]); self.stage3 = self.stage3.to(self.device).eval()
         self.means = stage3_ckpt["target_means"]; self.stds = stage3_ckpt["target_stds"]
 

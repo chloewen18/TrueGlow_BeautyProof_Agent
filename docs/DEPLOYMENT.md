@@ -177,6 +177,25 @@ python -c "from backend.app.integrations.visual import trufor; print(trufor('你
 采用**进程内方式**：把成员 3 交付包里的模型代码放进仓库，与 TruFor 在同一个
 `image_forensics` 工具里协同（TruFor 负责篡改定位，成员 3 负责修饰识别）。
 
+**当前版本 1.1.1**（`package_version=1.1.1`，`engine_version=1.1.1`，2026-09-25 换包）
+
+- 三处 `torch.load` 均为 `weights_only=True`（安全模式，不再执行反序列化），
+  SHA-256 完整性校验保留
+- 包内仍为相对导入 `from .modeling import ...`；交付包另附根目录 `tool.py`
+  作为扁平入口（`from tool import ...`），**我们未使用该入口**，故未纳入仓库
+- 接手流程（已执行）：核对压缩包 SHA-256 → 核对三份权重与 `MODEL_MANIFEST.json`
+  的 SHA-256 → 再替换代码与权重
+- 已验证的 v1.1.1 压缩包 SHA-256：
+  `19575954f722756973b789c50bc0e9d7b1e752e6d6830718857e784b468e1a95`
+  （工作区根目录下 `Member3_检测模型_1.1.1(1).zip`，84MB）
+
+### 路演口径（团队已确认，2026-09-25）
+
+- **TruFor 定位为「视觉真实性分析的辅助证据」，不对"P图程度"做定量承诺。**
+  理由：对同组配对图片的区分度有限，且 JPEG 压缩等图像处理会明显影响 score，
+  不可直接等同为篡改程度。
+- **区分"原图 vs 修饰图"主要依据成员 3 的模型**（实测 0.0009 vs 0.9762 / 0.9999）。
+
 **放置位置**（模型代码入库，权重不入库）：
 
 ```
