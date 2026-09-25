@@ -58,22 +58,24 @@ flowchart LR
 
 ## 快速启动
 
-已验证环境：**Windows + Python 3.12**。在 PowerShell 中执行：
+**推荐：Docker（一条命令，前后端一起起）**
 
-```powershell
+```bash
 git clone https://github.com/chloewen18/TrueGlow_BeautyProof_Agent.git
-cd TrueGlow
-py -3.12 -m venv .venv
-.venv/Scripts/python.exe -m pip install -r requirements-verified-win-py312.txt
-powershell -ExecutionPolicy Bypass -File scripts/start_local.ps1
+cd TrueGlow_BeautyProof_Agent
+docker compose up --build
+# 打开 http://localhost:7860/
 ```
 
-启动后访问：
+**不用 Docker：**
 
-- 工作台：<http://127.0.0.1:8503/>
-- API 文档：<http://127.0.0.1:8000/docs>
+- macOS / Linux：`pip install -r requirements.txt` 后运行 `bash scripts/start_local.sh`
+  （工作台 <http://127.0.0.1:7860/>，API 文档 <http://127.0.0.1:8000/docs>）
+- Windows：见[本地启动](docs/LOCAL_DEPLOYMENT.md)
 
-**真实图像推理需要单独准备模型权重**，安装依赖不会自动下载全部模型。TruFor 权重位于 `data/models/trufor.pth.tar`，修饰与条件模型位于 `data/models/member3/`；详细配置见[本地部署说明](docs/LOCAL_DEPLOYMENT.md)。缺少权重时可使用页面中明确标注的模拟案例了解报告流程，但不能据此获得真实图像核验结果。
+**真实图像推理需要单独准备模型权重**，安装依赖不会自动下载全部模型。TruFor 权重位于 `data/models/trufor.pth.tar`，修饰与条件模型位于 `data/models/member3/`；详细配置见[部署说明](docs/DEPLOYMENT.md)。缺少权重时可使用页面中明确标注的模拟案例了解报告流程，但不能据此获得真实图像核验结果。
+
+**公网部署**（Hugging Face Spaces / 服务器）：已内置 API Key 鉴权、单 IP 限流、访问口令与上传文件定期清理，步骤见[部署说明](docs/DEPLOYMENT.md)。
 
 ## 演示流程
 
@@ -89,7 +91,9 @@ powershell -ExecutionPolicy Bypass -File scripts/start_local.ps1
 
 项目提供真实推理适配器、评测脚本和结果记录。已有配对数据评测尚未排除训练重叠，文案测试集也曾用于规则迭代，因此不将这些结果宣传为独立泛化准确率。评测方法与限制见[数据与评测](docs/DATASET_AND_EVAL.md)。
 
-TrueGlow 是黑客松原型：检测信号不能证明创作者造假意图，前后差异不能证明产品因果功效；当前未实现 C2PA 验证。系统以本机运行与演示为目标，尚未完成面向公网的认证及数据隔离。
+TrueGlow 是黑客松原型：检测信号不能证明创作者造假意图，前后差异不能证明产品因果功效；当前未实现 C2PA 验证。公网部署已内置基础防护（API Key 鉴权、单 IP 限流、访问口令、上传文件定期清理），但认证是简单口令而非多用户隔离，公开演示前请按[部署说明](docs/DEPLOYMENT.md)配置密钥。
+
+**关于 TruFor 的定位**：图像取证（TruFor）在本系统中作为「视觉真实性分析的辅助证据」——对配对图片的修饰区分度有限，且 JPEG 压缩等常见图像处理会明显影响其分数，因此不对"P图程度"做定量承诺；区分原图与修饰图主要依据修饰检测模型。
 
 ## 项目导航
 
@@ -103,7 +107,7 @@ TrueGlow 是黑客松原型：检测信号不能证明创作者造假意图，�
 | `scripts/`、`tests/` | 启动、评测与自动化验证 |
 | `vendor/trufor/` | 第三方模型源码及原始许可证 |
 
-[部署指南](docs/LOCAL_DEPLOYMENT.md) · [目录说明](docs/PROJECT_STRUCTURE.md) · [API 说明](docs/API_SPEC.md) · [模型使用声明](docs/MODEL_USAGE.md)
+[本地启动](docs/LOCAL_DEPLOYMENT.md) · [公网部署与安全](docs/DEPLOYMENT.md) · [目录说明](docs/PROJECT_STRUCTURE.md) · [API 说明](docs/API_SPEC.md) · [模型使用声明](docs/MODEL_USAGE.md)
 
 ## 验证
 
