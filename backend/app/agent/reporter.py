@@ -197,8 +197,11 @@ class ReportGenerator:
                  (evidence.source_evidence, evidence.visual_evidence, evidence.before_after_evidence, evidence.text_evidence)}
         if "mock" in modes:
             limitations.append("含模拟证据，仅供流程演示，不能用于内容真实性判断。")
-        if evidence.source_evidence.raw.get("c2pa", {}).get("status") in ("absent", "error"):
+        c2pa_status = evidence.source_evidence.raw.get("c2pa", {}).get("status")
+        if c2pa_status in ("absent", "error"):
             limitations.append("未核验到 C2PA/来源信息，真实性无法确证（C2PA 缺失≠伪造）")
+        elif c2pa_status == "present":
+            limitations.append("检测到 C2PA/Content Credentials 清单，但本环境未验证签名链，真实性仍待确认")
         if not evidence.before_after_evidence.raw:
             limitations.append("未提供 before/after 素材，妆效归因无法完整判断")
         if not evidence.efficacy_evidence:

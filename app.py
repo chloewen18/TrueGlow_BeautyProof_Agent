@@ -127,7 +127,7 @@ with st.sidebar:
     st.markdown("EXIF / OCR　真实处理\n\n文案 / 功效　新版规则与资料库\n\n"
                 + capability_line("TruFor 取证", availability["trufor"]) + "\n\n"
                 + capability_line("修饰模型（成员3）", availability["member3"]) + "\n\n"
-                + "前后条件　模型估计 + 差异图\n\nC2PA 认证　尚未接入")
+                + "前后条件　模型估计 + 差异图\n\nC2PA 清单检测　已接入（未验证签名链）")
     st.caption("运行成功与否以每次报告状态为准")
     st.divider()
     st.caption("信任守护师 · 创造者的 AI 卫士")
@@ -222,7 +222,7 @@ elif page == "创作者复核":
     with right:
         st.subheader("证据要求")
         bullets(["未经平台压缩的原始素材","如实披露美颜、滤镜与曝光调整","保持前后画面光线与角度一致"])
-        st.info("补证不保证改变结论。当前未接入C2PA认证，不签发真实可信凭证。")
+        st.info("补证不保证改变结论。C2PA 仅做清单存在性检测、未验证签名链，不签发可信凭证。")
     if st.session_state.get("review_result"):
         r=st.session_state["review_result"]
         a,b=st.columns(2)
@@ -265,7 +265,7 @@ else:
                 with st.expander(name):
                     st.dataframe(metrics["cases"],hide_index=True)
         st.subheader("能力边界")
-        st.dataframe([{"模块":k,"状态":v} for k,v in [("OCR / EXIF","本地真实处理"),("宣称提取","新版词典与确定性规则"),("功效资料","交付品牌资料，未在线复核"),("图像鉴伪 / 前后对比","真实模型；跨域性能及因果解释受限"),("C2PA","尚未接入")]],hide_index=True)
+        st.dataframe([{"模块":k,"状态":v} for k,v in [("OCR / EXIF","本地真实处理"),("宣称提取","新版词典与确定性规则"),("功效资料","交付品牌资料，未在线复核"),("图像鉴伪 / 前后对比","真实模型；跨域性能及因果解释受限"),("C2PA 清单检测","已接入；未验证签名链")]],hide_index=True)
     with data_tab:
         render_team_deliverables()
         with st.expander("采集与标注模板"):

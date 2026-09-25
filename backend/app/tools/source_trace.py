@@ -12,7 +12,7 @@ from typing import Any
 import hashlib
 
 from ..config import settings
-from ..integrations.metadata_parser import extract_metadata
+from ..integrations.metadata_parser import detect_c2pa_manifest, extract_metadata
 
 from ..schemas.common import ToolRequest
 from ..schemas.tools import C2paInfo, SourceTraceEvidence
@@ -30,6 +30,7 @@ class SourceTraceHandler(ToolHandler):
         files = p.get("files", [])
         if any(str(item.get("ref", "")).startswith("uploads/") for item in files):
             records = []
+            detections = []
             root = (settings.resolved_data_dir / "uploads").resolve()
             for item in files:
                 ref = str(item.get("ref", ""))
@@ -37,19 +38,51 @@ class SourceTraceHandler(ToolHandler):
                 if root not in target.parents or not target.is_file():
                     raise ValueError("Invalid uploaded media reference")
                 metadata = extract_metadata(str(target))
+                c2pa_detect = detect_c2pa_manifest(str(target))
+                detections.append(c2pa_detect["status"])
                 records.append({
                     "ref": ref, "exif": metadata["exif"],
                     "has_metadata": metadata["has_metadata"],
+                    "c2pa_detection": c2pa_detect,
                     "sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
                     "size_bytes": target.stat().st_size,
                 })
+            if "present" in detections:
+                c2pa_status, c2pa_detail = (
+                    "present",
+                    "检测到 Content Credentials 清单标记（仅存在性检测，未验证签名链）",
+                )
+                conclusion = (
+                    "已读取上传文件的 EXIF 和 SHA256；检测到 Content Credentials（C2PA）清单标记，"
+                    "本环境仅做存在性检测、未验证签名链，清单存在不等于内容未被修饰，"
+                    "真实性仍需结合视觉取证与其他证据。"
+                )
+            elif "unknown" in detections:
+                c2pa_status, c2pa_detail = "error", "部分文件无法读取，C2PA 状态未知"
+                conclusion = (
+                    "已读取上传文件的 EXIF 和 SHA256；部分文件无法读取，C2PA 状态未知。"
+                    "元数据缺失不代表伪造，继续调用视觉取证。"
+                )
+            else:
+                c2pa_status, c2pa_detail = (
+                    "absent",
+                    "未检测到 C2PA/Content Credentials 清单标记（仅存在性检测）",
+                )
+                conclusion = (
+                    "已读取上传文件的 EXIF 和 SHA256；未检测到 C2PA 清单标记。"
+                    "元数据缺失不代表伪造，继续调用视觉取证。"
+                )
             return SourceTraceEvidence(
-                c2pa=C2paInfo(status="error", detail="C2PA verification is not implemented; status unknown"),
+                c2pa=C2paInfo(status=c2pa_status, detail=c2pa_detail),
                 exif={r["ref"]: r["exif"] for r in records},
                 metadata_complete=False,
-                file_info={"files": records, "mode": "real_exif", "metadata_completeness": "not_assessed"},
+                file_info={
+                    "files": records, "mode": "real_exif",
+                    "c2pa_detection_mode": "marker_presence_scan",
+                    "metadata_completeness": "not_assessed",
+                },
                 creator_submission_status="received" if p.get("creator_submission") else "none",
-                conclusion="已读取上传文件的 EXIF 和 SHA256；EXIF 存在不代表来源真实，缺失也不代表伪造。C2PA 尚未验证。",
+                conclusion=conclusion,
             ).model_dump(exclude_none=True)
         signals = p.get("signals", {})
         if "signals" not in p:

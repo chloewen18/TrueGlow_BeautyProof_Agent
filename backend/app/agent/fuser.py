@@ -82,6 +82,8 @@ class EvidenceFuser:
                 items = [_ev("src-001", "source_trace", "C2PA 存在且验证通过，来源证据可靠", {"c2pa_status": "valid"}, EvidenceReliability.HIGH, "C2PA / Content Credentials")]
             elif c2pa == "invalid":
                 items = [_ev("src-001", "source_trace", "C2PA 签名验证失败，来源证据不可信", {"c2pa_status": "invalid"}, EvidenceReliability.HIGH, "C2PA / Content Credentials")]
+            elif c2pa == "present":
+                items = [_ev("src-001", "source_trace", "检测到 C2PA/Content Credentials 清单（仅存在性检测，未验证签名链；清单存在不等于内容未被修饰）", {"c2pa_status": "present"}, EvidenceReliability.MEDIUM, "C2PA / Content Credentials")]
             elif c2pa == "error":
                 items = [_ev("src-001", "source_trace", "C2PA 尚未验证，来源状态未知", {"c2pa_status": "error"}, EvidenceReliability.LOW, "C2PA / Content Credentials")]
             else:

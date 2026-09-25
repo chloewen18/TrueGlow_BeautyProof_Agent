@@ -72,9 +72,13 @@ class PageUnderstandingEvidence(ComputedEvidence):
 # T2 来源溯源与创作者证明
 # ---------------------------------------------------------------------------
 class C2paInfo(BaseModel):
-    """C2PA / Content Credentials 状态。"""
+    """C2PA / Content Credentials 状态。
 
-    status: Literal["valid", "invalid", "absent", "error"] = "absent"
+    present = 检测到清单标记（仅存在性检测，未验证签名链）；
+    valid   = 存在且签名链验证通过（当前未实现，预留）。
+    """
+
+    status: Literal["valid", "invalid", "present", "absent", "error"] = "absent"
     detail: Optional[str] = None
 
 

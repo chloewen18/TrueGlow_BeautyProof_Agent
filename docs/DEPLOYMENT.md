@@ -231,3 +231,18 @@ data/models/member3/            ← 全部被 .gitignore 忽略
 它需要 `settings.member3_enabled` 等配置项（当前 `config.py` 中**不存在**）
 并调用 `register_member3_handlers()`（当前**无人调用**）。
 两套方案会争用同一个 `image_forensics` 槽位，**启用其中一套前需先明确废弃另一套**。
+
+## 9. C2PA 清单存在性检测（2026-09-25）
+
+`source_trace` 真实路径会对每个上传文件做 **C2PA / Content Credentials 清单存在性检测**
+（`metadata_parser.detect_c2pa_manifest`）：扫描文件头 4MB，识别 JPEG APP11/c2pa JUMBF、
+PNG `caBX` chunk 及 XMP/JUMBF 的 c2pa 命名空间。
+
+**边界（重要）**：
+- 只判断「清单是否存在」，**不验证签名链**——检测到清单 ≠ 内容真实/未被修饰
+- 未检测到清单 ≠ 伪造（平台压缩/转码可能剥离清单）
+- 状态枚举：`present`（检测到清单）/ `absent`（未检测到）/ `error`（读取失败）；
+  `valid`/`invalid` 为签名链验证预留，当前不会返回
+
+聚合规则（多文件上传）：任一文件检测到 → `present`；有文件读取失败 → `error`；否则 `absent`。
+每张图的检测结果保存在 `evidence.source_evidence.raw.file_info.files[].c2pa_detection`。

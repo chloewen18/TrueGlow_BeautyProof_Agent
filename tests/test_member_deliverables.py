@@ -52,7 +52,9 @@ class DeliveryTests(unittest.TestCase):
                     "files": [{"kind": "image", "ref": ref}], "signals": {"c2pa_status": "valid"}}}
                 result = client.post("/api/v1/tools/source_trace", json=payload).json()
                 self.assertEqual(result["status"], "success")
-                self.assertEqual(result["evidence"]["c2pa"]["status"], "error")
+                # C2PA 现在做「清单存在性检测」：普通 PIL 生成的 JPEG 无 C2PA 标记 → absent
+                self.assertEqual(result["evidence"]["c2pa"]["status"], "absent")
+                self.assertIn("存在性检测", result["evidence"]["c2pa"]["detail"])
                 self.assertIn("IntegrationTestCamera", str(result["evidence"]["exif"]))
                 from backend.app.agent.fuser import fuser
                 layer = fuser.fuse("test", {"source_trace": result["evidence"]}, creator_submission={"original_file": [ref]})
