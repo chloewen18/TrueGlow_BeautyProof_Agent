@@ -31,3 +31,6 @@ data/evaluation_runs/
 member2_forensics/deliverables/
 data/datasets/
 vendor/trufor/dataset/data/*_COCO_*_list.txt
+
+# 冒烟测试输出（正式结果按对数命名并入库）
+data/verdict_evaluation.json
