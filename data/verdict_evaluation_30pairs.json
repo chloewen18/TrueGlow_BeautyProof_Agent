@@ -1,0 +1,866 @@
+{
+  "generated_at": "2026-09-26T14:45:29",
+  "pairs_requested": 30,
+  "pairs_completed": 30,
+  "claim_used": "原相机零滤镜，无磨皮无修图，妆效自然持久",
+  "originals": {
+    "n": 30,
+    "false_accusation_rate": 0.0,
+    "verdicts": {
+      "partially_suspicious": 5,
+      "insufficient_evidence": 25
+    }
+  },
+  "retouched": {
+    "n": 30,
+    "signal_capture_rate": 0.8,
+    "verdicts": {
+      "partially_suspicious": 24,
+      "insufficient_evidence": 6
+    }
+  },
+  "errors": 0,
+  "avg_latency_s": 7.9,
+  "rows": [
+    {
+      "pair": 1,
+      "kind": "original",
+      "file": "originals/00000.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 10.5
+    },
+    {
+      "pair": 1,
+      "kind": "retouched",
+      "file": "retouched/00000.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 2,
+      "kind": "original",
+      "file": "originals/00001.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.6
+    },
+    {
+      "pair": 2,
+      "kind": "retouched",
+      "file": "retouched/00001.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.7
+    },
+    {
+      "pair": 3,
+      "kind": "original",
+      "file": "originals/00002.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.4
+    },
+    {
+      "pair": 3,
+      "kind": "retouched",
+      "file": "retouched/00002.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 4,
+      "kind": "original",
+      "file": "originals/00003.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 4,
+      "kind": "retouched",
+      "file": "retouched/00003.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 5,
+      "kind": "original",
+      "file": "originals/00004.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 5,
+      "kind": "retouched",
+      "file": "retouched/00004.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 6,
+      "kind": "original",
+      "file": "originals/00005.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 6,
+      "kind": "retouched",
+      "file": "retouched/00005.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 7,
+      "kind": "original",
+      "file": "originals/00006.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 7,
+      "kind": "retouched",
+      "file": "retouched/00006.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 8,
+      "kind": "original",
+      "file": "originals/00007.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 8,
+      "kind": "retouched",
+      "file": "retouched/00007.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 9,
+      "kind": "original",
+      "file": "originals/00008.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 9,
+      "kind": "retouched",
+      "file": "retouched/00008.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 10,
+      "kind": "original",
+      "file": "originals/00009.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 10,
+      "kind": "retouched",
+      "file": "retouched/00009.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 11,
+      "kind": "original",
+      "file": "originals/00010.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 11,
+      "kind": "retouched",
+      "file": "retouched/00010.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 12,
+      "kind": "original",
+      "file": "originals/00011.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.1
+    },
+    {
+      "pair": 12,
+      "kind": "retouched",
+      "file": "retouched/00011.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 61.1
+    },
+    {
+      "pair": 13,
+      "kind": "original",
+      "file": "originals/00012.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.3
+    },
+    {
+      "pair": 13,
+      "kind": "retouched",
+      "file": "retouched/00012.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 14,
+      "kind": "original",
+      "file": "originals/00013.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 14,
+      "kind": "retouched",
+      "file": "retouched/00013.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 15,
+      "kind": "original",
+      "file": "originals/00014.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 15,
+      "kind": "retouched",
+      "file": "retouched/00014.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 16,
+      "kind": "original",
+      "file": "originals/00015.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 16,
+      "kind": "retouched",
+      "file": "retouched/00015.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 17,
+      "kind": "original",
+      "file": "originals/00016.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.1
+    },
+    {
+      "pair": 17,
+      "kind": "retouched",
+      "file": "retouched/00016.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 18,
+      "kind": "original",
+      "file": "originals/00017.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 18,
+      "kind": "retouched",
+      "file": "retouched/00017.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 19,
+      "kind": "original",
+      "file": "originals/00018.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.2
+    },
+    {
+      "pair": 19,
+      "kind": "retouched",
+      "file": "retouched/00018.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 20,
+      "kind": "original",
+      "file": "originals/00019.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 20,
+      "kind": "retouched",
+      "file": "retouched/00019.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 21,
+      "kind": "original",
+      "file": "originals/00020.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 21,
+      "kind": "retouched",
+      "file": "retouched/00020.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 22,
+      "kind": "original",
+      "file": "originals/00021.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 22,
+      "kind": "retouched",
+      "file": "retouched/00021.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 23,
+      "kind": "original",
+      "file": "originals/00022.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 23,
+      "kind": "retouched",
+      "file": "retouched/00022.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 24,
+      "kind": "original",
+      "file": "originals/00023.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.1
+    },
+    {
+      "pair": 24,
+      "kind": "retouched",
+      "file": "retouched/00023.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 25,
+      "kind": "original",
+      "file": "originals/00024.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.7
+    },
+    {
+      "pair": 25,
+      "kind": "retouched",
+      "file": "retouched/00024.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.9
+    },
+    {
+      "pair": 26,
+      "kind": "original",
+      "file": "originals/00025.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 26,
+      "kind": "retouched",
+      "file": "retouched/00025.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 27,
+      "kind": "original",
+      "file": "originals/00026.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.0
+    },
+    {
+      "pair": 27,
+      "kind": "retouched",
+      "file": "retouched/00026.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 28,
+      "kind": "original",
+      "file": "originals/00027.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 28,
+      "kind": "retouched",
+      "file": "retouched/00027.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    },
+    {
+      "pair": 29,
+      "kind": "original",
+      "file": "originals/00028.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.4
+    },
+    {
+      "pair": 29,
+      "kind": "retouched",
+      "file": "retouched/00028.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 7.2
+    },
+    {
+      "pair": 30,
+      "kind": "original",
+      "file": "originals/00029.png",
+      "verdict": "insufficient_evidence",
+      "verdict_label": "证据不足",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.7
+    },
+    {
+      "pair": 30,
+      "kind": "retouched",
+      "file": "retouched/00029.png",
+      "verdict": "partially_suspicious",
+      "verdict_label": "部分可疑",
+      "tools": {
+        "page_understanding": "success",
+        "source_trace": "success",
+        "image_forensics": "success",
+        "text_integrity": "success"
+      },
+      "latency_s": 6.8
+    }
+  ]
+}
